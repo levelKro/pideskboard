@@ -76,6 +76,7 @@ Author: Mathieu Légaré
                 <child>
                   <!-- n-columns=4 n-rows=9 -->
                   <object class="GtkGrid" id="frameWeather">
+                    <property name="width-request">220</property>
                     <property name="height-request">180</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
@@ -198,10 +199,8 @@ Author: Mathieu Légaré
                         <property name="height-request">35</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
+                        <property name="halign">start</property>
                         <property name="valign">center</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -219,10 +218,8 @@ Author: Mathieu Légaré
                         <property name="height-request">35</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
+                        <property name="halign">start</property>
                         <property name="valign">center</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -240,10 +237,8 @@ Author: Mathieu Légaré
                         <property name="height-request">30</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
+                        <property name="halign">start</property>
                         <property name="valign">center</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -278,10 +273,8 @@ Author: Mathieu Légaré
                         <property name="height-request">20</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
+                        <property name="halign">start</property>
                         <property name="valign">center</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -316,10 +309,8 @@ Author: Mathieu Légaré
                         <property name="height-request">20</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
+                        <property name="halign">start</property>
                         <property name="valign">center</property>
-                        <property name="margin-left">10</property>
-                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -377,6 +368,7 @@ Author: Mathieu Légaré
                     <property name="can-focus">False</property>
                     <property name="halign">end</property>
                     <property name="valign">start</property>
+                    <property name="margin-start">20</property>
                     <child>
                       <object class="GtkImage" id="iconMailboxUnread">
                         <property name="height-request">40</property>
@@ -542,7 +534,7 @@ Author: Mathieu Légaré
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">True</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -569,7 +561,7 @@ Author: Mathieu Légaré
                         <property name="can-focus">False</property>
                         <property name="halign">end</property>
                         <property name="valign">end</property>
-                        <property name="label" translatable="yes">Aujourd'hui</property>
+                        <property name="label" translatable="yes">today</property>
                         <property name="track-visited-links">False</property>
                         <attributes>
                           <attribute name="font-desc" value="My Pager 16"/>
@@ -731,9 +723,10 @@ Author: Mathieu Légaré
     </child>
   </object>
   <object class="GtkWindow" id="windowControl">
-    <property name="width-request">400</property>
-    <property name="height-request">200</property>
+    <property name="width-request">302</property>
+    <property name="height-request">170</property>
     <property name="can-focus">False</property>
+    <property name="border-width">1</property>
     <property name="type">popup</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -751,19 +744,16 @@ Author: Mathieu Légaré
         <property name="height">0</property>
         <child>
           <object class="GtkImage">
-            <property name="width-request">400</property>
-            <property name="height-request">200</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixbuf">background-alt2.jpg</property>
+            <property name="pixbuf">background-ctrl.jpg</property>
           </object>
         </child>
         <child>
-          <!-- n-columns=3 n-rows=2 -->
+          <!-- n-columns=4 n-rows=2 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">center</property>
             <property name="margin-start">10</property>
             <property name="margin-end">10</property>
             <property name="margin-top">10</property>
@@ -776,8 +766,8 @@ Author: Mathieu Légaré
                 <property name="receives-default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
                 <property name="relief">none</property>
@@ -803,8 +793,8 @@ Author: Mathieu Légaré
                 <property name="receives-default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
                 <property name="relief">none</property>
@@ -830,8 +820,8 @@ Author: Mathieu Légaré
                 <property name="receives-default">True</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
-                <property name="margin-start">20</property>
-                <property name="margin-end">20</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">10</property>
                 <property name="relief">none</property>
@@ -851,6 +841,33 @@ Author: Mathieu Légaré
               </packing>
             </child>
             <child>
+              <object class="GtkButton" id="buttonCtrlRestart">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+                <property name="margin-start">5</property>
+                <property name="margin-end">5</property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">10</property>
+                <property name="relief">none</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">restart.png</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">3</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="buttonCtrlClose">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
@@ -864,16 +881,19 @@ Author: Mathieu Légaré
                   <object class="GtkImage">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
                     <property name="pixbuf">close.png</property>
                   </object>
                 </child>
               </object>
               <packing>
-                <property name="left-attach">2</property>
+                <property name="left-attach">3</property>
                 <property name="top-attach">0</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
             <child>
               <placeholder/>
@@ -887,70 +907,56 @@ Author: Mathieu Légaré
     </child>
   </object>
   <object class="GtkWindow" id="windowMJpeg">
-    <property name="width-request">350</property>
-    <property name="height-request">300</property>
+    <property name="width-request">322</property>
+    <property name="height-request">242</property>
     <property name="can-focus">False</property>
+    <property name="border-width">1</property>
     <property name="type">popup</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window-position">center-always</property>
     <property name="destroy-with-parent">True</property>
     <child>
-      <!-- n-columns=5 n-rows=6 -->
-      <object class="GtkGrid">
+      <object class="GtkLayout">
+        <property name="width-request">320</property>
+        <property name="height-request">240</property>
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="column-homogeneous">True</property>
+        <property name="width">320</property>
+        <property name="height">240</property>
         <child>
-          <object class="GtkButton" id="buttonMJpegClose">
-            <property name="label" translatable="yes">close</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="margin-start">5</property>
-            <property name="margin-end">5</property>
-            <property name="margin-top">10</property>
-            <property name="margin-bottom">5</property>
-          </object>
-          <packing>
-            <property name="left-attach">2</property>
-            <property name="top-attach">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkBox">
+          <object class="GtkImage">
             <property name="width-request">320</property>
             <property name="height-request">240</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <property name="orientation">vertical</property>
-            <property name="homogeneous">True</property>
+            <property name="pixbuf">nocamera.jpg</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="buttonMJpegClose">
+            <property name="width-request">24</property>
+            <property name="height-request">24</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="halign">end</property>
+            <property name="valign">end</property>
+            <property name="relief">none</property>
             <child>
-              <placeholder/>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="valign">end</property>
+                <property name="pixbuf">close.png</property>
+              </object>
             </child>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
-            <property name="width">5</property>
-            <property name="height">5</property>
+            <property name="x">275</property>
+            <property name="y">200</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
     </child>

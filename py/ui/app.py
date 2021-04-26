@@ -11,8 +11,12 @@ from gi.repository import Gst
 from gi.repository.GdkPixbuf import Pixbuf
 
 # Functions
+def getApi(action):
+    jsonUrl = "http://localhost/api.php?a="+ action
+    url = requests.get(jsonUrl)
+    return url.text
+
 def getDatas():
-    #jsonUrl = "http://192.168.0.107/api.php?a=datas"
     jsonUrl = "http://localhost/api.php?a=datas"
     url = requests.get(jsonUrl)
     return json.loads(url.text)
@@ -40,7 +44,7 @@ class App():
         self.count = 0        
         self.statePlayer = False;
         self.defaultPath = "/home/pi/pideskboard/py/ui/" #fix for autorun
-        #self.defaultPath = "D:/WEB/SITES/SDK/GitHub/piDeskboard/py/ui/"
+        self.radioStreamUrl = "http://radio.levelkro.net:8000/1"; #default value
         self.imageStop = Gtk.Image.new_from_file(self.defaultPath + "stop.png")
         self.imagePlay = Gtk.Image.new_from_file(self.defaultPath + "play.png")
         self.imagePause = Gtk.Image.new_from_file(self.defaultPath + "pause.png")
@@ -90,7 +94,6 @@ class App():
         self.dataPlayerTime = self.root.get_object("dataPlayerTime")
         self.dataPlayerDetails = self.root.get_object("dataPlayerDetails")
         
-        
         self.placeButtonCtrl = self.root.get_object("placeButtonCtrl")
         self.ButtonCtrlClose = self.root.get_object("buttonCtrlClose")
         self.ButtonCtrlClose.connect("clicked", self.triggerCtrlClose)
@@ -102,6 +105,8 @@ class App():
         self.buttonCtrlBluetooth.connect("clicked", self.triggerBluetooth)
         
         self.placeButtonCameras = self.root.get_object("placeButtonCameras")
+        self.ButtonMJpegClose = self.root.get_object("buttonMJpegClose")
+        self.ButtonMJpegClose.connect("clicked", self.triggerMJpegClose)
 
         #post-init
 
@@ -130,7 +135,7 @@ class App():
         Gst.init_check(None)
         self.IS_GST010 = Gst.version()[0] == 0
         self.player = Gst.ElementFactory.make("playbin", "player")
-        self.player.set_property("uri", "http://radio.levelkro.net:8000/1")
+        self.player.set_property("uri", self.radioStreamUrl)
         self.player.props.buffer_duration = 5 * Gst.SECOND
         self.bus = self.player.get_bus()
         self.bus.add_signal_watch()
@@ -160,7 +165,10 @@ class App():
         self.windowCtrl.hide() 
     
     def triggerCtrl(self,w):
-        self.windowCtrl.show_all()     
+        self.windowCtrl.show_all()
+        
+    def triggerMJpegClose(self,w):
+        self.windowMJpeg.hide()    
         
     def setUpdates(self):
         # Updates datas
@@ -168,6 +176,7 @@ class App():
         attText = self.templateTextA.get_attributes()
         
         self.textToday.set_text(jsonDatas["text_today"])
+        self.radioStreamUrl=self.gibberishShadow=jsonDatas["radio"]["url"]
         #Player Web Radio            
         self.gibberishShadow=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
         if(self.statePlayer == False):
@@ -225,7 +234,7 @@ class App():
         if self.statePlayer == False:
             self.statePlayer = True;
             self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "stop.png")
-            self.player.set_property("uri", "http://radio.levelkro.net:8000/1;.mp3")
+            self.player.set_property("uri", self.radioStreamUrl)
             self.player.set_state(Gst.State.PLAYING)
             GLib.timeout_add_seconds(1, self.setPlayerUpdates)
         else:
