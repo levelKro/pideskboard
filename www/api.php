@@ -126,7 +126,7 @@
 				switch($view['module']){
 					case 'image':
 						// SUB PAGE : image / camera ip
-						if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
+						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
 						$output['html'].='<div style="text-align:center;" class="showImage"><img src="'.$view['url'].'"/></div>';
 					break;
 					case 'list':
@@ -152,7 +152,7 @@
 					break;
 					case 'servers':
 						// SUB PAGE : server status
-						if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);	
+						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);	
 						$list=DBReadAll("servers");
 						if(!$list) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
 						ksort($list);
@@ -184,7 +184,7 @@
 					break;
 					case 'network':
 						// SUB PAGE : network local
-						if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
+						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
 						$list=DBReadAll("network");
 						if(!$list) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
 						ksort($list);
@@ -245,7 +245,7 @@
 							"total"=>date("t",strtotime($m.'/13/'.$y)),
 							"days"=>array()
 						);
-						if($cfg['enable']['speak']) speak(translateDate(date("F",$work['unix']))." ".$work['year'],$cfg['speak_module']);
+						#if($cfg['enable']['speak']) speak(translateDate(date("F",$work['unix']))." ".$work['year'],$cfg['speak_module']);
 						for($i=1;$i<=$work['total'];$i++){
 							$unix=strtotime($m.'/'.$i.'/'.$y);
 							$work['days'][$i]=array(
@@ -325,7 +325,7 @@
 						$weather=DBRead("weather");
 						if(!$weather || !$cfg['enable']['weather']) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
 						if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
-						if($cfg['enable']['speak']) speak(translateText("WEATHER_FORECAST_FOR")." ".$weather['name'],$cfg['speak_module']);
+						#if($cfg['enable']['speak']) speak(translateText("WEATHER_FORECAST_FOR")." ".$weather['name'],$cfg['speak_module']);
 						$jsonurl = "http://api.openweathermap.org/data/2.5/forecast?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
 						$json = file_get_contents($jsonurl);
 						$weather['remote'] = (array) json_decode($json);
@@ -461,7 +461,7 @@
 						else{
 							$output['html'].='<p class="Message"><center><i>'.translateText("NOMAIL").'</i></center></p>'; 
 						}
-						if($cfg['enable']['speak']) speak(str_replace("%UNREAD%",($tmp['unread']),translateText("MAIL_YOUHAVEXNEW")),$cfg['speak_module']);
+						#if($cfg['enable']['speak']) speak(str_replace("%UNREAD%",($tmp['unread']),translateText("MAIL_YOUHAVEXNEW")),$cfg['speak_module']);
 					break;
 					default:
 						// SUB PAGE : error
