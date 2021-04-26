@@ -1,0 +1,591 @@
+/*
+	Pi Deskboard CSS
+	(c) 2021 Mathieu Légaré <levelKro> https://levelkro.com
+*/
+
+body,
+html
+* {
+	margin:0;
+	padding:0;
+	line-height:1.0;
+	font-size:12px;
+	font-family:Arial;
+}
+::-webkit-scrollbar {
+ width: 0px;
+ height: 0px;
+}
+::-webkit-scrollbar-thumb {
+ background: none;
+ border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover{
+ background: none;;
+}
+::-webkit-scrollbar-track{
+ background: none;
+ border-radius: 0px;
+}
+* {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+body, html {
+	background-color:#000;
+	color:#eee;
+}
+a {
+	color:#fff;
+	text-decoration:none;
+}
+a:hover {
+	color:#ddd;
+	text-decoration:none;
+}
+h1,h2,h3,h4,h5,h6 {
+	text-shadow:2px 2px 5px rgba(0,0,0,0.75);
+	margin:10px 10px 10px 10px;
+	padding:0;
+}
+h1 {
+	font-size:40px;
+}
+h2 {
+	font-size:32px;
+}
+h3 {
+	font-size:26px;
+}
+h4 {
+	font-size:22px;
+}
+h5 {
+	font-size:20px;
+}
+h6 {
+	font-size:18px;
+}
+small {
+	font-size:10px;	
+}
+span {
+	font-size:12px;
+}
+ul {
+	list-style:square;
+	padding:5px 5px 5px 15px;
+	margin:10px 0;
+	width:90%;
+}
+ul li {
+	margin:0;
+	padding:3px 0;
+	text-align:justify;
+	font-size:18px;
+	line-height:1;
+}p {
+	margin:5px;
+	text-align:justify;
+	font-size:13px;
+}
+
+/*
+	Colors
+*/
+
+.yellow {
+	color:#ebeb00 !important;
+}
+.blue {
+	color:#00e3eb !important;
+}
+.red {
+	color:#db4646 !important;
+}
+.grey {
+	color:#9e9e9e !important;
+}
+.green {
+	color:#32a852 !important;
+}
+.darkblue {
+	color:#0023eb !important;
+}
+.white {
+	color:#fff !important;
+}
+.black {
+	color:#000 !important;
+}
+.orange {
+	color:#f05e16 !important;
+}
+
+/*
+	Loading spinner
+*/
+
+.loading {
+	display:block;
+	width:60px;
+	height:60px;
+	font-size:60px;
+	position:absolute;
+	left:48%;
+	top:45%;
+	z-index:999;
+}
+.loading i {
+	font-size:60px;
+}
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+.buttonBack {
+	position:fixed;
+	top:50px;
+	right:10px;
+	display:block;
+	font-size:32px;
+	color:rgba(200,200,200,0.60);
+	z-index:999;
+}
+.buttonBack i {
+	font-size:32px;
+	text-shadow:2px 2px 5px #000;
+}
+/*
+	Styling
+*/
+.frameLimit { 
+	min-width:100vw;
+	min-height:100vh;
+	width:100vw;
+	height:100vh;
+	max-width:100vw;
+	max-height:100vh;
+	overflow:hidden;
+	display:block;
+	background-image:url(../ui/bg/circuit.jpg);
+	background-position:center;
+	background-attachment:fixed;
+	background-size:120%;
+	background-repeat:no-repeat;
+}
+.frameLimit .frameMenu {
+	display:block;
+}
+.frameLimit .frameMenu .menu {
+	position:absolute;	
+	left:0;
+	top:0;
+	padding:0;
+	border-bottom:1px solid rgba(0,0,0,0.15);
+	border-right:1px solid rgba(0,0,0,0.15);
+	background-color:rgba(0,0,0,0.15);
+	margin:0;
+	white-space:nowrap;
+	overflow:auto;
+}
+
+.frameLimit .frameMenu .menu i {
+	color:#fff;
+	text-shadow:2px 2px 5px #000;
+	font-size:32px;
+	padding:5px;
+	margin:5px;
+}
+.frameLimit .frameMenu .menu .links {
+	position:fixed;
+	left:25vw;
+	top:25vh;
+	margin:0 auto;
+	padding:10px;
+	width:50vw;
+	background:rgba(0,0,0,0.75);
+	text-align:center;
+	z-index:99;
+	white-space:nowrap;
+	display:none;
+}
+.frameLimit .frameMenu .menu:hover .links,
+.frameLimit .frameMenu .menu:focus .links {
+	display:block;
+	box-shadow:0 8px 16px 0 rgba(255,255,255,0.2), 0 6px 20px 0 rgba(255,255,255,0.19);	
+}
+.frameLimit .frameMenu .menu:hover i,
+.frameLimit .frameMenu .menu:focus i {
+	color:#f05e16;
+}
+.frameLimit .frameMenu .menu .link {
+	display:block;
+	padding:5px;
+	margin:5px;
+	font-size:22px;
+	background:rgba(0,0,0,0.25);
+	text-shadow:2px 2px 5px #000;
+	border:1px solid rgba(0,0,0,0.75);
+}
+.frameLimit .frameMenu .menu .link:focus {
+	background:rgba(0,0,0,0.75);
+	color:#f05e16;
+}
+.frameLimit .frameMenu .menu .link i {
+	color:#03e6ff;
+	margin:0 5px 0 0;
+	font-size:16px;
+	line-height:0.8;
+}
+.frameLimit .frameMenu .menu .link .text {
+	font-size:16px;
+	line-height:0.8;
+}
+.frameLimit .frameMenu .controls {
+	position:absolute;
+	right:0;
+	top:0;
+	text-align:center;
+	white-space:nowrap;
+	padding:0;
+	border-bottom:1px solid rgba(0,0,0,0.15);
+	border-left:1px solid rgba(0,0,0,0.15);
+	background-color:rgba(0,0,0,0.15);
+	margin:0;
+	white-space:nowrap;
+	overflow:auto;
+}
+.frameLimit .frameMenu .controls i {
+	color:#aaa;
+	text-shadow:2px 2px 5px #000;
+	font-size:22px;
+	padding:5px;
+	margin:5px;
+}
+.frameLimit .frameMenu .controls .options {
+	display:none;
+	position:fixed;
+	left:25vw;
+	top:25vh;
+	margin:0 auto;
+	padding:10px;
+	width:50vw;
+	background:rgba(0,0,0,0.75);
+	text-align:center;
+	z-index:99;
+}
+.frameLimit .frameMenu .controls:hover .options,
+.frameLimit .frameMenu .controls:focus .options {
+	display:block;
+	box-shadow:0 8px 16px 0 rgba(255,255,255,0.2), 0 6px 20px 0 rgba(255,255,255,0.19);
+}
+.frameLimit .frameMenu .controls .options ul {
+	list-style:none;
+	width:auto;
+	margin:0 auto;
+	padding:0;
+}
+.frameLimit .frameMenu .controls .options ul li {
+	color:#aaa;
+	text-shadow:2px 2px 5px #000;
+	text-align:left;
+	display:block;
+	padding:10px;
+	font-size:20px;
+}
+.frameLimit .frameMenu .controls .options ul li:hover,
+.frameLimit .frameMenu .controls .options ul li:focus {
+	color:#f05e16;
+	text-shadow:2px 2px 5px #000;
+	text-align:left;
+	display:block;
+}
+.frameLimit .frameMenu .controls .options span.title {
+	color:#fff;
+	text-shadow:2px 2px 5px #000;
+	text-align:center;
+	font-weight:bold;
+	font-size:26px;
+}
+.frameLimit .frameMenu .controls .options ul i {
+	width:40px;
+	color:#aaa;
+	text-shadow:2px 2px 5px #000;
+	background:none;
+}
+.frameLimit .frameContent {
+	display:block;
+	overflow:hidden;
+}
+.frameLimit .frameContent .frameClock {
+	padding:0;
+	text-align:center;
+	position:absolute;	
+	right:10px;
+	top:60px;
+	width:50vw;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);
+}
+.frameClock #time {
+	font-size:60px;
+	line-height:1.4;
+	text-shadow:2px 2px 5px #000;
+	font-family:Digital2, Arial;
+	color:#fab216;
+	letter-spacing:6px;
+	display:block;
+}
+.frameClock #date {
+	font-size:22px;
+	text-shadow:2px 2px 5px #000;
+	font-family:"Ericsson GA628", Arial;
+	/*color:#03e6ff;*/
+	display:block;
+	margin:10px;
+}
+.frameLimit .frameContent .frameTodo {
+	padding:0;
+	position:absolute;	
+	left:10px;
+	top:40vh;
+	width:45vw;
+	height:35vh;
+	text-align:justify;
+	text-shadow:2px 2px 5px #000;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);
+	overflow:auto;
+	display:block;
+}
+.frameTodo b {
+	font-size:22px;
+	text-shadow:2px 2px 5px #000;
+	font-family:"Ericsson GA628", Arial;
+	margin:5px 0;
+
+}
+.frameTodo ul {
+	list-style:square;
+	margin:0 5px 5px;
+	padding:5px 0 5px 25px;
+}
+.frameTodo ul li {
+	margin:0 0 5px 0;
+	padding:0;
+	font-size:16px;
+}
+.frameTodo ul li * {
+	font-size:16px;
+}
+.frameLimit .frameContent .frameRadio {
+	padding:0;
+	position:absolute;	
+	right:10px;
+	bottom:10px;
+	width:50vw;
+	text-align:center;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);	
+}
+.frameRadio #radioTime {
+	font-size:30px;
+	text-shadow:2px 2px 5px #000;
+	font-family:Digital2, Arial;
+	color:#fab216;
+	letter-spacing:3px;
+	margin:10px;
+}
+.frameRadio #radioTitle {
+	font-size:20px;
+	line-height:1.2;
+	text-shadow:2px 2px 5px #000;
+	text-align:center;
+	font-family:"01 Digit", Arial;
+	color:#eee;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	margin:0 10px;
+}
+.frameRadio #radioSong {
+	font-size:20px;
+	line-height:1.2;
+	text-shadow:2px 2px 5px #000;
+	text-align:center;
+	font-family:"01 Digit", Arial;
+	color:#ddd;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	margin:0 10px 10px 10px;
+}
+.frameRadio #radioPlayerPlay i,
+.frameRadio #radioPlayerPause i {
+	font-size:30px;
+	text-shadow:2px 2px 5px #000;
+	line-height:48px;
+	display:inline-block;
+	margin:0 20px 0 0;
+}
+.frameRadio #radioPlayerPlay:hover,
+.frameRadio #radioPlayerPause:hover, 
+.frameRadio #radioPlayerPlay:focus,
+.frameRadio #radioPlayerPause:focus {
+	color:#03e6ff;
+}
+.frameLimit .frameContent .frameWeather {
+	padding:0 0 0 80px;
+	min-height:50px;
+	position:absolute;	
+	left:10px;
+	top:60px;
+	width:calc(45vw - 80px);
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);
+}
+.frameWeather .weatherCurrent {
+	display:block;
+	margin:5px 5px 0 0;
+}
+.frameWeather .weatherInfos {
+	display:block;
+	margin:5px 5px 5px 0;
+}
+.frameWeather .weatherCurrent span,
+.frameWeather .weatherInfos span {
+	display:inline-block;
+	padding:3px;
+}
+#weatherImage  {
+	float:left;
+	width:60px;
+	height:40px;
+	padding:10px 10px;
+	margin-left:-80px;
+	text-shadow:2px 2px 5px #000;
+}
+#weatherImage i {
+	float:left;
+	font-size:48px;
+}
+#weatherTemp {
+	font-size:26px;
+	text-shadow:2px 2px 5px #000;
+}
+#weatherFeel {
+	font-size:20px;
+	text-shadow:2px 2px 5px #000;
+}
+#weatherDetails {
+	font-size:16px;
+	text-shadow:2px 2px 5px #000;
+	display:block;
+}
+
+.weatherInfos span {
+	font-size:16px;
+	padding:3px 0;
+	text-shadow:2px 2px 5px #000;
+}
+.weatherInfos span i {
+	font-size:18px;
+	line-height:0.8;
+	padding:3px;
+}
+.frameLimit .frameContent .frameMailbox {
+	padding:10px;
+	position:absolute;	
+	left:10px;
+	bottom:10px;
+	max-width:40vw;
+	white-space:nowrap;
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);
+	display:inline-block;
+}
+.frameLimit .frameContent .frameMailbox span {
+	font-size:24px;
+	text-shadow:2px 2px 5px #000;
+	white-space:nowrap;
+	padding:0 5px;
+}
+.frameLimit .frameContent .frameMailbox span i {
+	color:#03e6ff;
+	font-size:30px;
+	padding:0 10px;
+}
+.frameMailbox .mailboxRead {
+}
+.frameMailbox .mailboxUnread{
+}
+
+#output {
+	display:block;
+	position:absolute;
+	text-align:center;
+	overflow:auto;
+}
+#output * {
+	text-shadow:2px 2px 5px #000;
+}
+#output ul {
+	margin:25px auto;
+	padding:5px 5px 5px 45px;
+	width:80vw;
+}
+#output ul li {
+	font-size:20px;
+}
+
+#output table,
+#output ul,
+#output dl,
+#output ol,
+#output p {
+	border:1px solid rgba(0,0,0,0.25);
+	background-color:rgba(0,0,0,0.25);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.75);
+	margin:10px auto;
+	max-width:90%;
+}
