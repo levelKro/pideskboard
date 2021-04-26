@@ -12,7 +12,8 @@ from gi.repository.GdkPixbuf import Pixbuf
 
 # Functions
 def getDatas():
-    jsonUrl = "http://192.168.0.107/api.php?a=datas"
+    #jsonUrl = "http://192.168.0.107/api.php?a=datas"
+    jsonUrl = "http://localhost/api.php?a=datas"
     url = requests.get(jsonUrl)
     return json.loads(url.text)
 
@@ -39,7 +40,7 @@ class App():
         self.count = 0        
         self.statePlayer = False;
         self.defaultPath = "/home/pi/pideskboard/py/ui/" #fix for autorun
-        #self.defaultPath = "D:/DOCS/python/piDeskboard/"
+        #self.defaultPath = "D:/WEB/SITES/SDK/GitHub/piDeskboard/py/ui/"
         self.imageStop = Gtk.Image.new_from_file(self.defaultPath + "stop.png")
         self.imagePlay = Gtk.Image.new_from_file(self.defaultPath + "play.png")
         self.imagePause = Gtk.Image.new_from_file(self.defaultPath + "pause.png")
@@ -59,6 +60,8 @@ class App():
         self.window.set_title("PiDeskboard in Python")
         self.window.connect("destroy", Gtk.main_quit, "WM destroy")
         self.window.show_all()
+        self.windowMJpeg = self.root.get_object("windowMJpeg")
+        self.windowCtrl = self.root.get_object("windowControl")
 
         # Names to GUI objects
         self.textToday =  self.root.get_object("textToday")
@@ -87,11 +90,29 @@ class App():
         self.dataPlayerTime = self.root.get_object("dataPlayerTime")
         self.dataPlayerDetails = self.root.get_object("dataPlayerDetails")
         
+        
         self.placeButtonCtrl = self.root.get_object("placeButtonCtrl")
+        self.ButtonCtrlClose = self.root.get_object("buttonCtrlClose")
+        self.ButtonCtrlClose.connect("clicked", self.triggerCtrlClose)
+        self.buttonCtrlPoweroff = self.root.get_object("buttonCtrlPoweroff")
+        self.buttonCtrlPoweroff.connect("clicked", self.triggerPoweroff)
+        self.buttonCtrlReboot = self.root.get_object("buttonCtrlReboot")
+        self.buttonCtrlReboot.connect("clicked", self.triggerReboot)
+        self.buttonCtrlBluetooth = self.root.get_object("buttonCtrlBluetooth")
+        self.buttonCtrlBluetooth.connect("clicked", self.triggerBluetooth)
+        
         self.placeButtonCameras = self.root.get_object("placeButtonCameras")
 
         #post-init
 
+        # Button for controles options    
+        self.buttonCtrl = Gtk.Button()
+        self.buttonCtrl.add(self.imageCtrl)
+        self.buttonCtrl.connect("clicked", self.triggerCtrl)
+        self.buttonCtrl.props.relief = Gtk.ReliefStyle.NONE
+        self.placeButtonCtrl.add(self.buttonCtrl)
+        self.placeButtonCtrl.show_all()
+        
         # Music Player
         # MP: Cleanup
         for row in self.playerAction:
@@ -125,6 +146,21 @@ class App():
         Gtk.main()
 
     # Tasks functions
+        
+    def triggerPoweroff(self,w):
+        self.tmp = getApi("poweroff")
+        
+    def triggerReboot(self,w):
+        self.tmp = getApi("reboot")
+        
+    def triggerBluetooth(self,w):
+        self.tmp = getApi("bluetooth")
+        
+    def triggerCtrlClose(self,w):
+        self.windowCtrl.hide() 
+    
+    def triggerCtrl(self,w):
+        self.windowCtrl.show_all()     
         
     def setUpdates(self):
         # Updates datas
