@@ -1,0 +1,3 @@
+image=splash.png
+stretch=1
+fullscreen=1
