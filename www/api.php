@@ -40,6 +40,12 @@
 			// BG
 			echo json_encode(array("html"=>translateText("CTRL_REFRESH"),"cmd"=>array("document.location.reload();")),true);
 		break;
+		case "restart":
+			// Request a Restart the Python UI
+			// BG
+			echo json_encode(array("html"=>translateText("CTRL_RESTART")),true);
+			system('/home/pi/pideskboard/sh/cli_killApp.sh &');
+		break;
 		case "bluetooth":
 			// Request a BT reconnection
 			// BG
@@ -104,7 +110,7 @@
 					fclose($file);
 				}				
 			}	
-			if(count($todo)<=0) $todo[]="<i>".translateText("NOTHING")."</i>";			
+			if(count($todo)<=0) $todo[]=translateText("NOTHING");
 			echo json_encode(array(
 				"time"=>date("H:i",time()),
 				"date"=>translateDate(date("l, j F, Y",time())),
