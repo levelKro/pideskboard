@@ -125,7 +125,9 @@ start:
 		$id=$radio['id'];
 		if($id<1 || !is_numeric($id)) $id=1;
 		if($port<1 || $port>65535 || !is_numeric($port)) $port=8000;
-		if(!empty($host)) jsonSave("radio",$sc->infos($host,$port,$id,$radio['pass']));		
+		if(!empty($host)) {
+			jsonSave("radio",$sc->infos($host,$port,$id,$radio['pass']));		
+		}
 	}
 	unset($return);
 	

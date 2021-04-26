@@ -36,6 +36,7 @@ Class ShoutCast{
 		
 		
 		$return=array(
+			"url"=>"http://".$host.":".$port."/".$stream_id,
 			"hostname"=>$serv1->fetchMatchingArray("HOSTNAME"),
 			"listenNow"=>(($serv1->fetchMatchingTag("CURRENTLISTENERS")=="")?0:$serv1->fetchMatchingTag("CURRENTLISTENERS")),
 			"listenPeak"=>$serv1->fetchMatchingTag("PEAKLISTENERS"),
@@ -43,24 +44,9 @@ Class ShoutCast{
 			"listenTime"=>$serv1->fetchMatchingArray("CONNECTTIME"),
 			"title"=>$serv1->fetchMatchingTag("SERVERTITLE"),
 			"songTitle"=>preg_replace($trackpattern, $trackreplace, $serv1->fetchMatchingTag("SONGTITLE")),
-			"songLast"=>array("tracks"=>$serv1->fetchMatchingArray("TITLE"),"times"=>$playtime),
+			//"songLast"=>array("tracks"=>$serv1->fetchMatchingArray("TITLE"),"times"=>$playtime),
 		);
 		return $return;
-/*
-
-
-while(list($key,$val) = each($con_song_print)) {
-$con_song_print[$key] = preg_replace($trackpattern, $trackreplace, $con_song_print[$key]);
-  echo "      <tr>\n";
-  echo "        <td width=\"15%\" bgcolor=\"$tbl2bgcolor2\">\n";
-  echo "          <font face=\"$font\" size=\"2\" color=\"$tbl2text2\">$playtime[$key]</font>\n";
-  echo "        </td>\n";
-  echo "        <td width=\"85%\" bgcolor=\"$tbl2bgcolor2\">\n";
-  echo "          <font face=\"$font\" size=\"2\" color=\"$tbl2text2\">$con_song_print[$key]</font>\n";
-  echo "        </td>\n";
-  echo "      </tr>\n";
-}
-*/
 	}
 
 }
