@@ -47,3 +47,4 @@ php/sys/cache/radio.json
 php/sys/cache/time_ding.dbr
 php/sys/cache/weather.json
 py/ui/app_pre.py
+php/error.log

@@ -7,7 +7,7 @@
 	ini_set('ignore_repeated_errors', TRUE); // always use TRUE
 	ini_set('log_errors', TRUE); // Error/Exception file logging engine.
 	ini_set('error_log', '/home/pi/pideskboard/php/error.log'); // Logging file path	
-	require_once("../configs/config.php");
+	require_once("/home/pi/pideskboard/configs/config.php");
 	require_once("sys/libs.php");
 start:
 	$f=$GLOBALS['cache']."talk/";
