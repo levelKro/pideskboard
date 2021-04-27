@@ -1,14 +1,17 @@
 #PiDeskboard by Mathieu Légaré <levelkro@yahoo.ca> https://levelkro.com
 #
-
-import json, requests, gi, re, datetime
+import json, requests, gi, re, datetime, io, time
 gi.require_version("Gtk", "3.0")
 gi.require_version('Gst', '1.0')
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import GObject
 from gi.repository import Gst
+from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf
+import cv2
+import numpy as np
+import threading
 
 # Functions
 def getApi(action):
@@ -42,15 +45,10 @@ class App():
         Gst.init(None)
         self.weatherUrl = ""
         self.count = 0        
-        self.statePlayer = False;
+        self.statePlayer = False
+        self.stateCamera = False
         self.defaultPath = "/home/pi/pideskboard/py/ui/" #fix for autorun
         self.radioStreamUrl = "http://radio.levelkro.net:8000/1"; #default value
-        self.imageStop = Gtk.Image.new_from_file(self.defaultPath + "stop.png")
-        self.imagePlay = Gtk.Image.new_from_file(self.defaultPath + "play.png")
-        self.imagePause = Gtk.Image.new_from_file(self.defaultPath + "pause.png")
-        self.imageEject = Gtk.Image.new_from_file(self.defaultPath + "eject.png")
-        self.imageIPCam = Gtk.Image.new_from_file(self.defaultPath + "ipcam.png")
-        self.imageCtrl = Gtk.Image.new_from_file(self.defaultPath + "ctrl.png")
         self.gibberish = "Loading . . ."
         self.gibberishShadow = "Loading . . ."
         self.a = 0
@@ -103,21 +101,47 @@ class App():
         self.buttonCtrlReboot.connect("clicked", self.triggerReboot)
         self.buttonCtrlBluetooth = self.root.get_object("buttonCtrlBluetooth")
         self.buttonCtrlBluetooth.connect("clicked", self.triggerBluetooth)
+        self.buttonCtrlRestart = self.root.get_object("buttonCtrlRestart")
+        self.buttonCtrlRestart.connect("clicked", self.triggerRestart)
         
         self.placeButtonCameras = self.root.get_object("placeButtonCameras")
-        self.ButtonMJpegClose = self.root.get_object("buttonMJpegClose")
-        self.ButtonMJpegClose.connect("clicked", self.triggerMJpegClose)
+        
+        self.buttonMJpegClose = self.root.get_object("buttonMJpegClose")
+        self.buttonMJpegClose.connect("clicked", self.triggerMJpegClose)
+        self.imageMJpegStream = self.root.get_object("imageMJpegStream")
+        self.buttonMJpegOpen = self.root.get_object("buttonMJpegOpen")
+        self.buttonMJpegOpen.connect("clicked", self.triggerMJpegOpen)
+        self.textMJpegStream = self.root.get_object("textMJpegStream")
 
         #post-init
 
         # Button for controles options    
         self.buttonCtrl = Gtk.Button()
-        self.buttonCtrl.add(self.imageCtrl)
+        self.buttonCtrl.add(Gtk.Image.new_from_file(self.defaultPath + "ctrl.png"))
         self.buttonCtrl.connect("clicked", self.triggerCtrl)
         self.buttonCtrl.props.relief = Gtk.ReliefStyle.NONE
         self.placeButtonCtrl.add(self.buttonCtrl)
         self.placeButtonCtrl.show_all()
-        
+
+        # Button for IPCamera (MJpeg stream)
+        # add config file for this
+        self.buttonIPCam1 = Gtk.Button()
+        self.buttonIPCam1.add(Gtk.Image.new_from_file(self.defaultPath + "cam1.png"))
+        self.buttonIPCam1.connect("clicked", self.triggerMJpegCamera,1)
+        self.buttonIPCam1.props.relief = Gtk.ReliefStyle.NONE
+        self.placeButtonCameras.add(self.buttonIPCam1)
+        self.buttonIPCam2 = Gtk.Button()
+        self.buttonIPCam2.add(Gtk.Image.new_from_file(self.defaultPath + "cam2.png"))
+        self.buttonIPCam2.connect("clicked", self.triggerMJpegCamera,2)
+        self.buttonIPCam2.props.relief = Gtk.ReliefStyle.NONE
+        self.placeButtonCameras.add(self.buttonIPCam2) 
+        self.buttonIPCam3 = Gtk.Button()
+        self.buttonIPCam3.add(Gtk.Image.new_from_file(self.defaultPath + "cam3.png"))
+        self.buttonIPCam3.connect("clicked", self.triggerMJpegCamera,3)
+        self.buttonIPCam3.props.relief = Gtk.ReliefStyle.NONE
+        self.placeButtonCameras.add(self.buttonIPCam3)
+        self.placeButtonCameras.show_all()
+
         # Music Player
         # MP: Cleanup
         for row in self.playerAction:
@@ -125,7 +149,7 @@ class App():
             
         # MP: Create Play/Stop button    
         self.buttonPlayerAction = Gtk.Button()
-        self.buttonPlayerAction.add(self.imagePlay)
+        self.buttonPlayerAction.add(Gtk.Image.new_from_file(self.defaultPath + "play.png"))
         self.buttonPlayerAction.connect("clicked", self.triggerPlayer)
         self.buttonPlayerAction.props.relief = Gtk.ReliefStyle.NONE
         self.playerAction.add(self.buttonPlayerAction)
@@ -152,22 +176,68 @@ class App():
 
     # Tasks functions
         
+    def triggerCtrl(self,w):
+        self.windowCtrl.show_all()
+
+    def triggerMJpegOpen(self,w):
+        self.windowMJpeg.show_all()
+        self.stream = ''
+    
+    def triggerMJpegCamera(self,w,id):
+        self.windowMJpeg.show_all()
+        self.textMJpegStream.set_text("Camera " + str(id))
+        self.id=id
+        self.stream = 'http://192.168.0.100:8090/camera' + str(id)
+        if self.stateCamera == True:
+            self.thread.stop()
+            
+        self.thread = threading.Thread(target=self.startCamera)
+        self.thread.daemon=True 
+        self.thread.start()          
+    
+    def startCamera(self):
+        id=self.id
+        self.capture_video = cv2.VideoCapture(self.stream)
+        while(True):
+            if id != self.id:
+                #self.thread.stop()
+                break
+            ret, img = self.capture_video.read()
+            if img is None:
+                #self.thread.stop()
+                self.stateCamera=False
+                break
+            img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            imgResize = cv2.resize(img, (320, 240))
+            #cv2.imshow("MonitorStream", imgResize) # Monitor
+            imageWorked = np.array(imgResize).ravel()
+            imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, 320, 240, 3*320)
+            GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbuf)
+            if cv2.waitKey(10) == ord('q'):
+                #exit(0)
+                #self.thread.stop()
+                self.stateCamera=False
+                break
+        
     def triggerPoweroff(self,w):
         self.tmp = getApi("poweroff")
         
     def triggerReboot(self,w):
         self.tmp = getApi("reboot")
-        
+    
+    def triggerRestart(self,w):
+        self.tmp = getApi("reboot")
+
     def triggerBluetooth(self,w):
         self.tmp = getApi("bluetooth")
         
     def triggerCtrlClose(self,w):
-        self.windowCtrl.hide() 
-    
-    def triggerCtrl(self,w):
-        self.windowCtrl.show_all()
+        self.windowCtrl.hide()   
         
     def triggerMJpegClose(self,w):
+        if self.stateCamera == True:
+            self.thread.stop()
+            
         self.windowMJpeg.hide()    
         
     def setUpdates(self):
@@ -176,7 +246,7 @@ class App():
         attText = self.templateTextA.get_attributes()
         
         self.textToday.set_text(jsonDatas["text_today"])
-        self.radioStreamUrl=self.gibberishShadow=jsonDatas["radio"]["url"]
+        self.radioStreamUrl=jsonDatas["radio"]["url"]
         #Player Web Radio            
         self.gibberishShadow=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
         if(self.statePlayer == False):
