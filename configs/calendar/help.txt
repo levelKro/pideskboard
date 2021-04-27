@@ -1,0 +1,11 @@
+Create one file per date, 2 ways for each day.
+
+d = day number in the month, without the 0
+m = month of the year, without the 0
+y = the year, with four digits
+
+One day only : m-d-y.txt
+	example: 6-24-2021.txt 
+
+Repeatly each year : m-d.txt
+	example: 7-1.txt
