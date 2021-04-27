@@ -501,21 +501,21 @@ Author: Mathieu Légaré
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox" id="placeButtonCameras">
+                      <object class="GtkButton" id="buttonMJpegOpen">
                         <property name="visible">True</property>
-                        <property name="app-paintable">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
                         <property name="halign">start</property>
-                        <property name="valign">center</property>
-                        <property name="homogeneous">True</property>
+                        <property name="valign">start</property>
+                        <property name="relief">none</property>
                         <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
+                          <object class="GtkImage">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="pixbuf">ipcam.png</property>
+                          </object>
                         </child>
                       </object>
                       <packing>
@@ -925,7 +925,7 @@ Author: Mathieu Légaré
         <property name="width">320</property>
         <property name="height">240</property>
         <child>
-          <object class="GtkImage">
+          <object class="GtkImage" id="imageMJpegStream">
             <property name="width-request">320</property>
             <property name="height-request">240</property>
             <property name="visible">True</property>
@@ -956,6 +956,43 @@ Author: Mathieu Légaré
           <packing>
             <property name="x">275</property>
             <property name="y">200</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="placeButtonCameras">
+            <property name="height-request">24</property>
+            <property name="visible">True</property>
+            <property name="app-paintable">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">start</property>
+            <property name="valign">end</property>
+            <property name="baseline-position">bottom</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">200</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="textMJpegStream">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="is-focus">True</property>
+            <property name="halign">start</property>
+            <property name="valign">start</property>
+            <property name="label" translatable="yes">Camera 0</property>
+            <property name="track-visited-links">False</property>
+            <attributes>
+              <attribute name="font-desc" value="LED Real Bold 14"/>
+              <attribute name="foreground" value="#2e2ec2c27e7e"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">10</property>
+            <property name="y">10</property>
           </packing>
         </child>
       </object>
