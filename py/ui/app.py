@@ -180,6 +180,7 @@ class App():
         self.windowCtrl.show_all()
 
     def triggerMJpegOpen(self,w):
+        self.imageMJpegStream.set_from_file(self.defaultPath + "nocamera.jpg")
         self.windowMJpeg.show_all()
         self.stream = ''
     
@@ -188,36 +189,29 @@ class App():
         self.textMJpegStream.set_text("Camera " + str(id))
         self.id=id
         self.stream = 'http://192.168.0.100:8090/camera' + str(id)
-        if self.stateCamera == True:
-            self.thread.stop()
-            
+        self.stateCamera = True
         self.thread = threading.Thread(target=self.startCamera)
         self.thread.daemon=True 
         self.thread.start()          
+             
     
     def startCamera(self):
         id=self.id
         self.capture_video = cv2.VideoCapture(self.stream)
         while(True):
             if id != self.id:
-                #self.thread.stop()
+                break
+            if self.stateCamera == False:
                 break
             ret, img = self.capture_video.read()
             if img is None:
-                #self.thread.stop()
                 self.stateCamera=False
                 break
             img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             imgResize = cv2.resize(img, (320, 240))
-            #cv2.imshow("MonitorStream", imgResize) # Monitor
             imageWorked = np.array(imgResize).ravel()
             imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, 320, 240, 3*320)
             GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbuf)
-            if cv2.waitKey(10) == ord('q'):
-                #exit(0)
-                #self.thread.stop()
-                self.stateCamera=False
-                break
         
     def triggerPoweroff(self,w):
         self.tmp = getApi("poweroff")
@@ -226,7 +220,7 @@ class App():
         self.tmp = getApi("reboot")
     
     def triggerRestart(self,w):
-        self.tmp = getApi("reboot")
+        self.tmp = getApi("restart")
 
     def triggerBluetooth(self,w):
         self.tmp = getApi("bluetooth")
@@ -236,8 +230,7 @@ class App():
         
     def triggerMJpegClose(self,w):
         if self.stateCamera == True:
-            self.thread.stop()
-            
+            self.stateCamera=False
         self.windowMJpeg.hide()    
         
     def setUpdates(self):
