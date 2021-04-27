@@ -1,0 +1,4 @@
+host=imap.gmail.com
+port=993
+user=user@gmail.com
+pass=
