@@ -1,11 +1,11 @@
 #PiDeskboard by Mathieu Légaré <levelkro@yahoo.ca> https://levelkro.com
 #
-import json, requests, gi, re, datetime, io, time
+import json, requests, gi, re, datetime
 gi.require_version("Gtk", "3.0")
 gi.require_version('Gst', '1.0')
 from gi.repository import Gtk
 from gi.repository import GLib
-from gi.repository import GObject
+#from gi.repository import GObject
 from gi.repository import Gst
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf
@@ -346,7 +346,7 @@ class App():
     def on_finished(self, player):
         self.statePlayer = False;
         self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "play.png")
-        self.dataPlayerTime.set_text("0:00")
+        self.dataPlayerTime.set_text("0:00:00")
  
     # Marquee effect
     def marquee(self, text):
@@ -355,7 +355,7 @@ class App():
             self.z = self.z + 1
             if self.a >= len(text):
                 self.a = 0
-                self.z = 17
+                self.z = 20
         return str(text[self.a:self.z])
 
     def displayMarquee(self):
