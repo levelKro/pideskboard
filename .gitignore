@@ -1,6 +1,5 @@
 
 __install/boot/wpa_supplicant.conf
-configs/config.php
 configs/calendar/7-4.txt
 configs/calendar/7-14.txt
 configs/calendar/7-1.txt
@@ -17,6 +16,9 @@ configs/calendar/12-17.txt
 configs/calendar/11-11.txt
 configs/calendar/10-31.txt
 configs/db/mail.ini
+configs/db/radio.ini
+configs/db/weather.ini
+configs/config.php
 configs/db/network/01-router0.ini
 configs/db/network/02-router1.ini
 configs/db/network/03-router2.ini
@@ -39,7 +41,6 @@ configs/db/servers/eshock.ini
 configs/db/servers/lanbox.ini
 configs/db/servers/opparis.ini
 configs/db/servers/whfr.ini
-configs/db/weather.ini
 php/sys/cache/date_ding.dbr
 php/sys/cache/mailbox.json
 php/sys/cache/newmail.dbr
@@ -53,4 +54,3 @@ py/ui/03n@2x.png
 py/ui/02n@2x.png
 py/ui/04d@2x.png
 py/ui/01n@2x.png
-configs/db/radio.ini
