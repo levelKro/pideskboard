@@ -1,5 +1,5 @@
 #!/bin/bash
-if pgrep -f "cli_deskboard.sh" > /dev/null 
+if pgrep -f "deskboard.py" > /dev/null 
 then
 	#is running
 	exit 

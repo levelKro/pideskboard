@@ -140,7 +140,7 @@ class Deskboard():
         self.dataPlayerTime = self.root.get_object("dataPlayerTime")
         self.dataPlayerDetails = self.root.get_object("dataPlayerDetails")
         #UI:Ctrl
-        self.placeButtonCtrl = self.root.get_object("placeButtonCtrl")
+        self.buttonCtrlOpen = self.root.get_object("buttonCtrlOpen")
         self.ButtonCtrlClose = self.root.get_object("buttonCtrlClose")
         self.ButtonCtrlClose.connect("clicked", self.triggerCtrlClose)
         self.buttonCtrlPoweroff = self.root.get_object("buttonCtrlPoweroff")
@@ -161,12 +161,8 @@ class Deskboard():
         self.textMJpegStream = self.root.get_object("textMJpegStream")
         
     def loadActions(self):
-        self.buttonCtrl = Gtk.Button()
-        self.buttonCtrl.add(Gtk.Image.new_from_file(self.defaultPath + "ctrl.png"))
-        self.buttonCtrl.connect("clicked", self.triggerCtrl)
-        self.buttonCtrl.props.relief = Gtk.ReliefStyle.NONE
-        self.placeButtonCtrl.add(self.buttonCtrl)
-        self.placeButtonCtrl.show_all()
+        self.buttonCtrlOpen.connect("clicked", self.triggerCtrl)
+        self.buttonCtrlOpen.show()
         # add config file for this
         i=1
         self.buttonIPCam = []
@@ -273,13 +269,13 @@ class Deskboard():
     def triggerCtrl(self,w):
         self.windowCtrl.show_all()
     def triggerPoweroff(self,w):
-        self.tmp = getApi("poweroff")
+        self.tmp = self.getApi("poweroff")
     def triggerReboot(self,w):
-        self.tmp = getApi("reboot")
+        self.tmp = self.getApi("reboot")
     def triggerRestart(self,w):
-        self.tmp = getApi("restart")
+        self.tmp = self.getApi("restart")
     def triggerBluetooth(self,w):
-        self.tmp = getApi("bluetooth")
+        self.tmp = self.getApi("bluetooth")
     def triggerCtrlClose(self,w):
         self.windowCtrl.hide()      
 
@@ -332,7 +328,7 @@ class Deskboard():
     def loadPlayer(self):
         self.imagePlayerAction.set_from_file(self.defaultPath + "play.png")
         self.buttonPlayerAction.connect("clicked", self.triggerPlayer)
-        self.buttonPlayerAction.props.relief = Gtk.ReliefStyle.NONE
+        self.buttonPlayerAction.show()
         # MP: Init Player
         Gst.init_check(None)
         self.IS_GST010 = Gst.version()[0] == 0
