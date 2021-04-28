@@ -24,22 +24,22 @@ start:
 	switch(date("G",time())){
 		case '0':
 		case '00':
-			if($cfg['enable']['speak']) speak(translateText("TIME_MIDNIGHT"),$cfg['speak_module']);
+			if($cfg['system']['espeak']) speak(translateText("TIME_MIDNIGHT"),$cfg['espeak']['module']);
 		break;
 		case '1':
-			if($cfg['enable']['speak']) speak(translateText("TIME_ONEHOUR"),$cfg['speak_module']);
+			if($cfg['system']['espeak']) speak(translateText("TIME_ONEHOUR"),$cfg['espeak']['module']);
 		break;
 		case '12':
-			if($cfg['enable']['speak']) speak(translateText("TIME_DINER"),$cfg['speak_module']);
+			if($cfg['system']['espeak']) speak(translateText("TIME_DINER"),$cfg['espeak']['module']);
 		break;
 		default:
-			if($cfg['enable']['speak']) speak(str_replace("%HOUR%",date("G",time()),translateText("TIME_CURRENT")),$cfg['speak_module']);
+			if($cfg['system']['espeak']) speak(str_replace("%HOUR%",date("G",time()),translateText("TIME_CURRENT")),$cfg['espeak']['module']);
 		}
 	}
 	DBRamSave("time_ding",date("H",time()));	
 	// DATE
 	if(DBRamRead("date_ding")!=date("l, j F, Y",time()) && date("H:i",time())=="00:00"){
-		if($cfg['enable']['speak']) speak(translateText("TIME_YOUARENOW")." ".translateDate(date("l, j F, Y",time())).".",$cfg['speak_module']);
+		if($cfg['system']['espeak']) speak(translateText("TIME_YOUARENOW")." ".translateDate(date("l, j F, Y",time())).".",$cfg['espeak']['module']);
 	}	
 	DBRamSave("date_ding",date("l, j F, Y",time()));		
 
@@ -48,9 +48,9 @@ start:
 	
 	// WEATHER
 	$weather=DBRead("weather");
-	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather && $cfg['enable']['weather']) {
+	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather && $cfg['webui']['weather']) {
 		$sync['weather']['now']=time();
-		if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
+		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
 		$json = file_get_contents($jsonurl);
 		$weather['remote'] = json_decode($json);
@@ -79,9 +79,9 @@ start:
 	
 	// MAILBOX
 	$mailbox=DBRead("mail");
-	if((time()-$sync['mailbox']['now']) >= $sync['mailbox']['limit'] && $mailbox && $cfg['enable']['mail']) {
+	if((time()-$sync['mailbox']['now']) >= $sync['mailbox']['limit'] && $mailbox && $cfg['webui']['mail']) {
 		$sync['mailbox']['now']=time();
-		if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
+		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		$mbox = imap_open('{'.$mailbox['host'].':'.$mailbox['port'].'/imap/ssl/novalidate-cert}INBOX', $mailbox['user'], $mailbox['pass']);
 		if(empty($mbox)) {
 			die(json_encode(array("error"=>imap_last_error()),true));
@@ -103,7 +103,7 @@ start:
 					// speech
 					if(DBRamRead("newmail")!==false && is_numeric(DBRamRead("newmail"))) $old=DBRamRead("newmail");
 					else $old=0;
-					if($old<$output['unread']) if($cfg['enable']['speak']) speak(str_replace("%UNREAD%",($output['unread']-$old),translateText("MAIL_YOUHAVEXNEW")),$cfg['speak_module']);
+					if($old<$output['unread']) if($cfg['system']['espeak']) speak(str_replace("%UNREAD%",($output['unread']-$old),translateText("MAIL_YOUHAVEXNEW")),$cfg['espeak']['module']);
 				}
 			}
 			DBRamSave("newmail",$output['unread']);				
@@ -115,9 +115,9 @@ start:
 	
 	// RADIO
 	$radio=DBRead("radio");
-	if((time()-$sync['radio']['now']) >= $sync['radio']['limit'] && $radio && $cfg['enable']['radio']) {
+	if((time()-$sync['radio']['now']) >= $sync['radio']['limit'] && $radio && $cfg['webui']['radio']) {
 		$sync['radio']['now']=time();
-		if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
+		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		require_once($GLOBALS['root']."sys/sc/shoutcast.php");	
 		$sc=New ShoutCast();
 		$host=$radio['host'];

@@ -22,8 +22,8 @@ start:
 						$sector=explode("||",$line);
 						if($sector[1]!="" || !$sector[1]) {
 							echo "*** (".str_replace(" ","+",$sector[0]).") ".$sector[1]."\n";
-							if($cfg['enable']['icons']) system($cfg['icon_script'].' 5000 '.$cfg['icon']['speak']." 2");
-							shell_exec($cfg['speak_script'].' "'.str_replace(" ","+",$sector[0]).'" "'.$sector[1].'" &');
+							if($cfg['enable']['icons']) system($cfg['icon']['path'].' 5000 '.$cfg['icon']['speak']." 2");
+							shell_exec($cfg['espeak']['path'].' "'.str_replace(" ","+",$sector[0]).'" "'.$sector[1].'" &');
 						}
 					}
 				}

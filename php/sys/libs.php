@@ -1,8 +1,8 @@
 <?php
 	// LIBS FILE
 	if(!isset($cfg) || !is_array($cfg)) die("");
-	if(file_exists($GLOBALS['root']."sys/lang/".$cfg['language'].".lang.php")) require_once($GLOBALS['root']."sys/lang/".$cfg['language'].".lang.php");
-	else require_once($GLOBALS['root']."sys/lang/en.lang.php");
+	if(file_exists($GLOBALS['system']['php']."sys/lang/".$cfg['system']['language'].".lang.php")) require_once($GLOBALS['system']['php']."sys/lang/".$cfg['system']['language'].".lang.php");
+	else require_once($GLOBALS['system']['php']."sys/lang/en.lang.php");
 	function remoteUrl($url,$array=false,$json=false){
 		// Capture content on remote URL
 		$ch = curl_init();
@@ -203,7 +203,7 @@
 	*/
 	function DBRamInit(){
 		// Cleaning and reset datas
-		$dh=opendir($GLOBALS['cache']);
+		$dh=opendir($GLOBALS['system']['cache']);
 		while (false !== ($filename = readdir($dh))) {
 			if($filename!="." && $filename!=".." && !is_dir($d.$filename)){
 				@unlink($d.$filename);
@@ -212,7 +212,7 @@
 	}
 	function DBRamSave($name,$value){
 		// Save data
-		$f=$GLOBALS['cache'].$name.".dbr";
+		$f=$GLOBALS['system']['cache'].$name.".dbr";
 		if(file_exists($f) && ($value=="" || $value==false)) unlink($f);
 		else {
 			$fp=fopen($f, 'w+');
@@ -222,7 +222,7 @@
 	}
 	function DBRamRead($name){
 		// Read data
-		$f=$GLOBALS['cache'].$name.".dbr";
+		$f=$GLOBALS['system']['cache'].$name.".dbr";
 		if(file_exists($f))	{
 			@include($f);
 			return $value;
@@ -232,12 +232,12 @@
 	// For static values
 	function DBSave($name,$value,$table=null){
 		// Save data
-		$f=$GLOBALS['database'].(($table!=null)?$table."/":"").$name.".ini";
+		$f=$GLOBALS['system']['db'].(($table!=null)?$table."/":"").$name.".ini";
 		return write_ini_file($f,$value);
 	}
 	function DBRead($name,$table=null){
 		// Read data
-		$f=$GLOBALS['database'].(($table!=null)?$table."/":"").$name.".ini";
+		$f=$GLOBALS['system']['db'].(($table!=null)?$table."/":"").$name.".ini";
 		if(file_exists($f))	{
 			return parse_ini_file($f, true);
 		}
@@ -245,7 +245,7 @@
 	}
 	function DBReadAll($name){
 		// Read data
-		$f=$GLOBALS['database'].$name."/";
+		$f=$GLOBALS['system']['db'].$name."/";
 		$dh  = opendir($f);
 		$output=array();
 		while (false !== ($filename = readdir($dh))) {
@@ -259,7 +259,7 @@
 	// Speak (add to queue list)
 	function speak($txt,$lang="en"){
 		$txt=strip_tags(html_entity_decode($txt));
-		$fp = fopen($GLOBALS['cache']."talk/".time().".dbr", 'a+'); 
+		$fp = fopen($GLOBALS['system']['cache']."talk/".time().".dbr", 'a+'); 
 		fwrite($fp, $lang."||".$txt."\r\n");	
 		fclose($fp);
 		/*
@@ -271,7 +271,7 @@
 	}
 	function jsonSave($name,$value,$table=null){
 		// Save data
-		$f=$GLOBALS['cache'].(($table!=null)?$table."/":"").$name.".json";
+		$f=$GLOBALS['system']['cache'].(($table!=null)?$table."/":"").$name.".json";
 		if(file_exists($f) && ($value=="" || $value==false)) unlink($f);
 		else {
 			$fp=fopen($f, 'w+');
@@ -281,7 +281,7 @@
 	}
 	function jsonRead($name,$table=null){
 		// Save data
-		$f=$GLOBALS['cache'].(($table!=null)?$table."/":"").$name.".json";
+		$f=$GLOBALS['system']['cache'].(($table!=null)?$table."/":"").$name.".json";
 		$lines="";
 		if($file=fopen($f,"r")){
 			while(!feof($file)) {
@@ -364,4 +364,5 @@
 	$cfg["mailbox"]=DBRead("mail");
 	$cfg["weather"]=DBRead("weather");
 	$cfg["calendar"]=array();
-	
+	// Register to a Global variables
+	$GLOBALS=$cfg;	

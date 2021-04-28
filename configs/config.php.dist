@@ -1,23 +1,18 @@
 <?php 
+	clearstatcache();
+	function readConfig(){
+		// Read data
+		if(file_exists(dirname(__FILE__)."/config.ini"))	{
+			return parse_ini_file(dirname(__FILE__)."/config.ini", true);
+		}
+		else return false;
+	}
+	$cfg=readConfig();
+	if(!$cfg) {
+		die("Can't load config , can't find in ".dirname(__FILE__));
+	}
 	// Main config files	
-	$cfg=array(
-		// Root path
-		"root"=>"/home/pi/pideskboard/php/",
-		// Path to cache folder
-		"cache"=>"/home/pi/pideskboard/php/sys/cache/",
-		// Path to Database folder
-		"database"=>"/home/pi/pideskboard/configs/db/",
-		// Enable or disable module/feature
-		"enable"=>array(
-			"mail"=>true, // Mailbox module
-			"weather"=>true, // Weather module
-			"radio"=>true, // Radio module
-			"icons"=>false, // Icon module
-			"speak"=>true, // Speak module
-			"calendar"=>true,
-		),
-		// Availables links on the dashboard
-		"links"=>array(
+	$cfg["links"]=array(
 			array(
 				"module"=>"list",
 				"icon"=>"shipping-fast",
@@ -40,22 +35,6 @@
 				"url"=>"http://192.168.0.100:8090/camera1",
 				"name"=>"Camera #1"
 			)
-		),
-		// Default language
-		"language"=>"fr",
-		// Speak module settings
-		"speak_module"=>"mb-fr1+f5",
-		"speak_script"=>"/home/pi/pideskboard/sh/cli_talk.sh",
-		// Icon module settings
-		"icon_script"=>"/home/pi/pideskboard/sh/cli_icon.sh",		
-		"icon"=>array(
-			"remote"=>"transmit_blue",
-			"speak"=>"sound",
-			"save"=>"disk",
-			"poweroff"=>"stop",
-			"reboot"=>"stop"
-		),
-		
-	);
+		);
 	// Register to a Global variables
 	$GLOBALS=$cfg;

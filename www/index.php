@@ -5,11 +5,12 @@
 	
 	// INDEX FILE
 	error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING & ~E_STRICT & ~E_DEPRECATED);
-	ini_set("display_errors", 1);
+	ini_set("display_errors", true);
+	date_default_timezone_set("America/Montreal");
+	setlocale(LC_MONETARY, 'en_US');
 	ini_set('ignore_repeated_errors', TRUE); // always use TRUE
 	ini_set('log_errors', TRUE); // Error/Exception file logging engine.
-	ini_set('error_log', '/home/pi/pideskboard/php/error.log');	
-	date_default_timezone_set("America/Montreal");
+	ini_set('error_log', '/home/pi/pideskboard/php/error.log'); // Logging file path	
 	setlocale(LC_MONETARY, 'en_US');
 	
 	@require_once("../configs/config.php");

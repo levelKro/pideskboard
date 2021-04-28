@@ -16,10 +16,10 @@
 		case 'speak':
 			// Save speak text for the CLI
 			// BG
-			if($cfg['enable']['icons']) system($cfg['icon_script'].' 1000 '.$cfg['icon']['save'].' 1');
+			if($cfg['system']['icon']) system($cfg['icon']['path'].' 1000 '.$cfg['icon']['save'].' 1');
 			if($_GET['m']) {
 				$m=strip_tags(html_entity_decode($_GET['m']));
-				if($cfg['enable']['speak']) speak($m,$cfg['speak_module']);	
+				if($cfg['system']['espeak']) speak($m,$cfg['espeak']['module']);	
 			}
 			exit;
 		break;
@@ -44,38 +44,38 @@
 			// Request a Restart the Python UI
 			// BG
 			echo json_encode(array("html"=>translateText("CTRL_RESTART")),true);
-			system('/home/pi/pideskboard/sh/cli_killApp.sh &');
+			system($cfg['cli']['restart']." &");
 		break;
 		case "bluetooth":
 			// Request a BT reconnection
 			// BG
 			echo json_encode(array("html"=>translateText("CTRL_BLUETOOTH")),true);
-			system('sudo /home/pi/pideskboard/sh/cli_bt.sh &');
+			system($cfg['cli']['bluetooth']." &");
 		break;
 		case "poweroff":
 			// Request a power off
 			// BG
-			if($cfg['enable']['icons']) system($cfg['icon_script'].' 15000 '.$cfg['icon']['poweroff'].' 3');
-			if($cfg['enable']['speak']) speak(translateText("POWEROFF"),$cfg['speak_module']);
+			if($cfg['system']['icon']) system($cfg['icon']['path'].' 15000 '.$cfg['icon']['poweroff'].' 3');
+			if($cfg['system']['espeak']) speak(translateText("POWEROFF"),$cfg['espeak']['module']);
 			echo json_encode(array("html"=>translateText("CTRL_POWEROFF")),true);
 			sleep(15);
-			system('sudo /sbin/shutdown -P now &');
+			system($cfg['cli']['poweroff']." &");
 		break;
 		case "reboot":
 			// Request a reboot
 			// BG
-			if($cfg['enable']['icons']) system($cfg['icon_script'].' 15000 '.$cfg['icon']['reboot'].' 3');
-			if($cfg['enable']['speak']) speak(translateText("REBOOT"),$cfg['speak_module']);
+			if($cfg['system']['icon']) system($cfg['icon']['path'].' 15000 '.$cfg['icon']['reboot'].' 3');
+			if($cfg['system']['espeak']) speak(translateText("REBOOT"),$cfg['espeak']['module']);
 			echo json_encode(array("html"=>translateText("CTRL_REBOOT")),true);
 			sleep(15);			
-			system('sudo /sbin/shutdown -r now &');
+			system($cfg['cli']['reboot']." &");
 		break;
 		case 'datas':
 			// Output background jobs synchronised
 			// BG
 			$links=array();
 			foreach($cfg['links'] as $id=>$item){
-				if(!empty($item["file"]) && filesize($GLOBALS['root']."configs/".$item["file"])==0) $ok=false;
+				if(!empty($item["file"]) && filesize($GLOBALS['system']['php']."configs/".$item["file"])==0) $ok=false;
 				else $ok=true;
 				if($ok==true) $links[]=array("id"=>$id,"name"=>$item['name'],"icon"=>$item['icon']);
 			}	
@@ -90,7 +90,7 @@
 				"year"=>date("Y",time()), // year
 				"unix"=>time()
 			);	
-			$fileday=$GLOBALS['root']."configs/calendar/".$today['month']."-".$today['day']."-".$today['year'].".txt";
+			$fileday=$GLOBALS['system']['php']."configs/calendar/".$today['month']."-".$today['day']."-".$today['year'].".txt";
 			if(file_exists($fileday)){
 				if($file=fopen($fileday,"r")){
 					while(!feof($file)) {
@@ -100,7 +100,7 @@
 					fclose($file);
 				}				
 			}
-			$fileday=$GLOBALS['root']."configs/calendar/".$today['month']."-".$today['day'].".txt";
+			$fileday=$GLOBALS['system']['php']."configs/calendar/".$today['month']."-".$today['day'].".txt";
 			if(file_exists($fileday)){
 				if($file=fopen($fileday,"r")){
 					while(!feof($file)) {
@@ -132,13 +132,13 @@
 				switch($view['module']){
 					case 'image':
 						// SUB PAGE : image / camera ip
-						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
+						#if($cfg['system']['espeak']) speak($view['name'],$cfg['espeak']['module']);
 						$output['html'].='<div style="text-align:center;" class="showImage"><img src="'.$view['url'].'"/></div>';
 					break;
 					case 'list':
 						// SUB PAGE : list
-						if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
-						if ($file = fopen($GLOBALS['root']."configs/".$view["file"], "r")) {
+						if($cfg['system']['espeak']) speak($view['name'],$cfg['espeak']['module']);
+						if ($file = fopen($GLOBALS['system']['php']."configs/".$view["file"], "r")) {
 							$output['html'].='<ul>';
 							$i=0;
 							while(!feof($file)) {
@@ -158,7 +158,7 @@
 					break;
 					case 'servers':
 						// SUB PAGE : server status
-						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);	
+						#if($cfg['system']['espeak']) speak($view['name'],$cfg['espeak']['module']);	
 						$list=DBReadAll("servers");
 						if(!$list) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
 						ksort($list);
@@ -190,7 +190,7 @@
 					break;
 					case 'network':
 						// SUB PAGE : network local
-						#if($cfg['enable']['speak']) speak($view['name'],$cfg['speak_module']);
+						#if($cfg['system']['espeak']) speak($view['name'],$cfg['espeak']['module']);
 						$list=DBReadAll("network");
 						if(!$list) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
 						ksort($list);
@@ -251,7 +251,7 @@
 							"total"=>date("t",strtotime($m.'/13/'.$y)),
 							"days"=>array()
 						);
-						#if($cfg['enable']['speak']) speak(translateDate(date("F",$work['unix']))." ".$work['year'],$cfg['speak_module']);
+						#if($cfg['system']['espeak']) speak(translateDate(date("F",$work['unix']))." ".$work['year'],$cfg['espeak']['module']);
 						for($i=1;$i<=$work['total'];$i++){
 							$unix=strtotime($m.'/'.$i.'/'.$y);
 							$work['days'][$i]=array(
@@ -291,7 +291,7 @@
 							else if($day['day_pos']==0) $output['html'].='</div><div class="week">';
 							$output['html'].='<div class="day'.(($day['day']==$today['day'] && $day['month']==$today['month'] && $day['year']==$today['year'])?' active':'').'"><span class="num">'.$day['day'].'</span>';
 							$output['html'].='<span class="notes"><span class="title">'.translateDate(date("l, j F Y",$day['unix'])).'</span>';
-							$fileday=$GLOBALS['root']."configs/calendar/".$day['month']."-".$day['day']."-".$day['year'].".txt";
+							$fileday=$GLOBALS['system']['php']."configs/calendar/".$day['month']."-".$day['day']."-".$day['year'].".txt";
 							if(file_exists($fileday)){
 								if($file=fopen($fileday,"r")){
 									$i=0;
@@ -303,7 +303,7 @@
 									fclose($file);
 								}				
 							}
-							$fileday=$GLOBALS['root']."configs/calendar/".$day['month']."-".$day['day'].".txt";
+							$fileday=$GLOBALS['system']['php']."configs/calendar/".$day['month']."-".$day['day'].".txt";
 							if(file_exists($fileday)){
 								if($file=fopen($fileday,"r")){
 									$i=0;
@@ -329,9 +329,9 @@
 					case 'weather':
 						// SUB PAGE : weather
 						$weather=DBRead("weather");
-						if(!$weather || !$cfg['enable']['weather']) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
-						if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
-						#if($cfg['enable']['speak']) speak(translateText("WEATHER_FORECAST_FOR")." ".$weather['name'],$cfg['speak_module']);
+						if(!$weather || !$cfg['webui']['weather']) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
+						if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
+						#if($cfg['system']['espeak']) speak(translateText("WEATHER_FORECAST_FOR")." ".$weather['name'],$cfg['espeak']['module']);
 						$jsonurl = "http://api.openweathermap.org/data/2.5/forecast?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
 						$json = file_get_contents($jsonurl);
 						$weather['remote'] = (array) json_decode($json);
@@ -421,8 +421,8 @@
 					case 'mailbox':
 						// SUB PAGE : mailbox
 						$mailbox=DBRead("mail");
-						if(!$mailbox || !$cfg['enable']['mail']) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
-						if($cfg['enable']['icons']) system($cfg['icon_script'].' 3000 '.$cfg['icon']['remote']);
+						if(!$mailbox || !$cfg['webui']['mail']) die(json_encode(array("error"=>$output['html'].translateText("ERROR_MODULE_DISABLED")),true));
+						if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 						$mbox = imap_open('{'.$mailbox['host'].':'.$mailbox['port'].'/imap/ssl/novalidate-cert}INBOX', $mailbox['user'], $mailbox['pass']);
 						if(empty($mbox)) {
 							die(json_encode(array("error"=>imap_last_error()),true));
@@ -467,7 +467,7 @@
 						else{
 							$output['html'].='<p class="Message"><center><i>'.translateText("NOMAIL").'</i></center></p>'; 
 						}
-						#if($cfg['enable']['speak']) speak(str_replace("%UNREAD%",($tmp['unread']),translateText("MAIL_YOUHAVEXNEW")),$cfg['speak_module']);
+						#if($cfg['system']['espeak']) speak(str_replace("%UNREAD%",($tmp['unread']),translateText("MAIL_YOUHAVEXNEW")),$cfg['espeak']['module']);
 					break;
 					default:
 						// SUB PAGE : error
