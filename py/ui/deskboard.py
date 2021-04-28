@@ -10,10 +10,9 @@ from gi.repository import Gdk
 from gi.repository import Gst
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
-import cv2
+import cv2, cairo
 import numpy as np
 import threading
-import cairo
 
 #Main Class
 class Deskboard():
@@ -34,11 +33,6 @@ class Deskboard():
         jsonUrl = self.apiUrl + action
         url = requests.get(jsonUrl)
         return url.text
-
-#def getDatas():
-#    jsonUrl = "http://localhost/api.php?a=datas"
-#    url = requests.get(jsonUrl)
-#    return json.loads(url.text)
 
     def getImage(self,url):
         response = requests.get(url)
@@ -87,7 +81,7 @@ class Deskboard():
 
     def loadConfig(self):
         self.config = configparser.ConfigParser()
-        self.config.read('config.ini')
+        self.config.read('../../configs/config.ini')
         self.weatherUrl = ""
         self.count = 0        
         self.statePlayer = False
@@ -98,6 +92,7 @@ class Deskboard():
         self.gibberishShadow = "Loading . . ."
         if self.config['system']['api'] is not None:
             self.apiUrl = self.config['system']['api']
+            self.apiUrl=self.apiUrl.replace('"', '')
         else:
             self.apiUrl = "http://localhost/api.php?a="
         self.a = 0
@@ -299,11 +294,11 @@ class Deskboard():
         rain = "rain" in jsonDatas["weather"]
         snow = "snow" in jsonDatas["weather"]
         if rain:
-            self.dataWeatherRain.set_text(jsonDatas["weather"]["rain"])
+            self.dataWeatherRain.set_text(str(jsonDatas["weather"]["rain"]))
         else:
             self.dataWeatherRain.set_text("-")
         if snow:    
-            self.dataWeatherSnow.set_text(jsonDatas["weather"]["snow"])
+            self.dataWeatherSnow.set_text(str(jsonDatas["weather"]["snow"]))
         else:
             self.dataWeatherSnow.set_text("-")
         if jsonDatas["weather"]["ico"] != self.weatherUrl :
