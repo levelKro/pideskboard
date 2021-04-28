@@ -1,6 +1,6 @@
 #!/bin/bash
 
-let pid=$(pgrep -f app.py)
+let pid=$(pgrep -f deskboard.py)
 echo "Found PID: $pid"
 if [[ ! -z "$pid" ]]
 then

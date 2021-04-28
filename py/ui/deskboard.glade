@@ -610,19 +610,29 @@ Author: Mathieu Légaré
                         <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkButton" id="buttonPlayerAction">
-                            <property name="label" translatable="yes"> </property>
-                            <property name="width-request">30</property>
-                            <property name="height-request">30</property>
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can-focus">False</property>
                             <property name="focus-on-click">False</property>
                             <property name="receives-default">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
                             <property name="margin-start">10</property>
                             <property name="margin-end">10</property>
                             <property name="margin-top">10</property>
                             <property name="margin-bottom">10</property>
                             <property name="relief">none</property>
+                            <child>
+                              <object class="GtkImage" id="imagePlayerAction">
+                                <property name="width-request">30</property>
+                                <property name="height-request">30</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="halign">center</property>
+                                <property name="valign">center</property>
+                                <property name="pixbuf">eject.png</property>
+                              </object>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
