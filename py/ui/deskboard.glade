@@ -291,10 +291,12 @@ Author: Mathieu Légaré
                         <property name="can-focus">False</property>
                         <property name="halign">end</property>
                         <property name="valign">center</property>
-                        <property name="label" translatable="yes">XX mm</property>
+                        <property name="label" translatable="yes">XXXX mm</property>
                         <property name="justify">right</property>
+                        <property name="single-line-mode">True</property>
+                        <property name="track-visited-links">False</property>
                         <attributes>
-                          <attribute name="font-desc" value="Bahnschrift Bold 14"/>
+                          <attribute name="font-desc" value="Bahnschrift Bold 12"/>
                           <attribute name="foreground" value="#f6f6f5f5f4f4"/>
                         </attributes>
                       </object>
@@ -331,7 +333,7 @@ Author: Mathieu Légaré
                         <property name="label" translatable="yes">XX cm</property>
                         <property name="justify">right</property>
                         <attributes>
-                          <attribute name="font-desc" value="Bahnschrift Bold 14"/>
+                          <attribute name="font-desc" value="Bahnschrift Bold 12"/>
                           <attribute name="foreground" value="#f6f6f5f5f4f4"/>
                         </attributes>
                       </object>

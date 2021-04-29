@@ -69,7 +69,7 @@ class Deskboard():
             self.z = self.z + 1
             if self.a >= len(text):
                 self.a = 0
-                self.z = 20
+                self.z = 17
         return str(text[self.a:self.z])
 
     def displayMarquee(self):
@@ -96,7 +96,7 @@ class Deskboard():
         else:
             self.apiUrl = "http://localhost/api.php?a="
         self.a = 0
-        self.z = 20
+        self.z = 17
         
     def saveConfig(self):
         with open('config.ini', 'w') as configfile:
@@ -187,10 +187,10 @@ class Deskboard():
         self.textMJpegStream.set_text("Camera " + str(id))
         self.id=id
         self.stream = self.config['cameras']['camImage' + str(id)]
-        self.thread = threading.Thread(target=self.startCameraPreview)
+        self.threadCamera = threading.Thread(target=self.startCameraPreview)
         self.stateCamera = True
-        self.thread.daemon=True 
-        self.thread.start()          
+        self.threadCamera.daemon=True 
+        self.threadCamera.start()          
     
     def startCameraPreview(self):
         #Mode Preview
@@ -221,10 +221,10 @@ class Deskboard():
         self.textMJpegStream.set_text("Camera " + str(id))
         self.id=id
         self.stream = self.config['cameras']['cam' + str(id)]
-        self.thread = threading.Thread(target=self.startCamera)
+        self.threadCamera = threading.Thread(target=self.startCamera)
         self.stateCamera = True
-        self.thread.daemon=True 
-        self.thread.start()        
+        self.threadCamera.daemon=True 
+        self.threadCamera.start()        
     
     def startCamera(self):
         #Mode Live
@@ -289,7 +289,7 @@ class Deskboard():
         self.dataWeatherFeel.set_text(jsonDatas["weather"]["feel"])
         self.dataWeatherTempMin.set_text(jsonDatas["weather"]["min"])
         self.dataWeatherTempMax.set_text(jsonDatas["weather"]["max"])
-        self.dataWeatherClouds.set_text(str(jsonDatas["weather"]["clouds"]) + "%")
+        self.dataWeatherClouds.set_text(str(jsonDatas["weather"]["clouds"]))
         self.dataWeatherDetails.set_text(jsonDatas["weather"]["name"])        
         rain = "rain" in jsonDatas["weather"]
         snow = "snow" in jsonDatas["weather"]
@@ -324,7 +324,11 @@ class Deskboard():
         self.imagePlayerAction.set_from_file(self.defaultPath + "play.png")
         self.buttonPlayerAction.connect("clicked", self.triggerPlayer)
         self.buttonPlayerAction.show()
-        # MP: Init Player
+        self.threadPlayer = threading.Thread(target=self.threadPlayer)
+        self.threadPlayer.daemon=True 
+        self.threadPlayer.start()
+        
+    def threadPlayer(self):         
         Gst.init_check(None)
         self.IS_GST010 = Gst.version()[0] == 0
         self.player = Gst.ElementFactory.make("playbin", "player")
