@@ -10,7 +10,7 @@
 	require_once("/home/pi/pideskboard/configs/config.php");
 	require_once("sys/libs.php");
 start:
-	$f=$GLOBALS['cache']."talk/";
+	$f=$GLOBALS['system']['cache']."talk/";
 	$dh  = opendir($f);
 	$output=array();
 	while (false !== ($filename = readdir($dh))) {
@@ -22,7 +22,7 @@ start:
 						$sector=explode("||",$line);
 						if($sector[1]!="" || !$sector[1]) {
 							echo "*** (".str_replace(" ","+",$sector[0]).") ".$sector[1]."\n";
-							if($cfg['enable']['icons']) system($cfg['icon']['path'].' 5000 '.$cfg['icon']['speak']." 2");
+							if($cfg['system']['icons']) system($cfg['icon']['path'].' 5000 '.$cfg['icon']['speak']." 2");
 							shell_exec($cfg['espeak']['path'].' "'.str_replace(" ","+",$sector[0]).'" "'.$sector[1].'" &');
 						}
 					}

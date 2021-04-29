@@ -62,15 +62,15 @@ start:
 		$return['ico'] = "http://openweathermap.org/img/wn/".$weather['remote']->weather[0]->icon."@2x.png";
 		if(is_object($weather['remote']->snow)){
 			$snow=(array) $weather['remote']->snow;
-			if(is_numeric($snow["1h"])) $return['snow']=$snow["1h"];
+			if(is_numeric($snow["1h"])) $return['snow']=round($snow["1h"],1)."mm";
 		}
 		if(is_object($weather['remote']->rain)){
 			$rain=(array) $weather['remote']->rain;
-			if(is_numeric($rain["1h"])) $return['rain']=$rain["1h"];			
+			if(is_numeric($rain["1h"])) $return['rain']=round($rain["1h"],1)."mm";			
 		}
 		if(is_object($weather['remote']->clouds)){
 			$clouds=(array) $weather['remote']->clouds;
-			if(is_numeric($clouds["all"])) $return['clouds']=$clouds["all"];
+			if(is_numeric($clouds["all"])) $return['clouds']=$clouds["all"]."%";
 		}
 		$return['image']='<i class="fas fa-'.getWeatherIcon($weather['remote']->weather[0]->id).' '.getWeatherColor($weather['remote']->weather[0]->id).'"></i>';	
 		jsonSave("weather",$return);

@@ -31,13 +31,13 @@ function updateDatas(view) {
 					var weather=values.weather;
 					document.getElementById("weatherTemp").innerHTML=weather.temp;
 					document.getElementById("weatherFeel").innerHTML=weather.feel;
-					if(weather.clouds) document.getElementById("weatherCloud").innerHTML='<i class="fas fa-cloud grey"></i> '+weather.clouds+'%';
+					if(weather.clouds) document.getElementById("weatherCloud").innerHTML='<i class="fas fa-cloud grey"></i> '+weather.clouds;
 					else document.getElementById("weatherCloud").innerHTML='<i class="fas fa-cloud grey"></i> 0%';
 					document.getElementById("weatherTempMin").innerHTML='<i class="fas fa-temperature-low blue"></i> '+weather.min;
 					document.getElementById("weatherTempMax").innerHTML='<i class="fas fa-temperature-high orange"></i> '+weather.max;
 					document.getElementById("weatherRainSnow").innerHTML="";
-					if(weather.snow) document.getElementById("weatherRainSnow").innerHTML+='<i class="fas fa-snowflake white"></i> '+weather.snow+'cm';
-					if(weather.rain) document.getElementById("weatherRainSnow").innerHTML+='<i class="fas fa-cloud-rain blue"></i> '+weather.rain+'mm';
+					if(weather.snow) document.getElementById("weatherRainSnow").innerHTML+='<i class="fas fa-snowflake white"></i> '+weather.snow;
+					if(weather.rain) document.getElementById("weatherRainSnow").innerHTML+='<i class="fas fa-cloud-rain blue"></i> '+weather.rain;
 					document.getElementById("weatherDetails").innerHTML=weather.name;
 					document.getElementById("weatherImage").innerHTML=weather.image;
 				}	
