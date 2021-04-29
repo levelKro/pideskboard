@@ -51,7 +51,7 @@ start:
 	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather && $cfg['webui']['weather']) {
 		$sync['weather']['now']=time();
 		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
-		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
+		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['system']['language']."&units=metric";
 		$json = file_get_contents($jsonurl);
 		$weather['remote'] = json_decode($json);
 		$return['temp'] = round($weather['remote']->main->temp,0)."°C";
