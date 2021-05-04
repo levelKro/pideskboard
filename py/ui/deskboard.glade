@@ -36,7 +36,7 @@ Author: Mathieu Légaré
     <property name="default-height">320</property>
     <property name="decorated">False</property>
     <child>
-      <object class="GtkLayout" id="mainLayout">
+      <object class="GtkLayout">
         <property name="width-request">480</property>
         <property name="height-request">320</property>
         <property name="visible">True</property>
@@ -55,7 +55,7 @@ Author: Mathieu Légaré
           </object>
         </child>
         <child>
-          <object class="GtkBox" id="mainSubFrame">
+          <object class="GtkBox">
             <property name="width-request">460</property>
             <property name="height-request">300</property>
             <property name="visible">True</property>
@@ -64,22 +64,19 @@ Author: Mathieu Légaré
             <property name="margin-end">10</property>
             <property name="margin-top">10</property>
             <property name="margin-bottom">10</property>
-            <property name="orientation">vertical</property>
             <property name="baseline-position">top</property>
             <child>
               <object class="GtkBox" id="mainFrame">
-                <property name="width-request">460</property>
+                <property name="width-request">220</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="valign">start</property>
+                <property name="orientation">vertical</property>
                 <property name="baseline-position">top</property>
                 <child>
                   <!-- n-columns=4 n-rows=9 -->
                   <object class="GtkGrid" id="frameWeather">
-                    <property name="width-request">220</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">start</property>
                     <property name="valign">start</property>
                     <child>
                       <object class="GtkImage" id="dataWeatherIcon">
@@ -357,223 +354,24 @@ Author: Mathieu Légaré
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">False</property>
+                    <property name="fill">True</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <!-- n-columns=4 n-rows=6 -->
-                  <object class="GtkGrid" id="frameTimeMail">
-                    <property name="width-request">220</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="valign">start</property>
-                    <property name="margin-start">20</property>
-                    <child>
-                      <object class="GtkImage" id="iconMailboxUnread">
-                        <property name="height-request">30</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="valign">center</property>
-                        <property name="pixbuf">email_unread.png</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkImage" id="iconMailboxRead">
-                        <property name="height-request">30</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="valign">center</property>
-                        <property name="pixbuf">email_read.png</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">2</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="dataMailboxUnread">
-                        <property name="width-request">60</property>
-                        <property name="height-request">40</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="valign">center</property>
-                        <property name="label" translatable="yes">X</property>
-                        <attributes>
-                          <attribute name="font-desc" value="Bahnschrift Bold 20"/>
-                          <attribute name="foreground" value="#f6f6f5f5f4f4"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="dataMailboxRead">
-                        <property name="width-request">60</property>
-                        <property name="height-request">40</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="valign">center</property>
-                        <property name="label" translatable="yes">X</property>
-                        <attributes>
-                          <attribute name="font-desc" value="Bahnschrift Bold 20"/>
-                          <attribute name="foreground" value="#dededddddada"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="dataTime">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">center</property>
-                        <property name="valign">end</property>
-                        <property name="margin-top">20</property>
-                        <property name="label" translatable="yes">XX:XX</property>
-                        <property name="justify">center</property>
-                        <attributes>
-                          <attribute name="font-desc" value="Digital2 40"/>
-                          <attribute name="foreground" value="#f5f5c2c21111"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">1</property>
-                        <property name="width">4</property>
-                        <property name="height">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel" id="dataDate">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">center</property>
-                        <property name="valign">end</property>
-                        <property name="margin-start">10</property>
-                        <property name="margin-end">10</property>
-                        <property name="margin-top">10</property>
-                        <property name="margin-bottom">10</property>
-                        <property name="label" translatable="yes">dddd,xx mmmm, yyyy</property>
-                        <property name="justify">center</property>
-                        <property name="wrap">True</property>
-                        <property name="ellipsize">middle</property>
-                        <property name="track-visited-links">False</property>
-                        <property name="lines">3</property>
-                        <attributes>
-                          <attribute name="font-desc" value="Ericsson GA628 16"/>
-                          <attribute name="foreground" value="#ffffffffffff"/>
-                        </attributes>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">3</property>
-                        <property name="width">4</property>
-                        <property name="height">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="buttonMJpegOpen">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="halign">start</property>
-                        <property name="valign">start</property>
-                        <property name="relief">none</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="width-request">25</property>
-                            <property name="height-request">25</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="valign">start</property>
-                            <property name="pixbuf">ipcam.png</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">5</property>
-                        <property name="width">3</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="buttonCtrlOpen">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="halign">end</property>
-                        <property name="valign">start</property>
-                        <property name="relief">none</property>
-                        <child>
-                          <object class="GtkImage">
-                            <property name="width-request">25</property>
-                            <property name="height-request">25</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
-                            <property name="pixbuf">ctrl.png</property>
-                          </object>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="left-attach">3</property>
-                        <property name="top-attach">5</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkBox" id="subFrame">
-                <property name="width-request">460</property>
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="valign">end</property>
-                <property name="baseline-position">bottom</property>
-                <child>
                   <!-- n-columns=1 n-rows=2 -->
                   <object class="GtkGrid" id="frameToday">
-                    <property name="width-request">220</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="valign">end</property>
+                    <property name="margin-top">10</property>
+                    <property name="orientation">vertical</property>
                     <property name="column-homogeneous">True</property>
                     <child>
                       <object class="GtkLabel" id="textToday">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="valign">end</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
                         <property name="label" translatable="yes">today</property>
                         <property name="track-visited-links">False</property>
                         <attributes>
@@ -605,17 +403,30 @@ Author: Mathieu Légaré
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="pack-type">end</property>
-                    <property name="position">0</property>
+                    <property name="position">1</property>
                   </packing>
                 </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox" id="subFrame">
+                <property name="width-request">220</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="baseline-position">bottom</property>
                 <child>
                   <!-- n-columns=3 n-rows=3 -->
                   <object class="GtkGrid" id="framePlayer">
                     <property name="width-request">220</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="halign">start</property>
+                    <property name="halign">end</property>
                     <property name="valign">end</property>
                     <property name="row-homogeneous">True</property>
                     <child>
@@ -624,6 +435,8 @@ Author: Mathieu Légaré
                         <property name="can-focus">False</property>
                         <property name="halign">end</property>
                         <property name="valign">center</property>
+                        <property name="margin-left">10</property>
+                        <property name="margin-right">10</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
                         <property name="hexpand">True</property>
@@ -667,7 +480,7 @@ Author: Mathieu Légaré
                     <child>
                       <object class="GtkButton" id="buttonPlayerAction">
                         <property name="visible">True</property>
-                        <property name="can-focus">False</property>
+                        <property name="can-focus">True</property>
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">False</property>
                         <property name="halign">start</property>
@@ -695,6 +508,191 @@ Author: Mathieu Légaré
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
+                    <property name="pack-type">end</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <!-- n-columns=4 n-rows=6 -->
+                  <object class="GtkGrid" id="frameTimeMail">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="column-homogeneous">True</property>
+                    <child>
+                      <object class="GtkImage" id="iconMailboxUnread">
+                        <property name="height-request">30</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="pixbuf">email_unread.png</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkImage" id="iconMailboxRead">
+                        <property name="height-request">30</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="pixbuf">email_read.png</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="dataMailboxUnread">
+                        <property name="width-request">60</property>
+                        <property name="height-request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">X</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                          <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="dataMailboxRead">
+                        <property name="width-request">60</property>
+                        <property name="height-request">40</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">X</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                          <attribute name="foreground" value="#dededddddada"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="dataTime">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="valign">end</property>
+                        <property name="margin-top">20</property>
+                        <property name="label" translatable="yes">XX:XX</property>
+                        <property name="justify">center</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Digital2 40"/>
+                          <attribute name="foreground" value="#f5f5c2c21111"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">2</property>
+                        <property name="width">4</property>
+                        <property name="height">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="dataDate">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="valign">end</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="margin-top">10</property>
+                        <property name="margin-bottom">10</property>
+                        <property name="label" translatable="yes">dddd,xx 
+mmmm, yyyy</property>
+                        <property name="justify">center</property>
+                        <property name="wrap">True</property>
+                        <property name="ellipsize">middle</property>
+                        <property name="track-visited-links">False</property>
+                        <property name="lines">3</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Ericsson GA628 16"/>
+                          <attribute name="foreground" value="#ffffffffffff"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">4</property>
+                        <property name="width">4</property>
+                        <property name="height">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="buttonMJpegOpen">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="relief">none</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="width-request">25</property>
+                            <property name="height-request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="pixbuf">ipcam.png</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                        <property name="width">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="buttonCtrlOpen">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">end</property>
+                        <property name="valign">start</property>
+                        <property name="relief">none</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="width-request">25</property>
+                            <property name="height-request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
+                            <property name="pixbuf">ctrl.png</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
@@ -705,6 +703,9 @@ Author: Mathieu Légaré
                 <property name="pack-type">end</property>
                 <property name="position">1</property>
               </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
         </child>
