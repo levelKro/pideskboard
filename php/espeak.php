@@ -24,7 +24,7 @@ start:
 							echo "*** (".str_replace(" ","+",$sector[0]).") ".$sector[1]."\n";
 							if($cfg['system']['icons']) system($cfg['icon']['path'].' 5000 '.$cfg['icon']['speak']." 2");
 							shell_exec($cfg['espeak']['path'].' "'.str_replace(" ","+",$sector[0]).'" "'.$sector[1].'" &');
-							sleep(3);
+							sleep(5);
 						}
 					}
 				}
