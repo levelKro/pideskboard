@@ -55,3 +55,6 @@ py/ui/01n@2x.png
 py/ui/04n@2x.png
 py/ui/10d@2x.png
 py/ui/10n@2x.png
+py/ui/1024x600/deskboard.glade~
+py/ui/480x320/deskboard.glade~
+py/ui/800x480/deskboard.glade~
