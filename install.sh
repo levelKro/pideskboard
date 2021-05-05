@@ -6,12 +6,6 @@
 ##	for pi Deskboard
 ##	(c) Mathieu Légar <levelkro@yahoo.ca> https://levelkro.com
 
-exec su -l -s /bin/sh -c "/commande" username
-
-run under another user
-
-sudo nano /etc/rc.local
-splash screen
 ## USER REQUIREMENT
 ## -RASPBIAN OS LITE (BUSTER)
 ## -HOSTNAME CONFIGURED
@@ -20,6 +14,7 @@ splash screen
 
 echo "### Installation of piDeskboard v1.0 alpha"
 echo ">> You must have a active Internet connection before continue this installation"
+echo ">> Also, you must configure the auto-login via the raspi-ci=onfig program"
 read -p "Are you ready? " -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
