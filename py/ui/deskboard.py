@@ -53,7 +53,7 @@ class Deskboard():
         context = cairo.Context(surface)
         Gdk.cairo_set_source_pixbuf(context, pixbuf, 0, 0)
         context.paint()
-        fontsize= 10
+        fontsize= self.camTimeSize
         context.move_to(x, y+fontsize)
         context.set_font_size(fontsize)
         context.set_source_rgba(255,255,255,1)
@@ -69,7 +69,7 @@ class Deskboard():
             self.z = self.z + 1
             if self.a >= len(text):
                 self.a = 0
-                self.z = 17
+                self.z = self.mwmarquee
         return str(text[self.a:self.z])
 
     def displayMarquee(self):
@@ -95,8 +95,36 @@ class Deskboard():
             self.apiUrl=self.apiUrl.replace('"', '')
         else:
             self.apiUrl = "http://localhost/api.php?a="
+        if self.config['system']['resolution'] == "1024x600":
+            #1024x600
+            self.mwmarquee = 25
+            self.resoWidth = 1024
+            self.resoHeight = 600
+            self.camResizeWidth=640
+            self.camResizeHeight=480
+            self.camTimeSize=20            
+            self.camTimePosition=120
+        elif self.config['system']['resolution'] == "800x480":
+            #800x480
+            self.mwmarquee = 23
+            self.resoWidth = 800
+            self.resoHeight = 480
+            self.camResizeWidth=320
+            self.camResizeHeight=240
+            self.camTimeSize=10            
+            self.camTimePosition=60
+        else:
+            #480x320, default
+            self.mwmarquee = 17
+            self.resoWidth = 480
+            self.resoHeight = 320
+            self.camResizeWidth=320
+            self.camResizeHeight=240
+            self.camTimeSize=10            
+            self.camTimePosition=60
+        self.pathUI = self.defaultPath + self.config['system']['resolution'] + "/"
         self.a = 0
-        self.z = 17
+        self.z = self.mwmarquee        
         
     def saveConfig(self):
         with open('config.ini', 'w') as configfile:
@@ -104,9 +132,9 @@ class Deskboard():
             
     def loadUI(self):
         self.root = Gtk.Builder()
-        self.root.add_from_file(self.defaultPath + "deskboard.glade")
+        self.root.add_from_file(self.pathUI + "deskboard.glade")
         self.window = self.root.get_object("window")
-        self.window.set_default_size(480, 320)        
+        self.window.set_default_size(self.resoWidth, self.resoHeight)        
         self.window.set_title("PiDeskboard in Python")
         self.window.connect("destroy", Gtk.main_quit, "WM destroy")
         self.window.show_all()
@@ -164,7 +192,7 @@ class Deskboard():
         while i <= 5:
             if 'cam' + str(i) in self.config['cameras']:
                 thisTmp = Gtk.Button()
-                thisTmp.add(Gtk.Image.new_from_file(self.defaultPath + "cam" + str(i) + ".png"))
+                thisTmp.add(Gtk.Image.new_from_file(self.pathUI + "cam" + str(i) + ".png"))
                 if self.config['cameras']['mode'] == "live":
                     thisTmp.connect("clicked", self.triggerMJpegCamera,i)
                 else:
@@ -178,7 +206,7 @@ class Deskboard():
 
     #Cameras MJPEG
     def triggerMJpegOpen(self,w):
-        self.imageMJpegStream.set_from_file(self.defaultPath + "nocamera.jpg")
+        self.imageMJpegStream.set_from_file(self.pathUI + "nocamera.jpg")
         self.windowMJpeg.show_all()
         self.stream = ''
     
@@ -198,21 +226,21 @@ class Deskboard():
         error = 0
         while(True):
             if id != self.id or self.stateCamera == False:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.defaultPath + "nocamera.jpg")
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
                 break
             thisFrame = self.getImage(self.stream)
             thisFrameFile = Pixbuf.new_from_file(thisFrame)
             if thisFrameFile is None and error >= 3:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.defaultPath + "nocamera.jpg")
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
                 break
             elif thisFrameFile is None:
                 error += 1
             else:
                 error = 0
-                thisFrameFileResize = thisFrameFile.scale_simple(320, 240, InterpType.BILINEAR)
+                thisFrameFileResize = thisFrameFile.scale_simple(self.camResizeWidth, self.camResizeHeight, InterpType.BILINEAR)
                 dateTimeObj = datetime.datetime.now()
                 dateString = dateTimeObj.strftime("%H:%M:%S")
-                thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,260,10)
+                thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,self.camResizeWidth-self.camTimePosition,10)
                 GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,thisFrameFileTimestamp)
             time.sleep(5)
    
@@ -233,21 +261,21 @@ class Deskboard():
         self.capture_video = cv2.VideoCapture(self.stream)
         while(True):
             if id != self.id or self.stateCamera == False:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.defaultPath + "nocamera.jpg")
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
                 break
             ret, img = self.capture_video.read()
             if img is None:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.defaultPath + "nocamera.jpg")
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
                 break
             if jump == 0:
                 jump = 1
                 img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                imgResize = cv2.resize(img, (320, 240))
+                imgResize = cv2.resize(img, (self.camResizeWidth, self.camResizeHeight))
                 imageWorked = np.array(imgResize).ravel()
-                imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, 320, 240, 3*320)
+                imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, self.camResizeWidth, self.camResizeHeight, 3*self.camResizeWidth)
                 dateTimeObj = datetime.datetime.now()
                 dateString = dateTimeObj.strftime("%H:%M:%S")
-                imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,260,10)                
+                imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,self.camResizeWidth-self.camTimePosition,10)                
                 GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbufTimestam)
             elif jump >= 5:
                 jump = 0
@@ -321,7 +349,7 @@ class Deskboard():
 
     # Music Player
     def loadPlayer(self):
-        self.imagePlayerAction.set_from_file(self.defaultPath + "play.png")
+        self.imagePlayerAction.set_from_file(self.pathUI + "play.png")
         self.buttonPlayerAction.connect("clicked", self.triggerPlayer)
         self.buttonPlayerAction.show()
         self.threadPlayer = threading.Thread(target=self.threadPlayer)
@@ -342,14 +370,14 @@ class Deskboard():
     def triggerPlayer(self, w):
         if self.statePlayer == False:
             self.statePlayer = True;
-            self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "stop.png")
+            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "stop.png")
             self.player.set_property("uri", self.radioStreamUrl)
             self.player.set_state(Gst.State.PLAYING)
             GLib.timeout_add_seconds(1, self.setPlayerUpdates)
         else:
             self.player.set_state(Gst.State.NULL)
             self.statePlayer = False;
-            self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "play.png")
+            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
         
     def setPlayerUpdates(self):
         if(self.statePlayer == False):
@@ -364,17 +392,17 @@ class Deskboard():
         if t == Gst.MessageType.EOS:
             self.player.set_state(Gst.State.NULL)
             self.statePlayer = False;
-            self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "play.png")
+            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
         elif t == Gst.MessageType.ERROR:
             self.player.set_state(Gst.State.NULL)
             err, debug = message.parse_error()
             print("Error: %s" % err, debug)
             self.statePlayer = False;
-            self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "play.png")
+            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
             
     def on_finished(self, player):
         self.statePlayer = False;
-        self.buttonPlayerAction.get_child().set_from_file(self.defaultPath + "play.png")
+        self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
         self.dataPlayerTime.set_text("0:00:00")
  
 # End of Class
