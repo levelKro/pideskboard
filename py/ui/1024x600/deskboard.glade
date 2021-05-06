@@ -70,6 +70,7 @@ Author: Mathieu Légaré
                 <property name="width-request">480</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="valign">start</property>
                 <property name="orientation">vertical</property>
                 <property name="baseline-position">top</property>
                 <child>
@@ -339,7 +340,7 @@ Author: Mathieu Légaré
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="fill">True</property>
+                    <property name="fill">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -349,6 +350,8 @@ Author: Mathieu Légaré
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="margin-top">10</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
                     <property name="orientation">vertical</property>
                     <property name="column-homogeneous">True</property>
                     <child>
@@ -690,15 +693,15 @@ mmmm, yyyy</property>
         </child>
         <child>
           <object class="GtkLabel" id="templateTextA">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="halign">start</property>
             <property name="valign">start</property>
+            <property name="hexpand">False</property>
             <property name="label" translatable="yes">hide me</property>
             <property name="wrap">True</property>
+            <property name="ellipsize">end</property>
             <property name="track-visited-links">False</property>
+            <property name="lines">2</property>
             <attributes>
               <attribute name="font-desc" value="Ericsson GA628 12"/>
               <attribute name="foreground" value="#f6f6f5f5f4f4"/>

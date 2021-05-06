@@ -341,6 +341,7 @@ class Deskboard():
             toAdd = Gtk.Label()
             toAdd.set_text("- " + self.cleanhtml(todoItem))
             toAdd.set_attributes(attText)
+            toAdd.set_line_wrap(True)
             box.pack_start(toAdd, True, True, 0)
             row.add(box)
             self.listToday.add(row)
