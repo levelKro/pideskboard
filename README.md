@@ -44,7 +44,7 @@ In the "__install\boot" folder you can copy the "ssh" to your MicroSD card "/boo
 You can also copy the "wpa_supplicant.conf.dist" into "wpa_supplicant.conf" inside the "/boot" and edit it for activate the Wifi with Raspberry Pi 0 W/WH and Raspberry Pi 3.
 
 ## Install
-Please refer to this Wiki page; https://levelkro.xyz/wiki/RPi-piDeskboard (French) or run "install.sh" with sudo on your terminal over SSH.
+Please refer to this Wiki page; https://levelkro.xyz/wiki/RPi-piDeskboard (French) or run "install.sh" on your terminal over SSH.
 
 ## Raspbian OS & Bluetooth
 If you have plan to use the Bluetooth with the Raspbian Lite, you must use this version; 2020-02-14 (2020-02-13). And do not make "sudo apt upgrade". One of the package disable and masde unusable the Bluetooth module.
