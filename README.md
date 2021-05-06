@@ -27,7 +27,7 @@ You can use this files now, but at your own risk. You can report any feedback ab
 Please note to use a Fresh new install of the Raspbian OS on your SD card, with SSH enabled, network configured with the hostname, and auto-login to CLI.
 After installation, you must not use the device for other thing of project for best performances and security reasons.
 
-* Raspbian OS Lite (not the Desktop, only CLI) (tested with image from december 2020)
+* Raspbian OS Lite (not the Desktop, only CLI)
 * Minimum 4Gb MicroSD card, 8Gb suggested
 * Raspberry Pi 0,1,2,3 (tested with Raspberry Pi Zero W)
 * Audio output for use with eSPeak (optionnal) (BT for RPi0, BT/HDMI or Analog for RPi1,2,3)
@@ -45,6 +45,13 @@ You can also copy the "wpa_supplicant.conf.dist" into "wpa_supplicant.conf" insi
 
 ## Install
 Please refer to this Wiki page; https://levelkro.xyz/wiki/RPi-piDeskboard (French)
+
+## Raspbian OS & Bluetooth
+If you have plan to use the Bluetooth with the Raspbian Lite, you must use this version; 2020-02-14 (2020-02-13). And do not make "sudo apt upgrade". One of the package disable and masde unusable the Bluetooth module.
+
+* Lite : http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip
+* Full : http://downloads.raspberrypi.org/raspbian_full/images/raspbian_full-2020-02-14/2020-02-13-raspbian-buster-full.zip
+* Desktop : http://downloads.raspberrypi.org/raspbian/images/raspbian-2020-02-14/2020-02-13-raspbian-buster.zip
 
 ## Credits
 Please note, this pâckage includes ressources from;

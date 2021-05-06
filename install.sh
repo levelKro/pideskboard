@@ -7,10 +7,9 @@
 ##(c) Mathieu Légar <levelkro@yahoo.ca> https://levelkro.com
 
 ## USER REQUIREMENT
-## -RASPBIAN OS LITE (BUSTER)
+## -RASPBIAN OS LITE (BUSTER) 2020-02-14 (2020-02-13)
 ## -HOSTNAME CONFIGURED
 ## -WIFI/LAN CONFIGURED AND ACTIVE
-## -AUTOLOGIN CLI
 
 echo "### Installation of piDeskboard v1.0 alpha"
 echo ">> You must have a active Internet connection before continue this installation"
@@ -27,8 +26,7 @@ sleep 1
 
 #MAJ Système
 echo "Ok, starting to update system before all..."
-sudo apt -qq update 
-sudo apt -qq upgrade -y
+sudo apt -qq update
 echo "... done"
 echo "Installing requirements, step 1/4"
 sudo apt -qq install -y python3-dev python3-pip yasm wget git samba espeak
@@ -43,27 +41,23 @@ echo "Installing requirements, step 4/4"
 sudo apt -qq install -y gir1.2-gst-plugins-base-1.0 gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly-amr 
 echo "... done"
 echo "Now downloading external requirements"
-
-## DOWNLOAD from external sources
 wget -q https://raspberry-pi.fr/download/espeak/mbrola3.0.1h_armhf.deb -O mbrola.deb
 git clone --depth=1 https://gitlab.com/DarkElvenAngel/initramfs-splash.git
-git clone https://github.com/levelKro/pideskboard.git
+#git clone https://github.com/levelKro/pideskboard.git
 echo "... done"
 echo "Installing external requirements"
-sudo dpkg -i mbrola.deb
 echo "... Installing extra for French support ... "
+sudo dpkg -i mbrola.deb
 sudo apt -qq install -y mbrola-fr*
 echo "... Python requirements installation ... "
 pip3 install opencv-contrib-python numpy
 echo "... done"
 echo "Now installing the X server for the GUI..."
-
-## X11 SERVER
 sudo apt -qq install -y --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
 echo "... done"
 echo "Now need to prepare files from piDeskboard before use it ..."
 
-##BOOT SCREEN INSTALL
+##piDeskboard install
 sudo cp /home/pi/initramfs-splash/boot/initramfs.img /boot/initramfs.img
 sudo cp /home/pi/pideskboard/splash.png /boot/splash.png
 sudo cp /home/pi/pideskboard/__install/boot/splash.txt /boot/splash.txt
@@ -116,4 +110,7 @@ echo "\t\t splash silent quiet"
 echo "\tYou need also to add this line in the '/boot/config.txt';"
 echo "\t\tinitramfs initramfs.img"
 echo 
-echo "Thank you to use the piDeskboard, when you have finish, reboot to enjoy"
+echo "Also, you need complete configurations inside the Windows share 'configs' and 'configs/db', remove in name the '.dist' extension."
+echo "If you can't access by the Windows share, is stored in the '/home/pi/pideskboard/configs' folder."
+echo 
+echo "Thank you to use the piDeskboard, when you have finish, reboot to enjoy."
