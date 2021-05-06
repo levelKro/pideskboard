@@ -192,15 +192,12 @@ Author: Mathieu Légaré
                     </child>
                     <child>
                       <object class="GtkImage" id="iconWeatherTempMin">
-                        <property name="height-request">55</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
                         <property name="pixbuf">temp_cold.png</property>
                       </object>
                       <packing>
@@ -211,15 +208,12 @@ Author: Mathieu Légaré
                     </child>
                     <child>
                       <object class="GtkImage" id="iconWeatherTempMax">
-                        <property name="height-request">55</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
                         <property name="pixbuf">temp_hot.png</property>
                       </object>
                       <packing>
@@ -230,15 +224,12 @@ Author: Mathieu Légaré
                     </child>
                     <child>
                       <object class="GtkImage" id="iconWeatherClouds">
-                        <property name="height-request">55</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
                         <property name="pixbuf">clouds.png</property>
                       </object>
                       <packing>
@@ -266,15 +257,12 @@ Author: Mathieu Légaré
                     </child>
                     <child>
                       <object class="GtkImage" id="iconWeatherRain">
-                        <property name="height-request">55</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
                         <property name="pixbuf">rain.png</property>
                       </object>
                       <packing>
@@ -304,15 +292,12 @@ Author: Mathieu Légaré
                     </child>
                     <child>
                       <object class="GtkImage" id="iconWeatherSnow">
-                        <property name="height-request">55</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="halign">start</property>
                         <property name="valign">center</property>
                         <property name="margin-start">10</property>
                         <property name="margin-end">10</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
                         <property name="xpad">0</property>
                         <property name="pixbuf">snow.png</property>
                       </object>
