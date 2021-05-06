@@ -712,8 +712,10 @@ mmmm, yyyy</property>
             <property name="halign">start</property>
             <property name="valign">start</property>
             <property name="label" translatable="yes">hide me</property>
+            <property name="wrap">True</property>
+            <property name="track-visited-links">False</property>
             <attributes>
-              <attribute name="font-desc" value="Ericsson GA628 20"/>
+              <attribute name="font-desc" value="Ericsson GA628 12"/>
               <attribute name="foreground" value="#f6f6f5f5f4f4"/>
             </attributes>
           </object>

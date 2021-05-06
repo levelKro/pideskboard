@@ -705,13 +705,17 @@ mmmm, yyyy</property>
         </child>
         <child>
           <object class="GtkLabel" id="templateTextA">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">start</property>
             <property name="valign">start</property>
             <property name="label" translatable="yes">hide me</property>
+            <property name="wrap">True</property>
+            <property name="track-visited-links">False</property>
             <attributes>
-              <attribute name="font-desc" value="Ericsson GA628 16"/>
+              <attribute name="font-desc" value="Ericsson GA628 12"/>
               <attribute name="foreground" value="#f6f6f5f5f4f4"/>
             </attributes>
           </object>

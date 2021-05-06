@@ -75,7 +75,7 @@
 			// BG
 			$links=array();
 			foreach($cfg['links'] as $id=>$item){
-				if(!empty($item["file"]) && filesize($GLOBALS['system']['php']."configs/".$item["file"])==0) $ok=false;
+				if(!empty($item["file"]) && filesize($GLOBALS['system']['config'].$item["file"])==0) $ok=false;
 				else $ok=true;
 				if($ok==true) $links[]=array("id"=>$id,"name"=>$item['name'],"icon"=>$item['icon']);
 			}	
@@ -90,7 +90,7 @@
 				"year"=>date("Y",time()), // year
 				"unix"=>time()
 			);	
-			$fileday=$GLOBALS['system']['php']."configs/calendar/".$today['month']."-".$today['day']."-".$today['year'].".txt";
+			$fileday=$GLOBALS['system']['config']."calendar/".$today['month']."-".$today['day']."-".$today['year'].".txt";
 			if(file_exists($fileday)){
 				if($file=fopen($fileday,"r")){
 					while(!feof($file)) {
@@ -100,7 +100,7 @@
 					fclose($file);
 				}				
 			}
-			$fileday=$GLOBALS['system']['php']."configs/calendar/".$today['month']."-".$today['day'].".txt";
+			$fileday=$GLOBALS['system']['config']."calendar/".$today['month']."-".$today['day'].".txt";
 			if(file_exists($fileday)){
 				if($file=fopen($fileday,"r")){
 					while(!feof($file)) {
@@ -138,7 +138,7 @@
 					case 'list':
 						// SUB PAGE : list
 						if($cfg['system']['espeak']) speak($view['name'],$cfg['espeak']['module']);
-						if ($file = fopen($GLOBALS['system']['php']."configs/".$view["file"], "r")) {
+						if ($file = fopen($GLOBALS['system']['config'].$view["file"], "r")) {
 							$output['html'].='<ul>';
 							$i=0;
 							while(!feof($file)) {
@@ -291,7 +291,7 @@
 							else if($day['day_pos']==0) $output['html'].='</div><div class="week">';
 							$output['html'].='<div class="day'.(($day['day']==$today['day'] && $day['month']==$today['month'] && $day['year']==$today['year'])?' active':'').'"><span class="num">'.$day['day'].'</span>';
 							$output['html'].='<span class="notes"><span class="title">'.translateDate(date("l, j F Y",$day['unix'])).'</span>';
-							$fileday=$GLOBALS['system']['php']."configs/calendar/".$day['month']."-".$day['day']."-".$day['year'].".txt";
+							$fileday=$GLOBALS['system']['config']."calendar/".$day['month']."-".$day['day']."-".$day['year'].".txt";
 							if(file_exists($fileday)){
 								if($file=fopen($fileday,"r")){
 									$i=0;
@@ -303,7 +303,7 @@
 									fclose($file);
 								}				
 							}
-							$fileday=$GLOBALS['system']['php']."configs/calendar/".$day['month']."-".$day['day'].".txt";
+							$fileday=$GLOBALS['system']['config']."calendar/".$day['month']."-".$day['day'].".txt";
 							if(file_exists($fileday)){
 								if($file=fopen($fileday,"r")){
 									$i=0;
