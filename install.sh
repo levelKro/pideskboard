@@ -15,13 +15,13 @@ echo "### Installation of piDeskboard v1.0 alpha"
 echo ">> You must have a active Internet connection before continue this installation"
 
 #Autologin - from RASPI-CONFIG
-systemctl set-default multi-user.target
-ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin $USER --noclear %I \$TERM
-EOF
+sudo systemctl set-default multi-user.target
+sudo ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
+#sudo cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << EOF
+#[Service]
+#ExecStart=
+#ExecStart=-/sbin/agetty --autologin pi --noclear %I \$TERM
+#EOF
 sleep 1
 
 #MAJ Système
@@ -62,12 +62,10 @@ sudo cp /home/pi/initramfs-splash/boot/initramfs.img /boot/initramfs.img
 sudo cp /home/pi/pideskboard/splash.png /boot/splash.png
 sudo cp /home/pi/pideskboard/__install/boot/splash.txt /boot/splash.txt
 sudo cp -r /home/pi/pideskboard/__install/home/_fonts /home/pi/.fonts
-chmod -x /home/pi/pideskboard/sh/*.sh
+sudo chmod +x /home/pi/pideskboard/sh/*.sh
 cd /home/pi/pideskboard
 git remote add upstream https://github.com/levelKro/pideskboard.git
 git pull upstream main
-
-## APACHE 2 CONFIG
 sudo sed -i 's|/var/www/html|/home/pi/pideskboard/www|g' /etc/apache2/sites-enabled/000-default.conf
 sudo sed -i 's|/var/www|/home/pi/pideskboard|g' /etc/apache2/apache2.conf
 
@@ -94,7 +92,7 @@ read only = no
 EOF
 
 sudo -s cat >> /home/pi/.profile << EOF
-[[ -z $DISPLAY && $XDG_VTNR -eq 1 ]] && /home/pi/pideskboard/sh/dm_start.sh
+[[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && /home/pi/pideskboard/sh/dm_start.sh
 EOF
 sudo -s cat >> /etc/xdg/openbox/autostart << EOF
 xset s off
