@@ -13,7 +13,7 @@
 
 echo "### Installation of piDeskboard v1.0 alpha"
 echo ">> You must have a active Internet connection before continue this installation"
-
+cd /home/pi
 #Autologin - from RASPI-CONFIG
 sudo systemctl set-default multi-user.target
 sudo ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
