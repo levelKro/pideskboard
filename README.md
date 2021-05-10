@@ -54,15 +54,23 @@ If you have plan to use the Bluetooth with the Raspbian Lite, you must use this 
 * Desktop : http://downloads.raspberrypi.org/raspbian/images/raspbian-2020-02-14/2020-02-13-raspbian-buster.zip
 
 ## Credits
-Please note, this pâckage includes ressources from;
+Please note, this package includes ressources from;
 
-* font-awesome
+### Backend
 * MusicTicker - XML
 * SCXML object
+
+### Web UI
+* 3D Cube rotating CSS
+* font-awesome
+
+### Python UI
 * GTK+ 
 * GStreamer
+* VideoLAN (VLC)
 * OpenCV
-* 3D Cube rotating CSS
+
+### All
 * Icons from Flat Icon (https://www.flaticon.com/)
 * And others (add them when is possible)
 

@@ -38,7 +38,7 @@ echo "Installing requirements, step 3/4"
 sudo apt -qq install -y python-gi-dev python-gi python-gi-cairo python3-gi python3-gi-cairo libgirepository1.0-dev gir1.2-gtk-3.0 python3-gst-1.0 gir1.2-gstreamer-1.0 gstreamer1.0-tools gstreamer1.0-gtk3 python3-opencv python3-numpy
 echo "... done"
 echo "Installing requirements, step 4/4"
-sudo apt -qq install -y gir1.2-gst-plugins-base-1.0 gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly-amr 
+sudo apt -qq install -y gir1.2-gst-plugins-base-1.0 gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly-amr vlc python3-vlc
 echo "... done"
 echo "Now downloading external requirements"
 wget -q https://raspberry-pi.fr/download/espeak/mbrola3.0.1h_armhf.deb -O mbrola.deb
@@ -50,7 +50,7 @@ echo "... Installing extra for French support ... "
 sudo dpkg -i mbrola.deb
 sudo apt -qq install -y mbrola-fr*
 echo "... Python requirements installation ... "
-pip3 install opencv-contrib-python numpy
+pip3 install opencv-contrib-python numpy python-vlc
 echo "... done"
 echo "Now installing the X server for the GUI..."
 sudo apt -qq install -y --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox

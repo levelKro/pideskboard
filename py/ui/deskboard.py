@@ -3,6 +3,8 @@
 import json, requests, gi, re, datetime, time, configparser
 gi.require_version("Gtk", "3.0")
 gi.require_version('Gst', '1.0')
+#gi.require_version('GdkX11', '3.0')
+#from gi.repository import GdkX11
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gdk
@@ -13,6 +15,7 @@ from gi.repository.GdkPixbuf import Pixbuf, InterpType
 import cv2, cairo
 import numpy as np
 import threading
+import libvlc as vlc
 
 #Main Class
 class Deskboard():
@@ -358,54 +361,36 @@ class Deskboard():
         self.threadPlayer.start()
         
     def threadPlayer(self):         
-        Gst.init_check(None)
-        self.IS_GST010 = Gst.version()[0] == 0
-        self.player = Gst.ElementFactory.make("playbin", "player")
-        self.player.set_property("uri", self.radioStreamUrl)
-        self.player.props.buffer_duration = 5 * Gst.SECOND
-        self.bus = self.player.get_bus()
-        self.bus.add_signal_watch()
-        self.bus.connect("message", self.on_message)
-        self.player.connect("about-to-finish",  self.on_finished)
-        
-    def triggerPlayer(self, w):
-        if self.statePlayer == False:
-            self.statePlayer = True;
-            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "stop.png")
-            self.player.set_property("uri", self.radioStreamUrl)
-            self.player.set_state(Gst.State.PLAYING)
-            GLib.timeout_add_seconds(1, self.setPlayerUpdates)
-        else:
-            self.player.set_state(Gst.State.NULL)
-            self.statePlayer = False;
-            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
+        self.player_paused=False
+        self.is_player_active = False
+        self.vlcInstance = vlc.Instance("--no-xlib --quiet")
+        self.player = self.vlcInstance.media_player_new()        
+        self.player.set_mrl(self.radioStreamUrl)
+        self.player.audio_set_volume(100)
         
     def setPlayerUpdates(self):
         if(self.statePlayer == False):
             return False
-        posTimeNano = self.player.query_position(Gst.Format.TIME)[1];
-        posTimeSec = float(posTimeNano / Gst.SECOND)
+        posTimeNano = self.player.get_time()
+        posTimeSec = float(posTimeNano / 1000)
         self.dataPlayerTime.set_text(str(datetime.timedelta(seconds=round(posTimeSec))))
         return True
     
-    def on_message(self, bus, message):
-        t = message.type
-        if t == Gst.MessageType.EOS:
-            self.player.set_state(Gst.State.NULL)
-            self.statePlayer = False;
+    def triggerPlayer(self, widget, data=None):
+        if self.statePlayer == False:
+            self.player.play()
+            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "stop.png")
+            self.statePlayer = True
+            GLib.timeout_add(500, self.setPlayerUpdates)
+
+        elif self.statePlayer == True:
+            self.player.stop()
             self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
-        elif t == Gst.MessageType.ERROR:
-            self.player.set_state(Gst.State.NULL)
-            err, debug = message.parse_error()
-            print("Error: %s" % err, debug)
-            self.statePlayer = False;
-            self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
-            
-    def on_finished(self, player):
-        self.statePlayer = False;
-        self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "play.png")
-        self.dataPlayerTime.set_text("0:00:00")
- 
+            self.statePlayer = False
+            self.dataPlayerTime.set_text("0:00:00")
+        else:
+            pass        
+
 # End of Class
 # Run the main app
 app=Deskboard()        
