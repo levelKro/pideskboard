@@ -67,6 +67,8 @@ class Deskboard():
 
     # Marquee effect
     def marquee(self, text):
+        if text is None:
+            text = "Error META"
         if self.a < len(text):
             self.a = self.a + 1
             self.z = self.z + 1
@@ -76,7 +78,7 @@ class Deskboard():
         return str(text[self.a:self.z])
 
     def displayMarquee(self):
-        self.dataPlayerDetails.set_label(self.marquee(self.gibberish))
+        self.dataPlayerDetails.set_label(self.marquee(self.radioInfo))
         return True
 
     def startMarquee(self):
@@ -91,8 +93,8 @@ class Deskboard():
         self.stateCamera = False
         self.radioStreamUrl = "http://radio.levelkro.net:8000/1"; #default value, refreshed with API
         self.defaultPath = self.config['system']['path']
-        self.gibberish = "Loading . . ."
-        self.gibberishShadow = "Loading . . ."
+        self.radioInfo = "Loading . . ."
+        self.radioInfoShadow = "Loading . . ."
         if self.config['system']['api'] is not None:
             self.apiUrl = self.config['system']['api']
             self.apiUrl=self.apiUrl.replace('"', '')
@@ -311,7 +313,7 @@ class Deskboard():
         attText = self.templateTextA.get_attributes()
         self.textToday.set_text(jsonDatas["text_today"])
         self.radioStreamUrl=jsonDatas["radio"]["url"]
-        self.gibberish=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
+        self.radioInfo=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
         self.dataDate.set_text(jsonDatas["date"])
         self.dataTime.set_text(jsonDatas["time"])
         self.dataMailboxUnread.set_text(str(jsonDatas["mailbox"]["unread"]))
@@ -360,9 +362,8 @@ class Deskboard():
         self.threadPlayer.daemon=True 
         self.threadPlayer.start()
         
-    def threadPlayer(self):         
-        self.player_paused=False
-        self.is_player_active = False
+    def threadPlayer(self):     
+        self.statePlayer = False
         self.vlcInstance = vlc.Instance("--no-xlib --quiet")
         self.player = self.vlcInstance.media_player_new()        
         self.player.set_mrl(self.radioStreamUrl)
@@ -377,7 +378,9 @@ class Deskboard():
         return True
     
     def triggerPlayer(self, widget, data=None):
-        if self.statePlayer == False:
+        if self.statePlayer == False:        
+            self.player.set_mrl(self.radioStreamUrl)
+            self.player.audio_set_volume(100)
             self.player.play()
             self.buttonPlayerAction.get_child().set_from_file(self.pathUI + "stop.png")
             self.statePlayer = True
