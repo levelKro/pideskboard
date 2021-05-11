@@ -3,13 +3,9 @@
 import json, requests, gi, re, datetime, time, configparser
 gi.require_version("Gtk", "3.0")
 gi.require_version('Gst', '1.0')
-#gi.require_version('GdkX11', '3.0')
-#from gi.repository import GdkX11
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import Gdk
-#from gi.repository import GObject
-from gi.repository import Gst
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
 import cv2, cairo
@@ -21,7 +17,6 @@ import libvlc as vlc
 class Deskboard():
     def __init__(self):
         #pre-init
-        Gst.init(None)
         self.loadConfig()
         self.loadUI()
         self.loadNames()
