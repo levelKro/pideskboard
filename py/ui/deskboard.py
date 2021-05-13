@@ -306,48 +306,49 @@ class Deskboard():
     def setUpdates(self):
         jsonDatas = json.loads(self.getApi("datas"))
         attText = self.templateTextA.get_attributes()
-        self.textToday.set_text(jsonDatas["text_today"])
-        self.radioStreamUrl=jsonDatas["radio"]["url"]
-        self.radioInfo=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
-        self.dataDate.set_text(jsonDatas["date"])
-        self.dataTime.set_text(jsonDatas["time"])
-        self.dataMailboxUnread.set_text(str(jsonDatas["mailbox"]["unread"]))
-        self.dataMailboxRead.set_text(str(jsonDatas["mailbox"]["read"]))
-        self.dataWeatherTemp.set_text(jsonDatas["weather"]["temp"])
-        self.dataWeatherFeel.set_text(jsonDatas["weather"]["feel"])
-        self.dataWeatherTempMin.set_text(jsonDatas["weather"]["min"])
-        self.dataWeatherTempMax.set_text(jsonDatas["weather"]["max"])
-        self.dataWeatherClouds.set_text(str(jsonDatas["weather"]["clouds"]))
-        self.dataWeatherDetails.set_text(jsonDatas["weather"]["name"])        
-        rain = "rain" in jsonDatas["weather"]
-        snow = "snow" in jsonDatas["weather"]
-        if rain:
-            self.dataWeatherRain.set_text(str(jsonDatas["weather"]["rain"]))
-        else:
-            self.dataWeatherRain.set_text("-")
-        if snow:    
-            self.dataWeatherSnow.set_text(str(jsonDatas["weather"]["snow"]))
-        else:
-            self.dataWeatherSnow.set_text("-")
-        if jsonDatas["weather"]["ico"] != self.weatherUrl :
-            imageData=self.getImage(jsonDatas["weather"]["ico"])
-            self.weatherUrl = jsonDatas["weather"]["ico"]
-            self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))            
-        for row in self.listToday:
-            self.listToday.remove(row)
-        row = Gtk.Box()
-        for todoItem in jsonDatas["todo"]:
-            box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-            toAdd = Gtk.Label()
-            toAdd.set_text("- " + self.cleanhtml(todoItem))
-            toAdd.set_attributes(attText)
-            toAdd.set_line_wrap(True)
-            box.pack_start(toAdd, True, True, 0)
-            row.add(box)
-            self.listToday.add(row)
-        self.listToday.show_all()
+        if jsonDatas["time"] is not None:
+            self.dataDate.set_text(jsonDatas["date"])
+            self.dataTime.set_text(jsonDatas["time"])
+            self.textToday.set_text(jsonDatas["text_today"])
+            self.radioStreamUrl=jsonDatas["radio"]["url"]
+            self.dataMailboxUnread.set_text(str(jsonDatas["mailbox"]["unread"]))
+            self.dataMailboxRead.set_text(str(jsonDatas["mailbox"]["read"]))
+            self.dataWeatherTemp.set_text(jsonDatas["weather"]["temp"])
+            self.dataWeatherFeel.set_text(jsonDatas["weather"]["feel"])
+            self.dataWeatherTempMin.set_text(jsonDatas["weather"]["min"])
+            self.dataWeatherTempMax.set_text(jsonDatas["weather"]["max"])
+            self.dataWeatherClouds.set_text(str(jsonDatas["weather"]["clouds"]))
+            self.dataWeatherDetails.set_text(jsonDatas["weather"]["name"])        
+            rain = "rain" in jsonDatas["weather"]
+            snow = "snow" in jsonDatas["weather"]
+            if rain:
+                self.dataWeatherRain.set_text(str(jsonDatas["weather"]["rain"]))
+            else:
+                self.dataWeatherRain.set_text("-")
+            if snow:    
+                self.dataWeatherSnow.set_text(str(jsonDatas["weather"]["snow"]))
+            else:
+                self.dataWeatherSnow.set_text("-")
+            if jsonDatas["weather"]["ico"] != self.weatherUrl :
+                imageData=self.getImage(jsonDatas["weather"]["ico"])
+                self.weatherUrl = jsonDatas["weather"]["ico"]
+                self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))            
+            for row in self.listToday:
+                self.listToday.remove(row)
+            row = Gtk.Box()
+            for todoItem in jsonDatas["todo"]:
+                box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+                toAdd = Gtk.Label()
+                toAdd.set_text("- " + self.cleanhtml(todoItem))
+                toAdd.set_attributes(attText)
+                toAdd.set_line_wrap(True)
+                box.pack_start(toAdd, True, True, 0)
+                row.add(box)
+                self.listToday.add(row)
+            self.listToday.show_all()
+            self.radioInfo=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
         return True
-
+    
     # Music Player
     def loadPlayer(self):
         self.imagePlayerAction.set_from_file(self.pathUI + "play.png")
