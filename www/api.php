@@ -44,6 +44,7 @@
 			// Request a Restart the Python UI
 			// BG
 			echo json_encode(array("html"=>translateText("CTRL_RESTART")),true);
+			if($cfg['system']['espeak']) speak(translateText("RESTART"),$cfg['espeak']['module']);
 			system($cfg['cli']['restart']." &");
 		break;
 		case "bluetooth":

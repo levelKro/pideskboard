@@ -86,6 +86,9 @@
 			case 'NOTHING':
 				return "Nothing";
 			break;
+			case 'RESTART':
+				return "Re-start the interface";
+			break;
 			default:
 				return "";
 		}

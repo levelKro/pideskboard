@@ -17,6 +17,17 @@
 	);
 start:
 	
+	if($cfg['system']['reboot']!==false){
+		if(date("G:i",time())==$cfg['system']['reboot']){
+			if($cfg['system']['icon']) system($cfg['icon']['path'].' 15000 '.$cfg['icon']['reboot'].' 3');
+			if($cfg['system']['espeak']) speak(translateText("REBOOT"),$cfg['espeak']['module']);
+			sleep(15);			
+			system($cfg['cli']['reboot']." &");
+			sleep(120);	 // wait 2 mins, prevent retsart of script process if killed.
+			die();
+		}
+	}
+	
 	// Sound section
 	
 	// TIME

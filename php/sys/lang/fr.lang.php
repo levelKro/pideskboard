@@ -127,6 +127,9 @@
 			case 'NOTHING':
 				return "Rien";
 			break;
+			case 'RESTART':
+				return "Re-démarrage de l'interface";
+			break;
 			default:
 				return "";
 		}
