@@ -1,0 +1,164 @@
+body, html {
+	background:#000;
+	font-family:Arial;
+	color:#fff;
+}
+a {
+	color:#1a5fd6;
+	text-decoration:none;
+}
+a:hover {
+	color:#1b6af2
+}
+.wrapper {
+	display:block;
+	margin:20px auto;
+	min-width:320px;
+	max-width:640px;
+	height: calc(100vh - 50px);
+	background:#131a26;
+}
+.header {
+	margin:10px;
+	border-bottom:1px solid #0b0b0d;
+	display:block;
+}
+.content {
+	margin:10px;
+	display:block;
+	font-size:18px;
+	text-align:center;
+}
+.footer {
+	margin:10px;
+	border-top:1px solid #0b0b0d;
+	display:block;
+	text-align:center;
+	font-size:14px;
+}
+a.logo span {
+	font-size:50px;
+	display:inline block;
+	color:#fff;
+}
+a.logo img {
+	float:left;
+	height:64px;
+	margin:0 10px 0 0;
+}
+a.logo small {
+	font-size:10px;
+	display:block;
+	color:#ccc;
+}
+.controls {
+	margin: 25px auto;
+	display:block;
+	text-align:center;
+}
+.controls div.option {
+	width: 75px;
+	height:100px;
+	overflow:hidden;
+	display:inline-block;
+	margin:10px;
+	font-size:12px;
+	color:#fff;
+	text-align:center;
+	padding:10px;
+	border:1px solid #0b0b0d;
+}
+.controls div.option:hover {
+	color:#fff;
+	background:#0b0b0d;
+	border:1px solid #1c1c21;
+	cursor:pointer;
+}
+.controls div.option span  {
+	display:block;
+	margin:5px;
+}
+.controls div.option div.sub {
+	display:none;
+}
+.controls div.option.wsub:hover img,
+.controls div.option.wsub:focus img {
+	width:24px;
+	height:24px;
+}
+.controls div.option:hover div.sub,
+.controls div.option:focus div.sub {
+	display:block;
+}
+div.sub div {
+	display:block;
+	cursor:pointer;
+	padding:1px 3px;
+	margin:2px;
+	font-size:12px;
+	color:#fff;
+	text-align:center;
+	border:1px solid #0b0b0d;
+	background:rgba(0,0,0,0.9);
+}
+.output {
+	color:#fff;
+	background:#0b0b0d;
+	border:1px solid #1c1c21;
+	min-height:15px;
+	font-size:14px;
+	line-height:0.8;
+	padding:5px;
+	font-family:Courier;
+	margin: 5px auto;
+	display:block;
+	text-align:left;
+}
+.output::before {
+	content:'Output:> ';
+	color:#1b6af2
+}
+.output::after {
+	content:'_';
+	color:#1b6af2
+}
+.line {
+	display:block;
+	font-size:14px;
+	line-height:0.8;
+}
+input[type="password"]{
+	color:#fff;
+	background:#0b0b0d;
+	border:1px solid #1c1c21;
+	font-size:14px;
+	line-height:0.8;
+	padding:5px;	
+}
+.stats {
+	display:inline-block;
+	color:#fff;
+	background:#0b0b0d;
+	border:1px solid #1c1c21;
+	font-size:14px;
+	padding:10px 10px 10px 74px;
+	font-family:Courier;
+	margin: 5px auto;
+	text-align:left;
+	min-height:64px;
+	width:auto;
+}
+.stats img {
+	margin:5px 10px 0 -64px;
+	float:left;
+}
+.stats span {
+	display:block;
+	line-height:0.9;
+	white-space:nowrap;
+	margin-right:10px;
+	
+}
+.stats span b {
+	color:#1b6af2
+}

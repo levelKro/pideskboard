@@ -32,7 +32,8 @@ echo "Installing requirements, step 1/4"
 sudo apt -qq install -y python3-dev python3-pip yasm wget git samba espeak
 echo "... done"
 echo "Installing requirements, step 2/4"
-sudo apt -qq install -y apache2 php php-cli php-imap php-curl php-xml php-xmlrpc libapache2-mod-php
+sudo apt -qq install -y php php-cli php-imap php-curl php-xml php-xmlrpc 
+#apache2 libapache2-mod-php
 echo "... done"
 echo "Installing requirements, step 3/4"
 sudo apt -qq install -y python-gi-dev python-gi python-gi-cairo python3-gi python3-gi-cairo libgirepository1.0-dev gir1.2-gtk-3.0 python3-gst-1.0 gir1.2-gstreamer-1.0 gstreamer1.0-tools gstreamer1.0-gtk3 python3-opencv python3-numpy
@@ -50,7 +51,7 @@ echo "... Installing extra for French support ... "
 sudo dpkg -i mbrola.deb
 sudo apt -qq install -y mbrola-fr*
 echo "... Python requirements installation ... "
-pip3 install opencv-contrib-python numpy python-vlc
+sudo pip3 install opencv-contrib-python numpy python-vlc psutil gpiozero
 echo "... done"
 echo "Now installing the X server for the GUI..."
 sudo apt -qq install -y --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
@@ -61,13 +62,17 @@ echo "Now need to prepare files from piDeskboard before use it ..."
 sudo cp /home/pi/initramfs-splash/boot/initramfs.img /boot/initramfs.img
 sudo cp /home/pi/pideskboard/splash.png /boot/splash.png
 sudo cp /home/pi/pideskboard/__install/boot/splash.txt /boot/splash.txt
+sudo cp /home/pi/pideskboard/__install/webctrl.sh /etc/init.d/webctrl.sh
 sudo cp -r /home/pi/pideskboard/__install/home/_fonts /home/pi/.fonts
 sudo chmod +x /home/pi/pideskboard/sh/*.sh
+sudo chmod +x /etc/init.d/webctrl.sh
+sudo systemctl enable webctrl.sh
 cd /home/pi/pideskboard
 git remote add upstream https://github.com/levelKro/pideskboard.git
 git pull upstream main
-sudo sed -i 's|/var/www/html|/home/pi/pideskboard/www|g' /etc/apache2/sites-enabled/000-default.conf
-sudo sed -i 's|/var/www|/home/pi/pideskboard|g' /etc/apache2/apache2.conf
+
+#sudo sed -i 's|/var/www/html|/home/pi/pideskboard/www|g' /etc/apache2/sites-enabled/000-default.conf
+#sudo sed -i 's|/var/www|/home/pi/pideskboard|g' /etc/apache2/apache2.conf
 
 sleep 1
 
