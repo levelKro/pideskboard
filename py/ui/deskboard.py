@@ -1,6 +1,10 @@
 #PiDeskboard by Mathieu Légaré <levelkro@yahoo.ca> https://levelkro.com
 #
-import json, requests, gi, re, datetime, time, configparser
+import json, requests, threading, configparser
+import gi, re, os, datetime, time, cairo
+import cv2
+import numpy as np
+import libvlc as vlc
 gi.require_version("Gtk", "3.0")
 gi.require_version('Gst', '1.0')
 from gi.repository import Gtk
@@ -8,10 +12,7 @@ from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
-import cv2, cairo
-import numpy as np
-import threading
-import libvlc as vlc
+from datetime import datetime
 
 #Main Class
 class Deskboard():
@@ -45,6 +46,10 @@ class Deskboard():
         cleanr = re.compile('<.*?>')
         cleantext = re.sub(cleanr, '', raw_html)
         return cleantext
+    
+    def readJson(self,path):
+        with open(path) as json_file:
+            return json.load(json_file)
     
     def imageText(self,pixbuf, text, x, y):
         surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, pixbuf.get_width(), pixbuf.get_height())
@@ -80,51 +85,50 @@ class Deskboard():
         GLib.timeout_add(500, self.displayMarquee)
 
     def loadConfig(self):
-        self.config = configparser.ConfigParser()
-        self.config.read('../../configs/config.ini')
-        self.weatherUrl = ""
-        self.count = 0        
-        self.statePlayer = False
-        self.stateCamera = False
-        self.radioStreamUrl = "http://radio.levelkro.net:8000/1"; #default value, refreshed with API
-        self.defaultPath = self.config['system']['path']
-        self.radioInfo = "Loading . . ."
-        self.radioInfoShadow = "Loading . . ."
-        if self.config['system']['api'] is not None:
-            self.apiUrl = self.config['system']['api']
-            self.apiUrl=self.apiUrl.replace('"', '')
-        else:
-            self.apiUrl = "http://localhost/api.php?a="
-        if self.config['system']['resolution'] == "1024x600":
-            #1024x600
-            self.mwmarquee = 25
-            self.resoWidth = 1024
-            self.resoHeight = 600
-            self.camResizeWidth=640
-            self.camResizeHeight=480
-            self.camTimeSize=20            
-            self.camTimePosition=120
-        elif self.config['system']['resolution'] == "800x480":
-            #800x480
-            self.mwmarquee = 23
-            self.resoWidth = 800
-            self.resoHeight = 480
-            self.camResizeWidth=320
-            self.camResizeHeight=240
-            self.camTimeSize=10            
-            self.camTimePosition=60
-        else:
-            #480x320, default
-            self.mwmarquee = 17
-            self.resoWidth = 480
-            self.resoHeight = 320
-            self.camResizeWidth=320
-            self.camResizeHeight=240
-            self.camTimeSize=10            
-            self.camTimePosition=60
-        self.pathUI = self.defaultPath + self.config['system']['resolution'] + "/"
-        self.a = 0
-        self.z = self.mwmarquee        
+        try:
+            self.config = configparser.ConfigParser()
+            self.config.read('../../configs/config.ini')
+            self.weatherUrl = ""
+            self.count = 0        
+            self.statePlayer = False
+            self.stateCamera = False
+            self.radioStreamUrl = "http://radio.levelkro.net:8000/1"; #default value, refreshed with API
+            self.defaultPath = self.config['system']['path']+"ui/"
+            self.radioInfo = "Loading . . ."
+            self.radioInfoShadow = "Loading . . ."
+            if self.config['system']['resolution'] == "1024x600":
+                #1024x600
+                self.mwmarquee = 25
+                self.resoWidth = 1024
+                self.resoHeight = 600
+                self.camResizeWidth=640
+                self.camResizeHeight=480
+                self.camTimeSize=20            
+                self.camTimePosition=120
+            elif self.config['system']['resolution'] == "800x480":
+                #800x480
+                self.mwmarquee = 23
+                self.resoWidth = 800
+                self.resoHeight = 480
+                self.camResizeWidth=320
+                self.camResizeHeight=240
+                self.camTimeSize=10            
+                self.camTimePosition=60
+            else:
+                #480x320, default
+                self.mwmarquee = 17
+                self.resoWidth = 480
+                self.resoHeight = 320
+                self.camResizeWidth=320
+                self.camResizeHeight=240
+                self.camTimeSize=10            
+                self.camTimePosition=60
+            self.pathUI = self.defaultPath + self.config['system']['resolution'] + "/"
+            self.a = 0
+            self.z = self.mwmarquee 
+        except:
+            print("Cant't load configurations datas")
+            exit()
         
     def saveConfig(self):
         with open('config.ini', 'w') as configfile:
@@ -186,7 +190,6 @@ class Deskboard():
     def loadActions(self):
         self.buttonCtrlOpen.connect("clicked", self.triggerCtrl)
         self.buttonCtrlOpen.show()
-        # add config file for this
         i=1
         self.buttonIPCam = []
         while i <= 5:
@@ -203,141 +206,143 @@ class Deskboard():
         for x in self.buttonIPCam:
             self.placeButtonCameras.add(x)
         self.placeButtonCameras.show_all()
-
-    #Cameras MJPEG
+        
+    #Cameras
     def triggerMJpegOpen(self,w):
         self.imageMJpegStream.set_from_file(self.pathUI + "nocamera.jpg")
         self.windowMJpeg.show_all()
         self.stream = ''
-    
-    def triggerMJpegCameraPreview(self,w,id):
-        self.windowMJpeg.show_all()
-        self.textMJpegStream.set_text("Camera " + str(id))
-        self.id=id
-        self.stream = self.config['cameras']['camImage' + str(id)]
-        self.threadCamera = threading.Thread(target=self.startCameraPreview)
-        self.stateCamera = True
-        self.threadCamera.daemon=True 
-        self.threadCamera.start()          
-    
-    def startCameraPreview(self):
-        #Mode Preview
-        id=self.id
-        error = 0
-        while(True):
-            if id != self.id or self.stateCamera == False:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                break
-            thisFrame = self.getImage(self.stream)
-            thisFrameFile = Pixbuf.new_from_file(thisFrame)
-            if thisFrameFile is None and error >= 3:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                break
-            elif thisFrameFile is None:
-                error += 1
-            else:
-                error = 0
-                thisFrameFileResize = thisFrameFile.scale_simple(self.camResizeWidth, self.camResizeHeight, InterpType.BILINEAR)
-                dateTimeObj = datetime.datetime.now()
-                dateString = dateTimeObj.strftime("%H:%M:%S")
-                thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,self.camResizeWidth-self.camTimePosition,10)
-                GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,thisFrameFileTimestamp)
-            time.sleep(5)
-   
-    def triggerMJpegCamera(self,w,id):
-        self.windowMJpeg.show_all()
-        self.textMJpegStream.set_text("Camera " + str(id))
-        self.id=id
-        self.stream = self.config['cameras']['cam' + str(id)]
-        self.threadCamera = threading.Thread(target=self.startCamera)
-        self.stateCamera = True
-        self.threadCamera.daemon=True 
-        self.threadCamera.start()        
-    
-    def startCamera(self):
-        #Mode Live
-        id=self.id
-        jump = 0
-        self.capture_video = cv2.VideoCapture(self.stream)
-        while(True):
-            if id != self.id or self.stateCamera == False:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                break
-            ret, img = self.capture_video.read()
-            if img is None:
-                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                break
-            if jump == 0:
-                jump = 1
-                img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                imgResize = cv2.resize(img, (self.camResizeWidth, self.camResizeHeight))
-                imageWorked = np.array(imgResize).ravel()
-                imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, self.camResizeWidth, self.camResizeHeight, 3*self.camResizeWidth)
-                dateTimeObj = datetime.datetime.now()
-                dateString = dateTimeObj.strftime("%H:%M:%S")
-                imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,self.camResizeWidth-self.camTimePosition,10)                
-                GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbufTimestam)
-            elif jump >= 5:
-                jump = 0
-            else:
-                jump += 1
-            #time.sleep(0.2) 
-        
+
     def triggerMJpegClose(self,w):
         self.stateCamera=False
         self.id = 0
         self.windowMJpeg.hide()
+   
+    #Mode Preview (Less CPU usage)
         
+    def triggerMJpegCameraPreview(self,w,id):
+        try:
+            self.windowMJpeg.show_all()
+            self.textMJpegStream.set_text("Camera " + str(id))
+            self.id=id
+            self.stream = self.config['cameras']['camImage' + str(id)]
+            self.threadCamera = threading.Thread(target=self.startCameraPreview)
+            self.stateCamera = True
+            self.threadCamera.daemon=True 
+            self.threadCamera.start()          
+        except:
+            print("Cant't load camera process")
+        
+    def startCameraPreview(self):
+        try:
+            id=self.id
+            error = 0
+            while(True):
+                if id != self.id or self.stateCamera == False:
+                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                    break
+                thisFrame = self.getImage(self.stream)
+                thisFrameFile = Pixbuf.new_from_file(thisFrame)
+                if thisFrameFile is None and error >= 3:
+                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                    break
+                elif thisFrameFile is None:
+                    error += 1
+                else:
+                    error = 0
+                    thisFrameFileResize = thisFrameFile.scale_simple(self.camResizeWidth, self.camResizeHeight, InterpType.BILINEAR)
+                    dateTimeObj = datetime.datetime.now()
+                    dateString = dateTimeObj.strftime("%H:%M:%S")
+                    thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,self.camResizeWidth-self.camTimePosition,10)
+                    GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,thisFrameFileTimestamp)
+                time.sleep(5)
+        except:
+            print("Cant't load camera preview process")
+    
+    #Mode Live (More CPU Usage)
+    def triggerMJpegCamera(self,w,id):
+        try:
+            self.windowMJpeg.show_all()
+            self.textMJpegStream.set_text("Camera " + str(id))
+            self.id=id
+            self.stream = self.config['cameras']['cam' + str(id)]
+            self.threadCamera = threading.Thread(target=self.startCamera)
+            self.stateCamera = True
+            self.threadCamera.daemon=True 
+            self.threadCamera.start()
+        except:
+            print("Cant't load camera process")
+        
+    def startCamera(self):
+        try:
+            id=self.id
+            jump = 0
+            self.capture_video = cv2.VideoCapture(self.stream)
+            while(True):
+                if id != self.id or self.stateCamera == False:
+                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                    break
+                ret, img = self.capture_video.read()
+                if img is None:
+                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                    break
+                if jump == 0:
+                    jump = 1
+                    img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                    imgResize = cv2.resize(img, (self.camResizeWidth, self.camResizeHeight))
+                    imageWorked = np.array(imgResize).ravel()
+                    imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, self.camResizeWidth, self.camResizeHeight, 3*self.camResizeWidth)
+                    dateTimeObj = datetime.datetime.now()
+                    dateString = dateTimeObj.strftime("%H:%M:%S")
+                    imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,self.camResizeWidth-self.camTimePosition,10)                
+                    GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbufTimestam)
+                elif jump >= 5:
+                    jump = 0
+                else:
+                    jump += 1
+                #time.sleep(0.2)         
+        except:
+            print("Cant't load camera view process")
+            
     #Controls
     def triggerCtrl(self,w):
         self.windowCtrl.show_all()
-    def triggerPoweroff(self,w):
-        self.tmp = self.getApi("poweroff")
-    def triggerReboot(self,w):
-        self.tmp = self.getApi("reboot")
-    def triggerRestart(self,w):
-        self.tmp = self.getApi("restart")
-    def triggerBluetooth(self,w):
-        self.tmp = self.getApi("bluetooth")
     def triggerCtrlClose(self,w):
-        self.windowCtrl.hide()      
+        self.windowCtrl.hide()
+        
+    def triggerPoweroff(self,w):
+        subprocess.run([self.config['cli']['poweroff']])
+    def triggerReboot(self,w):
+        subprocess.run([self.config['cli']['reboot']])
+    def triggerRestart(self,w):
+        subprocess.run([self.config['cli']['restart']])
+    def triggerBluetooth(self,w):
+        subprocess.run([self.config['cli']['bluetooth']])
 
     #Updates
     def setUpdates(self):
-        jsonDatas = json.loads(self.getApi("datas"))
         attText = self.templateTextA.get_attributes()
-        if jsonDatas["time"] is not None:
-            self.dataDate.set_text(jsonDatas["date"])
-            self.dataTime.set_text(jsonDatas["time"])
-            self.textToday.set_text(jsonDatas["text_today"])
-            self.radioStreamUrl=jsonDatas["radio"]["url"]
-            self.dataMailboxUnread.set_text(str(jsonDatas["mailbox"]["unread"]))
-            self.dataMailboxRead.set_text(str(jsonDatas["mailbox"]["read"]))
-            self.dataWeatherTemp.set_text(jsonDatas["weather"]["temp"])
-            self.dataWeatherFeel.set_text(jsonDatas["weather"]["feel"])
-            self.dataWeatherTempMin.set_text(jsonDatas["weather"]["min"])
-            self.dataWeatherTempMax.set_text(jsonDatas["weather"]["max"])
-            self.dataWeatherClouds.set_text(str(jsonDatas["weather"]["clouds"]))
-            self.dataWeatherDetails.set_text(jsonDatas["weather"]["name"])        
-            rain = "rain" in jsonDatas["weather"]
-            snow = "snow" in jsonDatas["weather"]
-            if rain:
-                self.dataWeatherRain.set_text(str(jsonDatas["weather"]["rain"]))
-            else:
-                self.dataWeatherRain.set_text("-")
-            if snow:    
-                self.dataWeatherSnow.set_text(str(jsonDatas["weather"]["snow"]))
-            else:
-                self.dataWeatherSnow.set_text("-")
-            if jsonDatas["weather"]["ico"] != self.weatherUrl :
-                imageData=self.getImage(jsonDatas["weather"]["ico"])
-                self.weatherUrl = jsonDatas["weather"]["ico"]
-                self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))            
+        try:
+            mailbox=self.readJson(self.config['system']['cache'] + "mailbox.json")
+            self.dataMailboxUnread.set_text(str(mailbox["unread"]))
+            self.dataMailboxRead.set_text(str(mailbox["read"]))
+        except:
+            print("Cant't read mailbox datas")
+        try:
+            dateToday=self.readJson(self.config['system']['cache'] + "date.json")
+            today = datetime.now()
+            self.dataDate.set_text(str(dateToday["today"]))
+            self.dataTime.set_text(today.strftime("%H:%M"))
+            self.textToday.set_text(dateToday["today_text"])
+        except:
+            print("Cant't read date and time datas")
+        try:
+            todoToday=self.readJson(self.config['system']['cache'] + "todo.json")
             for row in self.listToday:
                 self.listToday.remove(row)
             row = Gtk.Box()
-            for todoItem in jsonDatas["todo"]:
-                box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+            for todoItem in todoToday:
+                box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=5)
                 toAdd = Gtk.Label()
                 toAdd.set_text("- " + self.cleanhtml(todoItem))
                 toAdd.set_attributes(attText)
@@ -346,10 +351,42 @@ class Deskboard():
                 row.add(box)
                 self.listToday.add(row)
             self.listToday.show_all()
-            self.radioInfo=jsonDatas["radio"]["title"] + " - " + jsonDatas["radio"]["songTitle"]
+        except:
+            print("Cant't read todo datas")
+        try:        
+            radio=self.readJson(self.config['system']['cache'] + "radio.json")
+            self.radioStreamUrl=radio["url"]
+            self.radioInfo=radio["title"] + " - " + radio["songTitle"]
+        except:
+            print("Cant't read radio datas")
+        try:
+            weather=self.readJson(self.config['system']['cache'] + "weather.json")
+            self.dataWeatherTemp.set_text(weather["temp"])
+            self.dataWeatherFeel.set_text(weather["feel"])
+            self.dataWeatherTempMin.set_text(weather["min"])
+            self.dataWeatherTempMax.set_text(weather["max"])
+            self.dataWeatherClouds.set_text(str(weather["clouds"]))
+            self.dataWeatherDetails.set_text(weather["name"])        
+            rain = "rain" in weather
+            snow = "snow" in weather
+            if rain:
+                self.dataWeatherRain.set_text(str(weather["rain"]))
+            else:
+                self.dataWeatherRain.set_text("-")
+            if snow:    
+                self.dataWeatherSnow.set_text(str(weather["snow"]))
+            else:
+                self.dataWeatherSnow.set_text("-")
+            if weather["ico"] != self.weatherUrl :
+                imageData=self.getImage(weather["ico"])
+                self.weatherUrl = weather["ico"]
+                self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        except:
+            print("Cant't read weather datas")  
         return True
     
     # Music Player
+    # With VLC libs
     def loadPlayer(self):
         self.imagePlayerAction.set_from_file(self.pathUI + "play.png")
         self.buttonPlayerAction.connect("clicked", self.triggerPlayer)
@@ -358,12 +395,15 @@ class Deskboard():
         self.threadPlayer.daemon=True 
         self.threadPlayer.start()
         
-    def threadPlayer(self):     
-        self.statePlayer = False
-        self.vlcInstance = vlc.Instance("--no-xlib --quiet")
-        self.player = self.vlcInstance.media_player_new()        
-        self.player.set_mrl(self.radioStreamUrl)
-        self.player.audio_set_volume(100)
+    def threadPlayer(self):
+        try:
+            self.statePlayer = False
+            self.vlcInstance = vlc.Instance("--no-xlib --quiet")
+            self.player = self.vlcInstance.media_player_new()        
+            self.player.set_mrl(self.radioStreamUrl)
+            self.player.audio_set_volume(100)
+        except:
+            print("Cant't load player process")
         
     def setPlayerUpdates(self):
         if(self.statePlayer == False):

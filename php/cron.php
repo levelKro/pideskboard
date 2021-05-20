@@ -51,15 +51,54 @@ start:
 	// DATE
 	if(DBRamRead("date_ding")!=date("l, j F, Y",time()) && date("H:i",time())=="00:00"){
 		if($cfg['system']['espeak']) speak(translateText("TIME_YOUARENOW")." ".translateDate(date("l, j F, Y",time())).".",$cfg['espeak']['module']);
-	}	
+		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time()))));
+	}
+	elseif(!file_exists($cfg['system']['cache']."date.json")) {
+		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time())),"today_text"=>translateText("TODAY")));
+	}
 	DBRamSave("date_ding",date("l, j F, Y",time()));		
 
+
+	// TODO Today
+	$todo=array();
+	$today=array(
+		"day"=>date("j",time()), // date
+		"day_pos"=>date("w",time()), // position in week
+		"day_num"=>date("z",time()), // position in the year
+		"week"=>date("W",time()), // position of the week
+		"month"=>date("n",time()), // month
+		"month_day"=>date("t",time()), // total day in the month
+		"year"=>date("Y",time()), // year
+		"unix"=>time()
+	);	
+	$fileday=$GLOBALS['system']['config']."calendar/".$today['month']."-".$today['day']."-".$today['year'].".txt";
+	if(file_exists($fileday)){
+		if($file=fopen($fileday,"r")){
+			while(!feof($file)) {
+				$line = fgets($file);
+				if($line!="") $todo[]=$line;
+			}
+			fclose($file);
+		}				
+	}
+	$fileday=$GLOBALS['system']['config']."calendar/".$today['month']."-".$today['day'].".txt";
+	if(file_exists($fileday)){
+		if($file=fopen($fileday,"r")){
+			while(!feof($file)) {
+				$line = fgets($file);
+				if($line!="") $todo[]=$line;
+			}
+			fclose($file);
+		}				
+	}	
+	if(count($todo)<=0) $todo[]=translateText("NOTHING");
+	jsonSave("todo",$todo);
 	
 	// Sync section
 	
 	// WEATHER
 	$weather=DBRead("weather");
-	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather && $cfg['webui']['weather']) {
+	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather) {
 		$sync['weather']['now']=time();
 		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['system']['language']."&units=metric";
@@ -90,7 +129,7 @@ start:
 	
 	// MAILBOX
 	$mailbox=DBRead("mail");
-	if((time()-$sync['mailbox']['now']) >= $sync['mailbox']['limit'] && $mailbox && $cfg['webui']['mail']) {
+	if((time()-$sync['mailbox']['now']) >= $sync['mailbox']['limit'] && $mailbox) {
 		$sync['mailbox']['now']=time();
 		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		$mbox = imap_open('{'.$mailbox['host'].':'.$mailbox['port'].'/imap/ssl/novalidate-cert}INBOX', $mailbox['user'], $mailbox['pass']);
@@ -126,7 +165,7 @@ start:
 	
 	// RADIO
 	$radio=DBRead("radio");
-	if((time()-$sync['radio']['now']) >= $sync['radio']['limit'] && $radio && $cfg['webui']['radio']) {
+	if((time()-$sync['radio']['now']) >= $sync['radio']['limit'] && $radio) {
 		$sync['radio']['now']=time();
 		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
 		require_once($GLOBALS['root']."sys/sc/shoutcast.php");	
