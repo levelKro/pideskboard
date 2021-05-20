@@ -10,13 +10,9 @@ See the feature list for all possibilities;
 * Todo list (read doc of the day system)
 * Time & Date (And tell the current time using eSpeak)
 * IP Camera streams (up to 5 MJpeg cameras) (currently in development, but add option to change it in future version, but available into Web UI with unlimited number)
-* Web interface for use with any recent Web browser on your network
-* Calendar (WebUI only, version python planned)
-* Network & Servers status (WebUI only, version python not planned)
-* List reader (WebUI only, version python planned)
-* Text reader (WebUI only, version python planned)
-* Weather forecast (WebUI only, version python planned)
+* Weather forecast (planned)
 * For working with LCD panel with touch (HDMI and/or SPI)
+* piWebCtrl embedded for control your Raspberry Pi quickly
 
 ## About this current version
 This version have a stable Web UI version and work-in-progress version for Python. 
