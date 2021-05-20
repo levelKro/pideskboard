@@ -1,14 +1,14 @@
 #!/usr/bin/python3
 import urllib.parse as urlparse
-from urllib.parse import parse_qs
 import http.server
 import socketserver
 import os
 import subprocess
 import configparser
-from os import path
 import json
 import psutil
+from urllib.parse import parse_qs
+from os import path
 from gpiozero import CPUTemperature
 
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -86,8 +86,11 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         return psutil.cpu_percent()
 
     def get_temperature(self):
-        cpu = CPUTemperature()
-        return cpu.temperature
+        try:
+            cpu = CPUTemperature()
+            return cpu.temperature
+        except:
+            return "n/a"
 
     def get_uptime(self):
         try:
