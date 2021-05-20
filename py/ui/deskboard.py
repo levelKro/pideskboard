@@ -311,13 +311,13 @@ class Deskboard():
         self.windowCtrl.hide()
         
     def triggerPoweroff(self,w):
-        subprocess.run([self.config['cli']['poweroff']])
+        os.system(self.config['cli']['poweroff'])
     def triggerReboot(self,w):
-        subprocess.run([self.config['cli']['reboot']])
+        os.system(self.config['cli']['reboot'])
     def triggerRestart(self,w):
-        subprocess.run([self.config['cli']['restart']])
+        os.system(self.config['cli']['restart'])
     def triggerBluetooth(self,w):
-        subprocess.run([self.config['cli']['bluetooth']])
+        os.system(self.config['cli']['bluetooth'])
 
     #Updates
     def setUpdates(self):
