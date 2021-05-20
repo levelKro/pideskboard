@@ -7,16 +7,26 @@
 	ini_set('ignore_repeated_errors', TRUE); // always use TRUE
 	ini_set('log_errors', TRUE); // Error/Exception file logging engine.
 	ini_set('error_log', '/home/pi/pideskboard/php/error.log'); // Logging file path	
-	require_once("/home/pi/pideskboard/configs/config.php");
+	require("/home/pi/pideskboard/configs/config.php");
 	require_once("sys/libs.php");
 
 	$sync=array(
 		"weather"	=>	array(	"limit"	=>	900,	"now"	=>	0),
 		"mailbox"	=>	array(	"limit"	=>	300,	"now"	=>	0),
 		"radio"		=>	array(	"limit"	=>	60,		"now"	=>	0),
+		"config"	=>	array(	"limit"	=>	60,		"now"	=>	0)
 	);
 start:
 	
+	// Reload config
+	if((time()-$sync['config']['now']) >= $sync['config']['limit']) {
+		$sync['config']['now']=time();
+		$cfg=readConfig(); // Reload config
+		if(!$cfg) die("Can't load config , can't find in ".dirname(__FILE__));
+		else $GLOBALS=$cfg;
+	}
+	
+	// Auto-reboot
 	if($cfg['system']['reboot']!==false){
 		if(date("G:i",time())==$cfg['system']['reboot']){
 			if($cfg['system']['icon']) system($cfg['icon']['path'].' 15000 '.$cfg['icon']['reboot'].' 3');
@@ -28,27 +38,27 @@ start:
 		}
 	}
 	
-	// Sound section
-	
-	// TIME
+	// Time notice
 	if(DBRamRead("time_ding")!=date("H",time()) && date("i",time())=="00"){
-	switch(date("G",time())){
-		case '0':
-		case '00':
-			if($cfg['system']['espeak']) speak(translateText("TIME_MIDNIGHT"),$cfg['espeak']['module']);
-		break;
-		case '1':
-			if($cfg['system']['espeak']) speak(translateText("TIME_ONEHOUR"),$cfg['espeak']['module']);
-		break;
-		case '12':
-			if($cfg['system']['espeak']) speak(translateText("TIME_DINER"),$cfg['espeak']['module']);
-		break;
-		default:
-			if($cfg['system']['espeak']) speak(str_replace("%HOUR%",date("G",time()),translateText("TIME_CURRENT")),$cfg['espeak']['module']);
+		
+		switch(date("G",time())){
+			case '0':
+			case '00':
+				if($cfg['system']['espeak']) speak(translateText("TIME_MIDNIGHT"),$cfg['espeak']['module']);
+			break;
+			case '1':
+				if($cfg['system']['espeak']) speak(translateText("TIME_ONEHOUR"),$cfg['espeak']['module']);
+			break;
+			case '12':
+				if($cfg['system']['espeak']) speak(translateText("TIME_DINER"),$cfg['espeak']['module']);
+			break;
+			default:
+				if($cfg['system']['espeak']) speak(str_replace("%HOUR%",date("G",time()),translateText("TIME_CURRENT")),$cfg['espeak']['module']);
 		}
 	}
 	DBRamSave("time_ding",date("H",time()));	
-	// DATE
+	
+	// Date change & notice
 	if(DBRamRead("date_ding")!=date("l, j F, Y",time()) && date("H:i",time())=="00:00"){
 		if($cfg['system']['espeak']) speak(translateText("TIME_YOUARENOW")." ".translateDate(date("l, j F, Y",time())).".",$cfg['espeak']['module']);
 		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time()))));
@@ -93,8 +103,6 @@ start:
 	}	
 	if(count($todo)<=0) $todo[]=translateText("NOTHING");
 	jsonSave("todo",$todo);
-	
-	// Sync section
 	
 	// WEATHER
 	$weather=DBRead("weather");
