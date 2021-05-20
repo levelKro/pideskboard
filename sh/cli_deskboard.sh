@@ -1,4 +1,3 @@
 #!/bin/bash
 cd /home/pi/pideskboard/py/ui
-#DISPLAY=:0 nohup python3 /home/pi/piDeskboard/app.py >/dev/null 2>&1 &
-DISPLAY=:0 nice python3 ./deskboard.py &
+DISPLAY=:0 nice python3 ./deskboard.py >/home/pi/pideskboard/py/deskboard.log  2>&1 &

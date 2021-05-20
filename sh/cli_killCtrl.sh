@@ -1,5 +1,4 @@
 #!/bin/bash
-
 let pid=$(pgrep -f webctrl.py)
 echo "Found PID: $pid"
 if [[ ! -z "$pid" ]]
