@@ -11,6 +11,11 @@ from urllib.parse import parse_qs
 from os import path
 from gpiozero import CPUTemperature
 
+config = configparser.ConfigParser()
+config.read('../../configs/config.ini')
+WEBPATH=config['system']['path']+"ctrl/web"
+os.chdir(WEBPATH)
+
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         pathSplit = self.path.split("?")
@@ -37,16 +42,22 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             if self.getPass(self.path) == config['ctrl']['pass']:
                 if pathSection[2] == "reboot":
                     self.wfile.write(bytes('{"html":"Rebooting the Raspberry Pi","cmd":null}', "utf-8"))
-                    os.system([self.config['cli']['reboot']])
+                    os.system(config['cli']['reboot'])
                 elif pathSection[2] == "poweroff":
                     self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
-                    os.system([self.config['cli']['poweroff']])
+                    os.system(config['cli']['poweroff'])
                 elif pathSection[2] == "restart":
                     self.wfile.write(bytes('{"html":"Restarting the UI","cmd":null}', "utf-8"))
-                    os.system([self.config['cli']['restart']])
+                    os.system(config['cli']['restart'])
+                elif pathSection[2] == "start":
+                    self.wfile.write(bytes('{"html":"Starting the UI","cmd":null}', "utf-8"))
+                    os.system(config['cli']['start'])
+                elif pathSection[2] == "kill":
+                    self.wfile.write(bytes('{"html":"Killing the UI","cmd":null}', "utf-8"))
+                    os.system(config['cli']['kill'])
                 elif pathSection[2] == "bluetooth":
                     self.wfile.write(bytes('{"html":"Restarting the Bluetooth","cmd":null}', "utf-8"))
-                    os.system([self.config['cli']['bluetooth']])
+                    os.system(config['cli']['bluetooth'])
                 elif pathSection[2] == "service":
                     if pathSection[3] == "start" and pathSection[4] is not None:
                         self.wfile.write(bytes('{"html":"Starting the ' + pathSection[4] + ' service.","cmd":null}', "utf-8"))
@@ -125,10 +136,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         except:
             return "n/a"
         
-config = configparser.ConfigParser()
-config.read('../../configs/config.ini')
-WEBPATH=config['system']['path']+"ctrl/web"
-os.chdir(WEBPATH)
+
 handler_object = MyHttpRequestHandler
 my_server = socketserver.TCPServer(("0.0.0.0", int(config['ctrl']['port'])), handler_object)
 my_server.serve_forever()

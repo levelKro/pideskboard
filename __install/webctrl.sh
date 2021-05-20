@@ -20,24 +20,12 @@ case "$1" in
     /home/pi/pideskboard/sh/cli_webctrl.sh &
     ;;
   stop)
-    let pid=$(pgrep -f webctrl.py)
-    echo "Found PID: $pid"
-    if [[ ! -z "$pid" ]]
-    then
-      echo "Kill process"
-      sudo kill -9 $pid
-    fi
+    echo "Stop process"
+	/home/pi/pideskboard/sh/cli_killCtrl.sh &
     ;;
   restart)
-    let pid=$(pgrep -f webctrl.py)
-    echo "Found PID: $pid"
-    if [[ ! -z "$pid" ]]
-    then
-      echo "Kill process"
-      sudo kill -9 $pid
-    fi
-	echo "Start process"
-    /home/pi/pideskboard/sh/cli_webctrl.sh &
+    echo "Re-Start process"
+    /home/pi/pideskboard/sh/cli_restartCtrl.sh &
     ;;        
   *)
     echo $"Usage: piwebctrl.sh {start} {stop} {restart}"

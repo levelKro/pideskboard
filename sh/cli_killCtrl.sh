@@ -6,6 +6,4 @@ if [[ ! -z "$pid" ]]
 then
 	echo "Kill and restart"
 	sudo kill -9 $pid
-	sleep 2
-	/home/pi/pideskboard/sh/cli_webctrl.sh
 fi
