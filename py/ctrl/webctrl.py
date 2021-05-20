@@ -42,10 +42,10 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
                     self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
                     os.system([self.config['cli']['poweroff']])
                 elif pathSection[2] == "restart":
-                    self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
+                    self.wfile.write(bytes('{"html":"Restarting the UI","cmd":null}', "utf-8"))
                     os.system([self.config['cli']['restart']])
                 elif pathSection[2] == "bluetooth":
-                    self.wfile.write(bytes('{"html":"Powering off the Raspberry Pi","cmd":null}', "utf-8"))
+                    self.wfile.write(bytes('{"html":"Restarting the Bluetooth","cmd":null}', "utf-8"))
                     os.system([self.config['cli']['bluetooth']])
                 elif pathSection[2] == "service":
                     if pathSection[3] == "start" and pathSection[4] is not None:

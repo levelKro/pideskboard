@@ -12,7 +12,7 @@ from gi.repository import GLib
 from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
-from datetime import datetime
+from datetime import datetime as dt
 
 #Main Class
 class Deskboard():
@@ -221,88 +221,76 @@ class Deskboard():
     #Mode Preview (Less CPU usage)
         
     def triggerMJpegCameraPreview(self,w,id):
-        try:
-            self.windowMJpeg.show_all()
-            self.textMJpegStream.set_text("Camera " + str(id))
-            self.id=id
-            self.stream = self.config['cameras']['camImage' + str(id)]
-            self.threadCamera = threading.Thread(target=self.startCameraPreview)
-            self.stateCamera = True
-            self.threadCamera.daemon=True 
-            self.threadCamera.start()          
-        except:
-            print("Cant't load camera process")
+        self.windowMJpeg.show_all()
+        self.textMJpegStream.set_text("Camera " + str(id))
+        self.id=id
+        self.stream = self.config['cameras']['camImage' + str(id)]
+        self.threadCamera = threading.Thread(target=self.startCameraPreview)
+        self.stateCamera = True
+        self.threadCamera.daemon=True 
+        self.threadCamera.start()          
         
     def startCameraPreview(self):
-        try:
-            id=self.id
-            error = 0
-            while(True):
-                if id != self.id or self.stateCamera == False:
-                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                    break
-                thisFrame = self.getImage(self.stream)
-                thisFrameFile = Pixbuf.new_from_file(thisFrame)
-                if thisFrameFile is None and error >= 3:
-                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                    break
-                elif thisFrameFile is None:
-                    error += 1
-                else:
-                    error = 0
-                    thisFrameFileResize = thisFrameFile.scale_simple(self.camResizeWidth, self.camResizeHeight, InterpType.BILINEAR)
-                    dateTimeObj = datetime.datetime.now()
-                    dateString = dateTimeObj.strftime("%H:%M:%S")
-                    thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,self.camResizeWidth-self.camTimePosition,10)
-                    GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,thisFrameFileTimestamp)
-                time.sleep(5)
-        except:
-            print("Cant't load camera preview process")
+        id=self.id
+        error = 0
+        while(True):
+            if id != self.id or self.stateCamera == False:
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                break
+            thisFrame = self.getImage(self.stream)
+            thisFrameFile = Pixbuf.new_from_file(thisFrame)
+            if thisFrameFile is None and error >= 3:
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                break
+            elif thisFrameFile is None:
+                error += 1
+            else:
+                error = 0
+                thisFrameFileResize = thisFrameFile.scale_simple(self.camResizeWidth, self.camResizeHeight, InterpType.BILINEAR)
+                dateTimeObj = datetime.datetime.now()
+                dateString = dateTimeObj.strftime("%H:%M:%S")
+                thisFrameFileTimestamp = self.imageText(thisFrameFileResize,dateString,self.camResizeWidth-self.camTimePosition,10)
+                GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,thisFrameFileTimestamp)
+            time.sleep(5)
     
     #Mode Live (More CPU Usage)
     def triggerMJpegCamera(self,w,id):
-        try:
-            self.windowMJpeg.show_all()
-            self.textMJpegStream.set_text("Camera " + str(id))
-            self.id=id
-            self.stream = self.config['cameras']['cam' + str(id)]
-            self.threadCamera = threading.Thread(target=self.startCamera)
-            self.stateCamera = True
-            self.threadCamera.daemon=True 
-            self.threadCamera.start()
-        except:
-            print("Cant't load camera process")
+        self.windowMJpeg.show_all()
+        self.textMJpegStream.set_text("Camera " + str(id))
+        self.id=id
+        self.stream = self.config['cameras']['cam' + str(id)]
+        self.threadCamera = threading.Thread(target=self.startCamera)
+        self.stateCamera = True
+        self.threadCamera.daemon=True 
+        self.threadCamera.start()
         
     def startCamera(self):
-        try:
-            id=self.id
-            jump = 0
-            self.capture_video = cv2.VideoCapture(self.stream)
-            while(True):
-                if id != self.id or self.stateCamera == False:
-                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                    break
-                ret, img = self.capture_video.read()
-                if img is None:
-                    GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
-                    break
-                if jump == 0:
-                    jump = 1
-                    img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                    imgResize = cv2.resize(img, (self.camResizeWidth, self.camResizeHeight))
-                    imageWorked = np.array(imgResize).ravel()
-                    imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, self.camResizeWidth, self.camResizeHeight, 3*self.camResizeWidth)
-                    dateTimeObj = datetime.datetime.now()
-                    dateString = dateTimeObj.strftime("%H:%M:%S")
-                    imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,self.camResizeWidth-self.camTimePosition,10)                
-                    GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbufTimestam)
-                elif jump >= 5:
-                    jump = 0
-                else:
-                    jump += 1
-                #time.sleep(0.2)         
-        except:
-            print("Cant't load camera view process")
+        id=self.id
+        jump = 0
+        self.capture_video = cv2.VideoCapture(self.stream)
+        while(True):
+            if id != self.id or self.stateCamera == False:
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                break
+            ret, img = self.capture_video.read()
+            if img is None:
+                GLib.idle_add(self.imageMJpegStream.set_from_file,self.pathUI + "nocamera.jpg")
+                break
+            if jump == 0:
+                jump = 1
+                img=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                imgResize = cv2.resize(img, (self.camResizeWidth, self.camResizeHeight))
+                imageWorked = np.array(imgResize).ravel()
+                imagePixbuf = GdkPixbuf.Pixbuf.new_from_data(imageWorked,GdkPixbuf.Colorspace.RGB, False, 8, self.camResizeWidth, self.camResizeHeight, 3*self.camResizeWidth)
+                dateTimeObj = datetime.datetime.now()
+                dateString = dateTimeObj.strftime("%H:%M:%S")
+                imagePixbufTimestamp = self.imageText(imagePixbuf,dateString,self.camResizeWidth-self.camTimePosition,10)                
+                GLib.idle_add(self.imageMJpegStream.set_from_pixbuf,imagePixbufTimestam)
+            elif jump >= 5:
+                jump = 0
+            else:
+                jump += 1
+            #time.sleep(0.2)         
             
     #Controls
     def triggerCtrl(self,w):
@@ -330,7 +318,7 @@ class Deskboard():
             print("Cant't read mailbox datas")
         try:
             dateToday=self.readJson(self.config['system']['cache'] + "date.json")
-            today = datetime.now()
+            today = dt.now()
             self.dataDate.set_text(str(dateToday["today"]))
             self.dataTime.set_text(today.strftime("%H:%M"))
             self.textToday.set_text(dateToday["today_text"])
@@ -396,14 +384,11 @@ class Deskboard():
         self.threadPlayer.start()
         
     def threadPlayer(self):
-        try:
-            self.statePlayer = False
-            self.vlcInstance = vlc.Instance("--no-xlib --quiet")
-            self.player = self.vlcInstance.media_player_new()        
-            self.player.set_mrl(self.radioStreamUrl)
-            self.player.audio_set_volume(100)
-        except:
-            print("Cant't load player process")
+        self.statePlayer = False
+        self.vlcInstance = vlc.Instance("--no-xlib --quiet")
+        self.player = self.vlcInstance.media_player_new()        
+        self.player.set_mrl(self.radioStreamUrl)
+        self.player.audio_set_volume(100)
         
     def setPlayerUpdates(self):
         if(self.statePlayer == False):
