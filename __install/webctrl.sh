@@ -17,8 +17,7 @@ RETVAL=0
 case "$1" in
   start)
     echo "Start process"
-    cd /home/pi/pideskboard/py/ctrl
-    python3 ./piwebctrl.py &
+    /home/pi/pideskboard/sh/cli_webctrl.sh &
     ;;
   stop)
     let pid=$(pgrep -f webctrl.py)
@@ -38,8 +37,7 @@ case "$1" in
       sudo kill -9 $pid
     fi
 	echo "Start process"
-    cd /home/pi/pideskboard/py/ctrl
-    python3 ./piwebctrl.py &
+    /home/pi/pideskboard/sh/cli_webctrl.sh &
     ;;        
   *)
     echo $"Usage: piwebctrl.sh {start} {stop} {restart}"
