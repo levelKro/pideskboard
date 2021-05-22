@@ -132,7 +132,7 @@ start:
 		}
 		$return['image']='<i class="fas fa-'.getWeatherIcon($weather['remote']->weather[0]->id).' '.getWeatherColor($weather['remote']->weather[0]->id).'"></i>';	
 		jsonSave("weather",$return);
-			
+		unset($output);	
 		// Extended informations
 		$jsonurl = "http://api.openweathermap.org/data/2.5/forecast?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
 		$json = file_get_contents($jsonurl);
