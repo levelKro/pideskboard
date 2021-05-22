@@ -42,6 +42,19 @@ class Deskboard():
         response.close()
         return fname
 
+    def getImageResize(self,url,basewidth,baseheight):
+        response = requests.get(url)
+        fname = url.split("/")[-1]
+        f = open(fname, "wb")
+        f.write(response.content)
+        f.close()
+        response.close()
+        img = Image.open(fname)
+        img = img.resize((basewidth, baseheight), Image.ANTIALIAS)
+        frname = basewidth+"x"+baseheight+"-"+fname
+        img.save(frname)
+        return frname
+
     def cleanhtml(self,raw_html):
         cleanr = re.compile('<.*?>')
         cleantext = re.sub(cleanr, '', raw_html)
