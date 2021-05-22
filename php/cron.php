@@ -61,7 +61,7 @@ start:
 	// Date change & notice
 	if(DBRamRead("date_ding")!=date("l, j F, Y",time()) && date("H:i",time())=="00:00"){
 		if($cfg['system']['espeak']) speak(translateText("TIME_YOUARENOW")." ".translateDate(date("l, j F, Y",time())).".",$cfg['espeak']['module']);
-		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time()))));
+		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time())),"today_text"=>translateText("TODAY")));
 	}
 	elseif(!file_exists($cfg['system']['cache']."date.json")) {
 		jsonSave("date",array("today"=>translateDate(date("l, j F, Y",time())),"today_text"=>translateText("TODAY")));

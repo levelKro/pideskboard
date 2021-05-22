@@ -107,7 +107,7 @@ class Deskboard():
                 self.camTimePosition=120
             elif self.config['system']['resolution'] == "800x480":
                 #800x480
-                self.mwmarquee = 23
+                self.mwmarquee = 20
                 self.resoWidth = 800
                 self.resoHeight = 480
                 self.camResizeWidth=320
@@ -116,7 +116,7 @@ class Deskboard():
                 self.camTimePosition=60
             else:
                 #480x320, default
-                self.mwmarquee = 17
+                self.mwmarquee = 15
                 self.resoWidth = 480
                 self.resoHeight = 320
                 self.camResizeWidth=320
@@ -127,7 +127,7 @@ class Deskboard():
             self.a = 0
             self.z = self.mwmarquee 
         except:
-            print("Cant't load configurations datas")
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't load configurations datas")
             exit()
         
     def saveConfig(self):
@@ -315,7 +315,7 @@ class Deskboard():
             self.dataMailboxUnread.set_text(str(mailbox["unread"]))
             self.dataMailboxRead.set_text(str(mailbox["read"]))
         except:
-            print("Cant't read mailbox datas")
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read mailbox datas")
         try:
             dateToday=self.readJson(self.config['system']['cache'] + "date.json")
             today = dt.now()
@@ -323,7 +323,7 @@ class Deskboard():
             self.dataTime.set_text(today.strftime("%H:%M"))
             self.textToday.set_text(dateToday["today_text"])
         except:
-            print("Cant't read date and time datas")
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read date and time datas")
         try:
             todoToday=self.readJson(self.config['system']['cache'] + "todo.json")
             for row in self.listToday:
@@ -340,13 +340,13 @@ class Deskboard():
                 self.listToday.add(row)
             self.listToday.show_all()
         except:
-            print("Cant't read todo datas")
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read todo datas")
         try:        
             radio=self.readJson(self.config['system']['cache'] + "radio.json")
             self.radioStreamUrl=radio["url"]
             self.radioInfo=radio["title"] + " - " + radio["songTitle"]
         except:
-            print("Cant't read radio datas")
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read radio datas")
         try:
             weather=self.readJson(self.config['system']['cache'] + "weather.json")
             self.dataWeatherTemp.set_text(weather["temp"])
@@ -370,7 +370,7 @@ class Deskboard():
                 self.weatherUrl = weather["ico"]
                 self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))
         except:
-            print("Cant't read weather datas")  
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read weather datas")  
         return True
     
     # Music Player
