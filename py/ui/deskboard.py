@@ -514,148 +514,150 @@ class Deskboard():
                 self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read weather datas")
-
-        forecast=self.readJson(self.config['system']['cache'] + "forecast.json")
-        if forecast["today"][0]["ico"] != self.weatherUrlFC1 :
-            imageData=self.getImageResize(forecast["today"][0]["ico"],self.forecastResize,self.forecastResize)
-            self.weatherUrlFC1 = forecast["today"][0]["ico"]
-            self.fcToday1ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
-        self.fcToday1temp.set_text(forecast["today"][0]['temp'])
-        self.fcToday1feel.set_text(forecast["today"][0]['feel'])
-        self.fcToday1min.set_text(forecast["today"][0]['min'])
-        self.fcToday1max.set_text(forecast["today"][0]['max'])
-        self.fcToday1wind.set_text(forecast["today"][0]['winds'])
-        self.fcToday1clouds.set_text(forecast["today"][0]['clouds'])
-        self.fcToday1snow.set_text(forecast["today"][0]['snow'])
-        self.fcToday1rain.set_text(forecast["today"][0]['rain'])
-        self.fcToday1humidity.set_text(forecast["today"][0]['humidity'])
-        self.fcToday1details.set_text(forecast["today"][0]['details'])
-        if self.fcToday1time:
-            self.fcToday1time.set_text(forecast["today"][0]['hour']+"H")
+            try:
+            forecast=self.readJson(self.config['system']['cache'] + "forecast.json")
+            if forecast["today"][0]["ico"] != self.weatherUrlFC1 :
+                imageData=self.getImageResize(forecast["today"][0]["ico"],self.forecastResize,self.forecastResize)
+                self.weatherUrlFC1 = forecast["today"][0]["ico"]
+                self.fcToday1ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+            self.fcToday1temp.set_text(forecast["today"][0]['temp'])
+            self.fcToday1feel.set_text(forecast["today"][0]['feel'])
+            self.fcToday1min.set_text(forecast["today"][0]['min'])
+            self.fcToday1max.set_text(forecast["today"][0]['max'])
+            self.fcToday1wind.set_text(forecast["today"][0]['winds'])
+            self.fcToday1clouds.set_text(forecast["today"][0]['clouds'])
+            self.fcToday1snow.set_text(forecast["today"][0]['snow'])
+            self.fcToday1rain.set_text(forecast["today"][0]['rain'])
+            self.fcToday1humidity.set_text(forecast["today"][0]['humidity'])
+            self.fcToday1details.set_text(forecast["today"][0]['details'])
+            if self.fcToday1time:
+                self.fcToday1time.set_text(forecast["today"][0]['hour']+"H")
+                
             
-        
-        if forecast["today"][1]["ico"] != self.weatherUrlFC2 :
-            imageData=self.getImageResize(forecast["today"][1]["ico"],self.forecastResize,self.forecastResize)
-            self.weatherUrlFC2 = forecast["today"][1]["ico"]
-            self.fcToday2ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
-        self.fcToday2temp.set_text(forecast["today"][1]['temp'])
-        self.fcToday2feel.set_text(forecast["today"][1]['feel'])
-        self.fcToday2min.set_text(forecast["today"][1]['min'])
-        self.fcToday2max.set_text(forecast["today"][1]['max'])
-        self.fcToday2wind.set_text(forecast["today"][1]['winds'])
-        self.fcToday2clouds.set_text(forecast["today"][1]['clouds'])
-        self.fcToday2snow.set_text(forecast["today"][1]['snow'])
-        self.fcToday2rain.set_text(forecast["today"][1]['rain'])
-        self.fcToday2humidity.set_text(forecast["today"][1]['humidity'])
-        self.fcToday2details.set_text(forecast["today"][1]['details'])
-        if self.fcToday2time:
-            self.fcToday2time.set_text(forecast["today"][1]['hour']+"H")
-        
-        
-        if forecast["today"][2]["ico"] != self.weatherUrlFC3 :
-            imageData=self.getImageResize(forecast["today"][2]["ico"],self.forecastResize,self.forecastResize)
-            self.weatherUrlFC3 = forecast["today"][2]["ico"]
-            self.fcToday3ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
-        self.fcToday3temp.set_text(forecast["today"][2]['temp'])
-        self.fcToday3feel.set_text(forecast["today"][2]['feel'])
-        self.fcToday3min.set_text(forecast["today"][2]['min'])
-        self.fcToday3max.set_text(forecast["today"][2]['max'])
-        self.fcToday3wind.set_text(forecast["today"][2]['winds'])
-        self.fcToday3clouds.set_text(forecast["today"][2]['clouds'])
-        self.fcToday3snow.set_text(forecast["today"][2]['snow'])
-        self.fcToday3rain.set_text(forecast["today"][2]['rain'])
-        self.fcToday3humidity.set_text(forecast["today"][2]['humidity'])
-        self.fcToday3details.set_text(forecast["today"][2]['details'])
-        if self.fcToday3time:
-            self.fcToday3time.set_text(forecast["today"][2]['hour']+"H")
-        
-        
-        if forecast["today"][3]["ico"] != self.weatherUrlFC4 :
-            imageData=self.getImageResize(forecast["today"][3]["ico"],self.forecastResize,self.forecastResize)
-            self.weatherUrlFC4 = forecast["today"][3]["ico"]
-            self.fcToday4ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
-        self.fcToday4temp.set_text(forecast["today"][3]['temp'])
-        self.fcToday4feel.set_text(forecast["today"][3]['feel'])
-        self.fcToday4min.set_text(forecast["today"][3]['min'])
-        self.fcToday4max.set_text(forecast["today"][3]['max'])
-        self.fcToday4wind.set_text(forecast["today"][3]['winds'])
-        self.fcToday4clouds.set_text(forecast["today"][3]['clouds'])
-        self.fcToday4snow.set_text(forecast["today"][3]['snow'])
-        self.fcToday4rain.set_text(forecast["today"][3]['rain'])
-        self.fcToday4humidity.set_text(forecast["today"][3]['humidity'])
-        self.fcToday4details.set_text(forecast["today"][3]['details'])
-        if self.fcToday4time:
-            self.fcToday4time.set_text(forecast["today"][3]['hour']+"H")
-        
-        
-        if forecast["today"][4]["ico"] != self.weatherUrlFC5 :
-            imageData=self.getImageResize(forecast["today"][4]["ico"],self.forecastResize,self.forecastResize)
-            self.weatherUrlFC5 = forecast["today"][4]["ico"]
-            self.fcToday5ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
-        self.fcToday5temp.set_text(forecast["today"][4]['temp'])
-        self.fcToday5feel.set_text(forecast["today"][4]['feel'])
-        self.fcToday5min.set_text(forecast["today"][4]['min'])
-        self.fcToday5max.set_text(forecast["today"][4]['max'])
-        self.fcToday5wind.set_text(forecast["today"][4]['winds'])
-        self.fcToday5clouds.set_text(forecast["today"][4]['clouds'])
-        self.fcToday5snow.set_text(forecast["today"][4]['snow'])
-        self.fcToday5rain.set_text(forecast["today"][4]['rain'])
-        self.fcToday5humidity.set_text(forecast["today"][4]['humidity'])
-        self.fcToday5details.set_text(forecast["today"][4]['details'])
-        if self.fcToday5time:
-            self.fcToday5time.set_text(forecast["today"][4]['hour']+"H")
-        
-        self.fcNext1day.set_text(forecast["next"][0]['day'])
-        self.fcNext1min.set_text(forecast["next"][0]['min'])
-        self.fcNext1max.set_text(forecast["next"][0]['max'])
-        self.fcNext1snow.set_text(forecast["next"][0]['snow'])
-        self.fcNext1rain.set_text(forecast["next"][0]['rain'])
-        if self.fcNext1week:
-            self.fcNext1week.set_text(forecast["next"][0]['text_day'])
-            self.fcNext1month.set_text(forecast["next"][0]['text_month'])         
-        self.fcNext2day.set_text(forecast["next"][1]['day'])
-        self.fcNext2min.set_text(forecast["next"][1]['min'])
-        self.fcNext2max.set_text(forecast["next"][1]['max'])
-        self.fcNext2snow.set_text(forecast["next"][1]['snow'])
-        self.fcNext2rain.set_text(forecast["next"][1]['rain']) 
-        if self.fcNext2week:
-            self.fcNext2week.set_text(forecast["next"][1]['text_day'])
-            self.fcNext2month.set_text(forecast["next"][1]['text_month'])        
-        self.fcNext3day.set_text(forecast["next"][2]['day'])
-        self.fcNext3min.set_text(forecast["next"][2]['min'])
-        self.fcNext3max.set_text(forecast["next"][2]['max'])
-        self.fcNext3snow.set_text(forecast["next"][2]['snow'])
-        self.fcNext3rain.set_text(forecast["next"][2]['rain'])
-        if self.fcNext3week:
-            self.fcNext3week.set_text(forecast["next"][2]['text_day'])
-            self.fcNext3month.set_text(forecast["next"][2]['text_month'])         
-        self.fcNext4day.set_text(forecast["next"][3]['day'])
-        self.fcNext4min.set_text(forecast["next"][3]['min'])
-        self.fcNext4max.set_text(forecast["next"][3]['max'])
-        self.fcNext4snow.set_text(forecast["next"][3]['snow'])
-        self.fcNext4rain.set_text(forecast["next"][3]['rain'])
-        if self.fcNext4week:
-            self.fcNext4week.set_text(forecast["next"][3]['text_day'])
-            self.fcNext4month.set_text(forecast["next"][3]['text_month']) 
-        chktmp = 4 in forecast["next"]
-        if chktmp:
-            self.fcNext5day.set_text(forecast["next"][4]['day'])
-            self.fcNext5min.set_text(forecast["next"][4]['min'])
-            self.fcNext5max.set_text(forecast["next"][4]['max'])
-            self.fcNext5snow.set_text(forecast["next"][4]['snow'])
-            self.fcNext5rain.set_text(forecast["next"][4]['rain'])
-            if self.fcNext5week:
-                self.fcNext5week.set_text(forecast["next"][4]['text_day'])
-                self.fcNext5month.set_text(forecast["next"][4]['text_month']) 
-        else:
-            self.fcNext5day.set_text("n/a")
-            self.fcNext5min.set_text("-")
-            self.fcNext5max.set_text("-")
-            self.fcNext5snow.set_text("-")
-            self.fcNext5rain.set_text("-")
-            if self.fcNext5week:
-                self.fcNext5week.set_text("")
-                self.fcNext5month.set_text("") 
+            if forecast["today"][1]["ico"] != self.weatherUrlFC2 :
+                imageData=self.getImageResize(forecast["today"][1]["ico"],self.forecastResize,self.forecastResize)
+                self.weatherUrlFC2 = forecast["today"][1]["ico"]
+                self.fcToday2ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+            self.fcToday2temp.set_text(forecast["today"][1]['temp'])
+            self.fcToday2feel.set_text(forecast["today"][1]['feel'])
+            self.fcToday2min.set_text(forecast["today"][1]['min'])
+            self.fcToday2max.set_text(forecast["today"][1]['max'])
+            self.fcToday2wind.set_text(forecast["today"][1]['winds'])
+            self.fcToday2clouds.set_text(forecast["today"][1]['clouds'])
+            self.fcToday2snow.set_text(forecast["today"][1]['snow'])
+            self.fcToday2rain.set_text(forecast["today"][1]['rain'])
+            self.fcToday2humidity.set_text(forecast["today"][1]['humidity'])
+            self.fcToday2details.set_text(forecast["today"][1]['details'])
+            if self.fcToday2time:
+                self.fcToday2time.set_text(forecast["today"][1]['hour']+"H")
+            
+            
+            if forecast["today"][2]["ico"] != self.weatherUrlFC3 :
+                imageData=self.getImageResize(forecast["today"][2]["ico"],self.forecastResize,self.forecastResize)
+                self.weatherUrlFC3 = forecast["today"][2]["ico"]
+                self.fcToday3ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+            self.fcToday3temp.set_text(forecast["today"][2]['temp'])
+            self.fcToday3feel.set_text(forecast["today"][2]['feel'])
+            self.fcToday3min.set_text(forecast["today"][2]['min'])
+            self.fcToday3max.set_text(forecast["today"][2]['max'])
+            self.fcToday3wind.set_text(forecast["today"][2]['winds'])
+            self.fcToday3clouds.set_text(forecast["today"][2]['clouds'])
+            self.fcToday3snow.set_text(forecast["today"][2]['snow'])
+            self.fcToday3rain.set_text(forecast["today"][2]['rain'])
+            self.fcToday3humidity.set_text(forecast["today"][2]['humidity'])
+            self.fcToday3details.set_text(forecast["today"][2]['details'])
+            if self.fcToday3time:
+                self.fcToday3time.set_text(forecast["today"][2]['hour']+"H")
+            
+            
+            if forecast["today"][3]["ico"] != self.weatherUrlFC4 :
+                imageData=self.getImageResize(forecast["today"][3]["ico"],self.forecastResize,self.forecastResize)
+                self.weatherUrlFC4 = forecast["today"][3]["ico"]
+                self.fcToday4ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+            self.fcToday4temp.set_text(forecast["today"][3]['temp'])
+            self.fcToday4feel.set_text(forecast["today"][3]['feel'])
+            self.fcToday4min.set_text(forecast["today"][3]['min'])
+            self.fcToday4max.set_text(forecast["today"][3]['max'])
+            self.fcToday4wind.set_text(forecast["today"][3]['winds'])
+            self.fcToday4clouds.set_text(forecast["today"][3]['clouds'])
+            self.fcToday4snow.set_text(forecast["today"][3]['snow'])
+            self.fcToday4rain.set_text(forecast["today"][3]['rain'])
+            self.fcToday4humidity.set_text(forecast["today"][3]['humidity'])
+            self.fcToday4details.set_text(forecast["today"][3]['details'])
+            if self.fcToday4time:
+                self.fcToday4time.set_text(forecast["today"][3]['hour']+"H")
+            
+            
+            if forecast["today"][4]["ico"] != self.weatherUrlFC5 :
+                imageData=self.getImageResize(forecast["today"][4]["ico"],self.forecastResize,self.forecastResize)
+                self.weatherUrlFC5 = forecast["today"][4]["ico"]
+                self.fcToday5ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+            self.fcToday5temp.set_text(forecast["today"][4]['temp'])
+            self.fcToday5feel.set_text(forecast["today"][4]['feel'])
+            self.fcToday5min.set_text(forecast["today"][4]['min'])
+            self.fcToday5max.set_text(forecast["today"][4]['max'])
+            self.fcToday5wind.set_text(forecast["today"][4]['winds'])
+            self.fcToday5clouds.set_text(forecast["today"][4]['clouds'])
+            self.fcToday5snow.set_text(forecast["today"][4]['snow'])
+            self.fcToday5rain.set_text(forecast["today"][4]['rain'])
+            self.fcToday5humidity.set_text(forecast["today"][4]['humidity'])
+            self.fcToday5details.set_text(forecast["today"][4]['details'])
+            if self.fcToday5time:
+                self.fcToday5time.set_text(forecast["today"][4]['hour']+"H")
+            
+            self.fcNext1day.set_text(forecast["next"][0]['day'])
+            self.fcNext1min.set_text(forecast["next"][0]['min'])
+            self.fcNext1max.set_text(forecast["next"][0]['max'])
+            self.fcNext1snow.set_text(forecast["next"][0]['snow'])
+            self.fcNext1rain.set_text(forecast["next"][0]['rain'])
+            if self.fcNext1week:
+                self.fcNext1week.set_text(forecast["next"][0]['text_day'])
+                self.fcNext1month.set_text(forecast["next"][0]['text_month'])         
+            self.fcNext2day.set_text(forecast["next"][1]['day'])
+            self.fcNext2min.set_text(forecast["next"][1]['min'])
+            self.fcNext2max.set_text(forecast["next"][1]['max'])
+            self.fcNext2snow.set_text(forecast["next"][1]['snow'])
+            self.fcNext2rain.set_text(forecast["next"][1]['rain']) 
+            if self.fcNext2week:
+                self.fcNext2week.set_text(forecast["next"][1]['text_day'])
+                self.fcNext2month.set_text(forecast["next"][1]['text_month'])        
+            self.fcNext3day.set_text(forecast["next"][2]['day'])
+            self.fcNext3min.set_text(forecast["next"][2]['min'])
+            self.fcNext3max.set_text(forecast["next"][2]['max'])
+            self.fcNext3snow.set_text(forecast["next"][2]['snow'])
+            self.fcNext3rain.set_text(forecast["next"][2]['rain'])
+            if self.fcNext3week:
+                self.fcNext3week.set_text(forecast["next"][2]['text_day'])
+                self.fcNext3month.set_text(forecast["next"][2]['text_month'])         
+            self.fcNext4day.set_text(forecast["next"][3]['day'])
+            self.fcNext4min.set_text(forecast["next"][3]['min'])
+            self.fcNext4max.set_text(forecast["next"][3]['max'])
+            self.fcNext4snow.set_text(forecast["next"][3]['snow'])
+            self.fcNext4rain.set_text(forecast["next"][3]['rain'])
+            if self.fcNext4week:
+                self.fcNext4week.set_text(forecast["next"][3]['text_day'])
+                self.fcNext4month.set_text(forecast["next"][3]['text_month']) 
+            chktmp = 4 in forecast["next"]
+            if chktmp:
+                self.fcNext5day.set_text(forecast["next"][4]['day'])
+                self.fcNext5min.set_text(forecast["next"][4]['min'])
+                self.fcNext5max.set_text(forecast["next"][4]['max'])
+                self.fcNext5snow.set_text(forecast["next"][4]['snow'])
+                self.fcNext5rain.set_text(forecast["next"][4]['rain'])
+                if self.fcNext5week:
+                    self.fcNext5week.set_text(forecast["next"][4]['text_day'])
+                    self.fcNext5month.set_text(forecast["next"][4]['text_month']) 
+            else:
+                self.fcNext5day.set_text("n/a")
+                self.fcNext5min.set_text("-")
+                self.fcNext5max.set_text("-")
+                self.fcNext5snow.set_text("-")
+                self.fcNext5rain.set_text("-")
+                if self.fcNext5week:
+                    self.fcNext5week.set_text("")
+                    self.fcNext5month.set_text("") 
+        except:
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read forecast datas")
             
         return True
     
