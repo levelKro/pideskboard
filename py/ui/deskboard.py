@@ -13,6 +13,7 @@ from gi.repository import Gdk
 from gi.repository import GdkPixbuf
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
 from datetime import datetime as dt
+from PIL import Image
 
 #Main Class
 class Deskboard():
@@ -51,7 +52,7 @@ class Deskboard():
         response.close()
         img = Image.open(fname)
         img = img.resize((basewidth, baseheight), Image.ANTIALIAS)
-        frname = basewidth+"x"+baseheight+"-"+fname
+        frname = str(basewidth)+"x"+str(baseheight)+"-"+fname
         img.save(frname)
         return frname
 
@@ -102,6 +103,11 @@ class Deskboard():
             self.config = configparser.ConfigParser()
             self.config.read('../../configs/config.ini')
             self.weatherUrl = ""
+            self.weatherUrlFC1 = ""
+            self.weatherUrlFC2 = ""
+            self.weatherUrlFC3 = ""
+            self.weatherUrlFC4 = ""
+            self.weatherUrlFC5 = ""
             self.count = 0        
             self.statePlayer = False
             self.stateCamera = False
@@ -118,6 +124,7 @@ class Deskboard():
                 self.camResizeHeight=480
                 self.camTimeSize=20            
                 self.camTimePosition=120
+                self.forecastResize=100
             elif self.config['system']['resolution'] == "800x480":
                 #800x480
                 self.mwmarquee = 20
@@ -127,6 +134,7 @@ class Deskboard():
                 self.camResizeHeight=240
                 self.camTimeSize=10            
                 self.camTimePosition=60
+                self.forecastResize=100
             else:
                 #480x320, default
                 self.mwmarquee = 15
@@ -136,6 +144,7 @@ class Deskboard():
                 self.camResizeHeight=240
                 self.camTimeSize=10            
                 self.camTimePosition=60
+                self.forecastResize=64
             self.pathUI = self.defaultPath + self.config['system']['resolution'] + "/"
             self.a = 0
             self.z = self.mwmarquee 
@@ -157,6 +166,8 @@ class Deskboard():
         self.window.show_all()
         self.windowMJpeg = self.root.get_object("windowMJpeg")
         self.windowCtrl = self.root.get_object("windowControl")
+        self.windowForecast = self.root.get_object("windowForecast")
+        self.windowForecastNext = self.root.get_object("windowForecastNext")
         
     def loadNames(self):
         self.dataDate =  self.root.get_object("dataDate")
@@ -199,6 +210,110 @@ class Deskboard():
         self.buttonMJpegOpen = self.root.get_object("buttonMJpegOpen")
         self.buttonMJpegOpen.connect("clicked", self.triggerMJpegOpen)
         self.textMJpegStream = self.root.get_object("textMJpegStream")
+        #UI:Forecast        
+        self.buttonForecastOpen = self.root.get_object("buttonForecast")
+        self.buttonForecastOpen.connect("clicked", self.triggerForecastOpen)
+        self.ButtonForecastClose = self.root.get_object("buttonForecastClose")
+        self.ButtonForecastClose.connect("clicked", self.triggerForecastClose)        
+        self.buttonForecastNextOpen = self.root.get_object("buttonForecastNext")
+        self.buttonForecastNextOpen.connect("clicked", self.triggerForecastNextOpen)
+        self.ButtonForecastNextClose = self.root.get_object("buttonForecastNextClose")
+        self.ButtonForecastNextClose.connect("clicked", self.triggerForecastNextClose)
+        self.fcToday1ico = self.root.get_object("fcToday1ico")
+        self.fcToday1temp = self.root.get_object("fcToday1temp")
+        self.fcToday1feel = self.root.get_object("fcToday1feel")
+        self.fcToday1min = self.root.get_object("fcToday1min")
+        self.fcToday1max = self.root.get_object("fcToday1max")
+        self.fcToday1clouds = self.root.get_object("fcToday1clouds")
+        self.fcToday1wind = self.root.get_object("fcToday1wind")
+        self.fcToday1snow = self.root.get_object("fcToday1snow")
+        self.fcToday1rain = self.root.get_object("fcToday1rain")
+        self.fcToday1humidity = self.root.get_object("fcToday1humidity")
+        self.fcToday1details = self.root.get_object("fcToday1details")
+        self.fcToday1time = self.root.get_object("fcToday1time")
+        self.fcToday2ico = self.root.get_object("fcToday2ico")
+        self.fcToday2temp = self.root.get_object("fcToday2temp")
+        self.fcToday2feel = self.root.get_object("fcToday2feel")
+        self.fcToday2min = self.root.get_object("fcToday2min")
+        self.fcToday2max = self.root.get_object("fcToday2max")
+        self.fcToday2clouds = self.root.get_object("fcToday2clouds")
+        self.fcToday2wind = self.root.get_object("fcToday2wind")
+        self.fcToday2snow = self.root.get_object("fcToday2snow")
+        self.fcToday2rain = self.root.get_object("fcToday2rain")
+        self.fcToday2humidity = self.root.get_object("fcToday2humidity")
+        self.fcToday2details = self.root.get_object("fcToday2details")
+        self.fcToday2time = self.root.get_object("fcToday2time")
+        self.fcToday3ico = self.root.get_object("fcToday3ico")
+        self.fcToday3temp = self.root.get_object("fcToday3temp")
+        self.fcToday3feel = self.root.get_object("fcToday3feel")
+        self.fcToday3min = self.root.get_object("fcToday3min")
+        self.fcToday3max = self.root.get_object("fcToday3max")
+        self.fcToday3clouds = self.root.get_object("fcToday3clouds")
+        self.fcToday3wind = self.root.get_object("fcToday3wind")
+        self.fcToday3snow = self.root.get_object("fcToday3snow")
+        self.fcToday3rain = self.root.get_object("fcToday3rain")
+        self.fcToday3humidity = self.root.get_object("fcToday3humidity")
+        self.fcToday3details = self.root.get_object("fcToday3details")
+        self.fcToday3time = self.root.get_object("fcToday3time")
+        self.fcToday4ico = self.root.get_object("fcToday4ico")
+        self.fcToday4temp = self.root.get_object("fcToday4temp")
+        self.fcToday4feel = self.root.get_object("fcToday4feel")
+        self.fcToday4min = self.root.get_object("fcToday4min")
+        self.fcToday4max = self.root.get_object("fcToday4max")
+        self.fcToday4clouds = self.root.get_object("fcToday4clouds")
+        self.fcToday4wind = self.root.get_object("fcToday4wind")
+        self.fcToday4snow = self.root.get_object("fcToday4snow")
+        self.fcToday4rain = self.root.get_object("fcToday4rain")
+        self.fcToday4humidity = self.root.get_object("fcToday4humidity")
+        self.fcToday4details = self.root.get_object("fcToday4details")
+        self.fcToday4time = self.root.get_object("fcToday4time")
+        self.fcToday5ico = self.root.get_object("fcToday5ico")
+        self.fcToday5temp = self.root.get_object("fcToday5temp")
+        self.fcToday5feel = self.root.get_object("fcToday5feel")
+        self.fcToday5min = self.root.get_object("fcToday5min")
+        self.fcToday5max = self.root.get_object("fcToday5max")
+        self.fcToday5clouds = self.root.get_object("fcToday5clouds")
+        self.fcToday5wind = self.root.get_object("fcToday5wind")
+        self.fcToday5snow = self.root.get_object("fcToday5snow")
+        self.fcToday5rain = self.root.get_object("fcToday5rain")
+        self.fcToday5humidity = self.root.get_object("fcToday5humidity")
+        self.fcToday5details = self.root.get_object("fcToday5details")
+        self.fcToday5time = self.root.get_object("fcToday5time")
+        self.fcNext1day = self.root.get_object("forecastNextDay1")
+        self.fcNext1min = self.root.get_object("forecastNextMin1")
+        self.fcNext1max = self.root.get_object("forecastNextMax1")
+        self.fcNext1snow = self.root.get_object("forecastNextSnow1")
+        self.fcNext1rain = self.root.get_object("forecastNextRain1")
+        self.fcNext1month = self.root.get_object("forecastNextMonth1")
+        self.fcNext1week = self.root.get_object("forecastNextWeek1")
+        self.fcNext2day = self.root.get_object("forecastNextDay2")
+        self.fcNext2min = self.root.get_object("forecastNextMin2")
+        self.fcNext2max = self.root.get_object("forecastNextMax2")
+        self.fcNext2snow = self.root.get_object("forecastNextSnow2")
+        self.fcNext2rain = self.root.get_object("forecastNextRain2")
+        self.fcNext2month = self.root.get_object("forecastNextMonth2")
+        self.fcNext2week = self.root.get_object("forecastNextWeek2")
+        self.fcNext3day = self.root.get_object("forecastNextDay3")
+        self.fcNext3min = self.root.get_object("forecastNextMin3")
+        self.fcNext3max = self.root.get_object("forecastNextMax3")
+        self.fcNext3snow = self.root.get_object("forecastNextSnow3")
+        self.fcNext3rain = self.root.get_object("forecastNextRain3")
+        self.fcNext3month = self.root.get_object("forecastNextMonth3")
+        self.fcNext3week = self.root.get_object("forecastNextWeek3")
+        self.fcNext4day = self.root.get_object("forecastNextDay4")
+        self.fcNext4min = self.root.get_object("forecastNextMin4")
+        self.fcNext4max = self.root.get_object("forecastNextMax4")
+        self.fcNext4snow = self.root.get_object("forecastNextSnow4")
+        self.fcNext4rain = self.root.get_object("forecastNextRain4")
+        self.fcNext4month = self.root.get_object("forecastNextMonth4")
+        self.fcNext4week = self.root.get_object("forecastNextWeek4")
+        self.fcNext5day = self.root.get_object("forecastNextDay5")
+        self.fcNext5min = self.root.get_object("forecastNextMin5")
+        self.fcNext5max = self.root.get_object("forecastNextMax5")
+        self.fcNext5snow = self.root.get_object("forecastNextSnow5")
+        self.fcNext5rain = self.root.get_object("forecastNextRain5")
+        self.fcNext5month = self.root.get_object("forecastNextMonth5")
+        self.fcNext5week = self.root.get_object("forecastNextWeek5")
         
     def loadActions(self):
         self.buttonCtrlOpen.connect("clicked", self.triggerCtrl)
@@ -219,6 +334,21 @@ class Deskboard():
         for x in self.buttonIPCam:
             self.placeButtonCameras.add(x)
         self.placeButtonCameras.show_all()
+    
+    
+    #Forecast
+    def triggerForecastOpen(self,w):
+        self.windowForecast.show_all()
+
+    def triggerForecastClose(self,w):
+        self.windowForecast.hide()
+    
+    #Forecast Next days
+    def triggerForecastNextOpen(self,w):
+        self.windowForecastNext.show_all()
+
+    def triggerForecastNextClose(self,w):
+        self.windowForecastNext.hide()
         
     #Cameras
     def triggerMJpegOpen(self,w):
@@ -383,7 +513,150 @@ class Deskboard():
                 self.weatherUrl = weather["ico"]
                 self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))
         except:
-            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read weather datas")  
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read weather datas")
+
+        forecast=self.readJson(self.config['system']['cache'] + "forecast.json")
+        if forecast["today"][0]["ico"] != self.weatherUrlFC1 :
+            imageData=self.getImageResize(forecast["today"][0]["ico"],self.forecastResize,self.forecastResize)
+            self.weatherUrlFC1 = forecast["today"][0]["ico"]
+            self.fcToday1ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        self.fcToday1temp.set_text(forecast["today"][0]['temp'])
+        self.fcToday1feel.set_text(forecast["today"][0]['feel'])
+        self.fcToday1min.set_text(forecast["today"][0]['min'])
+        self.fcToday1max.set_text(forecast["today"][0]['max'])
+        self.fcToday1wind.set_text(forecast["today"][0]['winds'])
+        self.fcToday1clouds.set_text(forecast["today"][0]['clouds'])
+        self.fcToday1snow.set_text(forecast["today"][0]['snow'])
+        self.fcToday1rain.set_text(forecast["today"][0]['rain'])
+        self.fcToday1humidity.set_text(forecast["today"][0]['humidity'])
+        self.fcToday1details.set_text(forecast["today"][0]['details'])
+        if self.fcToday1time:
+            self.fcToday1time.set_text(forecast["today"][0]['hour']+"H")
+            
+        
+        if forecast["today"][1]["ico"] != self.weatherUrlFC2 :
+            imageData=self.getImageResize(forecast["today"][1]["ico"],self.forecastResize,self.forecastResize)
+            self.weatherUrlFC2 = forecast["today"][1]["ico"]
+            self.fcToday2ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        self.fcToday2temp.set_text(forecast["today"][1]['temp'])
+        self.fcToday2feel.set_text(forecast["today"][1]['feel'])
+        self.fcToday2min.set_text(forecast["today"][1]['min'])
+        self.fcToday2max.set_text(forecast["today"][1]['max'])
+        self.fcToday2wind.set_text(forecast["today"][1]['winds'])
+        self.fcToday2clouds.set_text(forecast["today"][1]['clouds'])
+        self.fcToday2snow.set_text(forecast["today"][1]['snow'])
+        self.fcToday2rain.set_text(forecast["today"][1]['rain'])
+        self.fcToday2humidity.set_text(forecast["today"][1]['humidity'])
+        self.fcToday2details.set_text(forecast["today"][1]['details'])
+        if self.fcToday2time:
+            self.fcToday2time.set_text(forecast["today"][1]['hour']+"H")
+        
+        
+        if forecast["today"][2]["ico"] != self.weatherUrlFC3 :
+            imageData=self.getImageResize(forecast["today"][2]["ico"],self.forecastResize,self.forecastResize)
+            self.weatherUrlFC3 = forecast["today"][2]["ico"]
+            self.fcToday3ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        self.fcToday3temp.set_text(forecast["today"][2]['temp'])
+        self.fcToday3feel.set_text(forecast["today"][2]['feel'])
+        self.fcToday3min.set_text(forecast["today"][2]['min'])
+        self.fcToday3max.set_text(forecast["today"][2]['max'])
+        self.fcToday3wind.set_text(forecast["today"][2]['winds'])
+        self.fcToday3clouds.set_text(forecast["today"][2]['clouds'])
+        self.fcToday3snow.set_text(forecast["today"][2]['snow'])
+        self.fcToday3rain.set_text(forecast["today"][2]['rain'])
+        self.fcToday3humidity.set_text(forecast["today"][2]['humidity'])
+        self.fcToday3details.set_text(forecast["today"][2]['details'])
+        if self.fcToday3time:
+            self.fcToday3time.set_text(forecast["today"][2]['hour']+"H")
+        
+        
+        if forecast["today"][3]["ico"] != self.weatherUrlFC4 :
+            imageData=self.getImageResize(forecast["today"][3]["ico"],self.forecastResize,self.forecastResize)
+            self.weatherUrlFC4 = forecast["today"][3]["ico"]
+            self.fcToday4ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        self.fcToday4temp.set_text(forecast["today"][3]['temp'])
+        self.fcToday4feel.set_text(forecast["today"][3]['feel'])
+        self.fcToday4min.set_text(forecast["today"][3]['min'])
+        self.fcToday4max.set_text(forecast["today"][3]['max'])
+        self.fcToday4wind.set_text(forecast["today"][3]['winds'])
+        self.fcToday4clouds.set_text(forecast["today"][3]['clouds'])
+        self.fcToday4snow.set_text(forecast["today"][3]['snow'])
+        self.fcToday4rain.set_text(forecast["today"][3]['rain'])
+        self.fcToday4humidity.set_text(forecast["today"][3]['humidity'])
+        self.fcToday4details.set_text(forecast["today"][3]['details'])
+        if self.fcToday4time:
+            self.fcToday4time.set_text(forecast["today"][3]['hour']+"H")
+        
+        
+        if forecast["today"][4]["ico"] != self.weatherUrlFC5 :
+            imageData=self.getImageResize(forecast["today"][4]["ico"],self.forecastResize,self.forecastResize)
+            self.weatherUrlFC5 = forecast["today"][4]["ico"]
+            self.fcToday5ico.set_from_pixbuf(Pixbuf.new_from_file(imageData))
+        self.fcToday5temp.set_text(forecast["today"][4]['temp'])
+        self.fcToday5feel.set_text(forecast["today"][4]['feel'])
+        self.fcToday5min.set_text(forecast["today"][4]['min'])
+        self.fcToday5max.set_text(forecast["today"][4]['max'])
+        self.fcToday5wind.set_text(forecast["today"][4]['winds'])
+        self.fcToday5clouds.set_text(forecast["today"][4]['clouds'])
+        self.fcToday5snow.set_text(forecast["today"][4]['snow'])
+        self.fcToday5rain.set_text(forecast["today"][4]['rain'])
+        self.fcToday5humidity.set_text(forecast["today"][4]['humidity'])
+        self.fcToday5details.set_text(forecast["today"][4]['details'])
+        if self.fcToday5time:
+            self.fcToday5time.set_text(forecast["today"][4]['hour']+"H")
+        
+        self.fcNext1day.set_text(forecast["next"][0]['day'])
+        self.fcNext1min.set_text(forecast["next"][0]['min'])
+        self.fcNext1max.set_text(forecast["next"][0]['max'])
+        self.fcNext1snow.set_text(forecast["next"][0]['snow'])
+        self.fcNext1rain.set_text(forecast["next"][0]['rain'])
+        if self.fcNext1week:
+            self.fcNext1week.set_text(forecast["next"][0]['text_day'])
+            self.fcNext1month.set_text(forecast["next"][0]['text_month'])         
+        self.fcNext2day.set_text(forecast["next"][1]['day'])
+        self.fcNext2min.set_text(forecast["next"][1]['min'])
+        self.fcNext2max.set_text(forecast["next"][1]['max'])
+        self.fcNext2snow.set_text(forecast["next"][1]['snow'])
+        self.fcNext2rain.set_text(forecast["next"][1]['rain']) 
+        if self.fcNext2week:
+            self.fcNext2week.set_text(forecast["next"][1]['text_day'])
+            self.fcNext2month.set_text(forecast["next"][1]['text_month'])        
+        self.fcNext3day.set_text(forecast["next"][2]['day'])
+        self.fcNext3min.set_text(forecast["next"][2]['min'])
+        self.fcNext3max.set_text(forecast["next"][2]['max'])
+        self.fcNext3snow.set_text(forecast["next"][2]['snow'])
+        self.fcNext3rain.set_text(forecast["next"][2]['rain'])
+        if self.fcNext3week:
+            self.fcNext3week.set_text(forecast["next"][2]['text_day'])
+            self.fcNext3month.set_text(forecast["next"][2]['text_month'])         
+        self.fcNext4day.set_text(forecast["next"][3]['day'])
+        self.fcNext4min.set_text(forecast["next"][3]['min'])
+        self.fcNext4max.set_text(forecast["next"][3]['max'])
+        self.fcNext4snow.set_text(forecast["next"][3]['snow'])
+        self.fcNext4rain.set_text(forecast["next"][3]['rain'])
+        if self.fcNext4week:
+            self.fcNext4week.set_text(forecast["next"][3]['text_day'])
+            self.fcNext4month.set_text(forecast["next"][3]['text_month']) 
+        chktmp = 4 in forecast["next"]
+        if chktmp:
+            self.fcNext5day.set_text(forecast["next"][4]['day'])
+            self.fcNext5min.set_text(forecast["next"][4]['min'])
+            self.fcNext5max.set_text(forecast["next"][4]['max'])
+            self.fcNext5snow.set_text(forecast["next"][4]['snow'])
+            self.fcNext5rain.set_text(forecast["next"][4]['rain'])
+            if self.fcNext5week:
+                self.fcNext5week.set_text(forecast["next"][4]['text_day'])
+                self.fcNext5month.set_text(forecast["next"][4]['text_month']) 
+        else:
+            self.fcNext5day.set_text("n/a")
+            self.fcNext5min.set_text("-")
+            self.fcNext5max.set_text("-")
+            self.fcNext5snow.set_text("-")
+            self.fcNext5rain.set_text("-")
+            if self.fcNext5week:
+                self.fcNext5week.set_text("")
+                self.fcNext5month.set_text("") 
+            
         return True
     
     # Music Player

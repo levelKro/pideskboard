@@ -51,7 +51,7 @@ sudo apt -qq install -y python-gi-dev python-gi python-gi-cairo python3-gi pytho
 echo "... done"
 sleep 1
 echo "Installing requirements, step 4/4, please wait"
-sudo apt -qq install -y gir1.2-gst-plugins-base-1.0 gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly-amr vlc python3-vlc
+sudo apt -qq install -y gir1.2-gst-plugins-base-1.0 gstreamer1.0-plugins-good gstreamer1.0-plugins-ugly gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly-amr vlc python3-vlc python3-pil
 echo "... done"
 sleep 1
 echo "Now downloading external requirements"

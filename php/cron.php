@@ -130,7 +130,6 @@ start:
 			$clouds=(array) $weather['remote']->clouds;
 			if(is_numeric($clouds["all"])) $return['clouds']=$clouds["all"]."%";
 		}
-		$return['image']='<i class="fas fa-'.getWeatherIcon($weather['remote']->weather[0]->id).' '.getWeatherColor($weather['remote']->weather[0]->id).'"></i>';	
 		jsonSave("weather",$return);
 		unset($output);	
 		// Extended informations
@@ -140,6 +139,7 @@ start:
 		$list=$weather['remote']['list'];
 		$i=0;
 		$today=date("j",time());
+		$output['next']=array();
 		foreach($list as $item){
 			$item = (array) $item;
 			if(is_object($item["snow"])) {
@@ -152,6 +152,7 @@ start:
 			if($i<=4){
 				$output['today'][]=array(
 					"date"=>$item["dt"],
+					"hour"=>date("H",$item['dt']),
 					"code"=>$item["weather"][0]->id,
 					"ico"=>"http://openweathermap.org/img/wn/".$item["weather"][0]->icon."@2x.png",
 					"temp"=>round($item["main"]->temp,1).'°C',
@@ -168,14 +169,25 @@ start:
 				$i++;
 			}
 			if($day!=$today){
+				$output['next'][$day]['day']=$day;
 				$output['next'][$day]['date']=$item["dt"];
-				if($item["weather"][0]->id!="800") $output['next'][$day]['code'][substr($item["weather"][0]->id,0,1)]++;
-				else $output['next'][$day]['code'][0]++;
-				if($item["main"]->temp_min<$output['next'][$day]['min'] || $output['next'][$day]['min']=="") $output['next'][$day]['min']=round($item["main"]->temp_min,1);
-				if($item["main"]->temp_max>$output['next'][$day]['max'] || $output['next'][$day]['max']=="") $output['next'][$day]['max']=round($item["main"]->temp_max,1);
+				$output['next'][$day]['text_day']=translateDate(date("l",$item['dt']));
+				$output['next'][$day]['text_month']=translateDate(date("F",$item['dt']));
+				if($item["main"]->temp_min<$output['next'][$day]['min'] || $output['next'][$day]['min']=="") $output['next'][$day]['min']=round($item["main"]->temp_min,1).'°C';
+				if($item["main"]->temp_max>$output['next'][$day]['max'] || $output['next'][$day]['max']=="") $output['next'][$day]['max']=round($item["main"]->temp_max,1).'°C';
 				if($item["snow"]["3h"]>0) $output['next'][$day]['snow']=($output['next'][$day]['snow']+($item["snow"]["3h"]));
 				if($item["rain"]["3h"]>0) $output['next'][$day]['rain']=($output['next'][$day]['rain']+($item["rain"]["3h"]));
+				
 			}
+		}
+		$lines=array();
+		foreach($output['next'] as $line){
+			$lines[]=$line;
+		}
+		$output['next']=$lines;
+		foreach($output['next'] as $x=>$values){
+			$output['next'][$x]['snow']=(($output['next'][$x]['snow'])?$output['next'][$x]['snow']."cm":"");
+			$output['next'][$x]['rain']=(($output['next'][$x]['rain'])?$output['next'][$x]['rain']."mm":"");
 		}
 		jsonSave("forecast",$output);
 	}

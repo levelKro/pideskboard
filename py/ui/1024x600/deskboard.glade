@@ -643,9 +643,8 @@ mmmm, yyyy</property>
                         </child>
                       </object>
                       <packing>
-                        <property name="left-attach">0</property>
+                        <property name="left-attach">2</property>
                         <property name="top-attach">0</property>
-                        <property name="width">3</property>
                       </packing>
                     </child>
                     <child>
@@ -671,6 +670,58 @@ mmmm, yyyy</property>
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="buttonForecast">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="relief">none</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="width-request">25</property>
+                            <property name="height-request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="pixbuf">forecast.png</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="buttonForecastNext">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="focus-on-click">False</property>
+                        <property name="receives-default">True</property>
+                        <property name="halign">start</property>
+                        <property name="valign">start</property>
+                        <property name="relief">none</property>
+                        <child>
+                          <object class="GtkImage">
+                            <property name="width-request">25</property>
+                            <property name="height-request">25</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="halign">start</property>
+                            <property name="valign">start</property>
+                            <property name="pixbuf">forecast-extended.png</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
                         <property name="top-attach">0</property>
                       </packing>
                     </child>
@@ -900,6 +951,2740 @@ mmmm, yyyy</property>
               <placeholder/>
             </child>
           </object>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="windowForecast">
+    <property name="width-request">1024</property>
+    <property name="height-request">600</property>
+    <property name="can-focus">False</property>
+    <property name="resizable">False</property>
+    <property name="window-position">center-always</property>
+    <property name="default-width">1024</property>
+    <property name="default-height">600</property>
+    <property name="decorated">False</property>
+    <property name="deletable">False</property>
+    <property name="gravity">center</property>
+    <child>
+      <object class="GtkLayout">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="width">1024</property>
+        <property name="height">600</property>
+        <child>
+          <object class="GtkImage">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">background-weather.jpg</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="width-request">975</property>
+            <property name="height-request">540</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">25</property>
+            <property name="margin-end">25</property>
+            <property name="margin-top">20</property>
+            <property name="margin-bottom">20</property>
+            <property name="spacing">10</property>
+            <property name="homogeneous">True</property>
+            <property name="baseline-position">top</property>
+            <child>
+              <!-- n-columns=2 n-rows=15 -->
+              <object class="GtkGrid">
+                <property name="width-request">150</property>
+                <property name="height-request">300</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage" id="fcToday1ico">
+                    <property name="height-request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">nodata.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                    <property name="height">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_clouds.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_wind.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_humidity.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1details">
+                    <property name="height-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xxxxx</property>
+                    <property name="wrap">True</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 14"/>
+                      <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                    <property name="width">2</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1temp">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                      <attribute name="foreground" value="#ffff78780000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1feel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1snow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">x.xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1rain">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">x.xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1clouds">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1wind">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">x.xx m/s</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1humidity">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1max">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1min">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday1time">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">labelXX H</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=15 -->
+              <object class="GtkGrid">
+                <property name="width-request">150</property>
+                <property name="height-request">300</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage" id="fcToday2ico">
+                    <property name="height-request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">nodata.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                    <property name="height">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_clouds.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_wind.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_humidity.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2details">
+                    <property name="height-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xxxxx</property>
+                    <property name="wrap">True</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 14"/>
+                      <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                    <property name="width">2</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2temp">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                      <attribute name="foreground" value="#ffff78780000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2feel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2snow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2rain">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2clouds">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2wind">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX m/s</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2humidity">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2max">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2min">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday2time">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">labelXX H</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=15 -->
+              <object class="GtkGrid">
+                <property name="width-request">150</property>
+                <property name="height-request">300</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage" id="fcToday3ico">
+                    <property name="height-request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">nodata.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                    <property name="height">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_clouds.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_wind.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_humidity.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3details">
+                    <property name="height-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xxxxx</property>
+                    <property name="wrap">True</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 14"/>
+                      <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                    <property name="width">2</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3temp">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                      <attribute name="foreground" value="#ffff78780000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3feel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3snow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3rain">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3clouds">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3wind">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX m/s</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3humidity">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3max">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3min">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday3time">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">labelXX H</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=15 -->
+              <object class="GtkGrid">
+                <property name="width-request">150</property>
+                <property name="height-request">300</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage" id="fcToday4ico">
+                    <property name="height-request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">nodata.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                    <property name="height">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_clouds.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_wind.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_humidity.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4details">
+                    <property name="height-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xxxxx</property>
+                    <property name="wrap">True</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 14"/>
+                      <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                    <property name="width">2</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4temp">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                      <attribute name="foreground" value="#ffff78780000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4feel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4snow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4rain">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4clouds">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4wind">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX m/s</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4humidity">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4max">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4min">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday4time">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">labelXX H</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=15 -->
+              <object class="GtkGrid">
+                <property name="width-request">150</property>
+                <property name="height-request">300</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage" id="fcToday5ico">
+                    <property name="height-request">120</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="pixbuf">nodata.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                    <property name="height">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_clouds.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_wind.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_humidity.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">20</property>
+                    <property name="margin-top">5</property>
+                    <property name="margin-bottom">5</property>
+                    <property name="pixbuf">fc_temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5details">
+                    <property name="height-request">40</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xxxxx</property>
+                    <property name="wrap">True</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 14"/>
+                      <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                    <property name="width">2</property>
+                    <property name="height">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5temp">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 20"/>
+                      <attribute name="foreground" value="#ffff78780000"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5feel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5snow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">14</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5rain">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">13</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5clouds">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">xx %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">12</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5wind">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX m/s</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5humidity">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX %</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">10</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5max">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">9</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5min">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="fcToday5time">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">start</property>
+                    <property name="label" translatable="yes">labelXX H</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="buttonForecastClose">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">True</property>
+            <property name="halign">end</property>
+            <property name="valign">start</property>
+            <property name="relief">none</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="pixbuf">close.png</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">980</property>
+            <property name="y">5</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="windowForecastNext">
+    <property name="width-request">1024</property>
+    <property name="height-request">600</property>
+    <property name="can-focus">False</property>
+    <property name="resizable">False</property>
+    <property name="window-position">center-always</property>
+    <property name="default-width">1024</property>
+    <property name="default-height">600</property>
+    <property name="decorated">False</property>
+    <property name="deletable">False</property>
+    <property name="gravity">center</property>
+    <child>
+      <object class="GtkLayout">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="width">1024</property>
+        <property name="height">600</property>
+        <child>
+          <object class="GtkImage">
+            <property name="width-request">480</property>
+            <property name="height-request">320</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">background-forecast.jpg</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="width-request">775</property>
+            <property name="height-request">540</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-start">25</property>
+            <property name="margin-end">25</property>
+            <property name="margin-top">40</property>
+            <property name="margin-bottom">20</property>
+            <property name="spacing">10</property>
+            <property name="homogeneous">True</property>
+            <child>
+              <!-- n-columns=2 n-rows=7 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="forecastNextDay1">
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMin1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMax1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextRain1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">X.XX mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextSnow1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">x.xx cm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMonth1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextWeek1">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=7 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="forecastNextDay2">
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMin2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMax2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextRain2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">X.XX mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextSnow2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">x.xx cm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextWeek2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMonth2">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=7 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="forecastNextDay3">
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMin3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMax3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextRain3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">X.XX mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextSnow3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">x.xx cm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextWeek3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMonth3">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=7 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="forecastNextDay4">
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMin4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMax4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextRain4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">X.XX mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextSnow4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">x.xx cm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextWeek4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMonth4">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=7 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="row-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="forecastNextDay5">
+                    <property name="width-request">100</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="label" translatable="yes">XX</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">1</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMin5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMax5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">XX.X C</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextRain5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">X.XX mm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextSnow5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">x.xx cm</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 16"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">rain.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">snow.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_cold.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="margin-end">10</property>
+                    <property name="pixbuf">temp_hot.png</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextWeek5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="forecastNextMonth5">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">xxxxxxx</property>
+                    <property name="justify">center</property>
+                    <property name="track-visited-links">False</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Bahnschrift 18"/>
+                      <attribute name="foreground" value="#ffffffffffff"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">2</property>
+                    <property name="width">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">4</property>
+              </packing>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="buttonForecastNextClose">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="focus-on-click">False</property>
+            <property name="receives-default">True</property>
+            <property name="halign">end</property>
+            <property name="valign">start</property>
+            <property name="relief">none</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="valign">start</property>
+                <property name="pixbuf">close.png</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">980</property>
+            <property name="y">5</property>
+          </packing>
         </child>
       </object>
     </child>
