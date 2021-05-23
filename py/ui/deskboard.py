@@ -86,9 +86,13 @@ class Deskboard():
         if self.a < len(text):
             self.a = self.a + 1
             self.z = self.z + 1
-            if self.a >= len(text):
+            if self.a >= len(text) or self.z > len(text):
                 self.a = 0
                 self.z = self.mwmarquee
+        else:
+            self.a = 0
+            self.z = self.mwmarquee
+            
         return str(text[self.a:self.z])
 
     def displayMarquee(self):
@@ -514,7 +518,7 @@ class Deskboard():
                 self.dataWeatherIcon.set_from_pixbuf(Pixbuf.new_from_file(imageData))
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read weather datas")
-            try:
+        try:
             forecast=self.readJson(self.config['system']['cache'] + "forecast.json")
             if forecast["today"][0]["ico"] != self.weatherUrlFC1 :
                 imageData=self.getImageResize(forecast["today"][0]["ico"],self.forecastResize,self.forecastResize)
