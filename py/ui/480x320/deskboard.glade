@@ -392,7 +392,8 @@ Author: Mathieu Légaré
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
-                        <property name="baseline-position">bottom</property>
+                        <property name="spacing">1</property>
+                        <property name="baseline-position">top</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -481,7 +482,7 @@ Author: Mathieu Légaré
                     <child>
                       <object class="GtkButton" id="buttonPlayerAction">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="focus-on-click">False</property>
                         <property name="receives-default">False</property>
                         <property name="halign">start</property>
@@ -640,10 +641,10 @@ mmmm, yyyy</property>
                     <child>
                       <object class="GtkButton" id="buttonMJpegOpen">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="halign">start</property>
+                        <property name="receives-default">False</property>
+                        <property name="halign">end</property>
                         <property name="valign">start</property>
                         <property name="relief">none</property>
                         <child>
@@ -652,8 +653,6 @@ mmmm, yyyy</property>
                             <property name="height-request">25</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="valign">start</property>
                             <property name="pixbuf">ipcam.png</property>
                           </object>
                         </child>
@@ -666,9 +665,9 @@ mmmm, yyyy</property>
                     <child>
                       <object class="GtkButton" id="buttonCtrlOpen">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
+                        <property name="receives-default">False</property>
                         <property name="halign">end</property>
                         <property name="valign">start</property>
                         <property name="relief">none</property>
@@ -678,8 +677,6 @@ mmmm, yyyy</property>
                             <property name="height-request">25</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="halign">center</property>
-                            <property name="valign">center</property>
                             <property name="pixbuf">ctrl.png</property>
                           </object>
                         </child>
@@ -692,10 +689,10 @@ mmmm, yyyy</property>
                     <child>
                       <object class="GtkButton" id="buttonForecast">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="halign">start</property>
+                        <property name="receives-default">False</property>
+                        <property name="halign">end</property>
                         <property name="valign">start</property>
                         <property name="relief">none</property>
                         <child>
@@ -704,8 +701,6 @@ mmmm, yyyy</property>
                             <property name="height-request">25</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="valign">start</property>
                             <property name="pixbuf">forecast.png</property>
                           </object>
                         </child>
@@ -718,10 +713,10 @@ mmmm, yyyy</property>
                     <child>
                       <object class="GtkButton" id="buttonForecastNext">
                         <property name="visible">True</property>
-                        <property name="can-focus">True</property>
+                        <property name="can-focus">False</property>
                         <property name="focus-on-click">False</property>
-                        <property name="receives-default">True</property>
-                        <property name="halign">start</property>
+                        <property name="receives-default">False</property>
+                        <property name="halign">end</property>
                         <property name="valign">start</property>
                         <property name="relief">none</property>
                         <child>
@@ -730,8 +725,6 @@ mmmm, yyyy</property>
                             <property name="height-request">25</property>
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <property name="halign">start</property>
-                            <property name="valign">start</property>
                             <property name="pixbuf">forecast-extended.png</property>
                           </object>
                         </child>
@@ -825,9 +818,9 @@ mmmm, yyyy</property>
             <child>
               <object class="GtkButton" id="buttonCtrlPoweroff">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="can-focus">False</property>
                 <property name="focus-on-click">False</property>
-                <property name="receives-default">True</property>
+                <property name="receives-default">False</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="margin-start">5</property>
@@ -853,9 +846,9 @@ mmmm, yyyy</property>
             <child>
               <object class="GtkButton" id="buttonCtrlReboot">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="can-focus">False</property>
                 <property name="focus-on-click">False</property>
-                <property name="receives-default">True</property>
+                <property name="receives-default">False</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="margin-start">5</property>
@@ -881,9 +874,9 @@ mmmm, yyyy</property>
             <child>
               <object class="GtkButton" id="buttonCtrlBluetooth">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="can-focus">False</property>
                 <property name="focus-on-click">False</property>
-                <property name="receives-default">True</property>
+                <property name="receives-default">False</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="margin-start">5</property>
@@ -909,9 +902,9 @@ mmmm, yyyy</property>
             <child>
               <object class="GtkButton" id="buttonCtrlRestart">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="can-focus">False</property>
                 <property name="focus-on-click">False</property>
-                <property name="receives-default">True</property>
+                <property name="receives-default">False</property>
                 <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="margin-start">5</property>
@@ -937,9 +930,9 @@ mmmm, yyyy</property>
             <child>
               <object class="GtkButton" id="buttonCtrlClose">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
+                <property name="can-focus">False</property>
                 <property name="focus-on-click">False</property>
-                <property name="receives-default">True</property>
+                <property name="receives-default">False</property>
                 <property name="halign">end</property>
                 <property name="valign">start</property>
                 <property name="margin-start">20</property>
@@ -2537,9 +2530,9 @@ mmmm, yyyy</property>
         <child>
           <object class="GtkButton" id="buttonForecastClose">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can-focus">False</property>
             <property name="focus-on-click">False</property>
-            <property name="receives-default">True</property>
+            <property name="receives-default">False</property>
             <property name="halign">end</property>
             <property name="valign">start</property>
             <property name="relief">none</property>
@@ -2598,6 +2591,8 @@ mmmm, yyyy</property>
             <property name="margin-top">40</property>
             <property name="margin-bottom">10</property>
             <property name="orientation">vertical</property>
+            <property name="spacing">2</property>
+            <property name="homogeneous">True</property>
             <child>
               <!-- n-columns=6 n-rows=2 -->
               <object class="GtkGrid">
@@ -3202,165 +3197,14 @@ mmmm, yyyy</property>
                 <property name="position">3</property>
               </packing>
             </child>
-            <child>
-              <!-- n-columns=6 n-rows=2 -->
-              <object class="GtkGrid">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="row-homogeneous">True</property>
-                <child>
-                  <object class="GtkLabel" id="forecastNextDay5">
-                    <property name="width-request">100</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="label" translatable="yes">XX</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Bahnschrift Bold 24"/>
-                      <attribute name="foreground" value="#ffffffffffff"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                    <property name="width">2</property>
-                    <property name="height">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="forecastNextMin5">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="label" translatable="yes">XX.X C</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Bahnschrift 16"/>
-                      <attribute name="foreground" value="#ffffffffffff"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="left-attach">3</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="forecastNextMax5">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="label" translatable="yes">XX.X C</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Bahnschrift 16"/>
-                      <attribute name="foreground" value="#ffffffffffff"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="left-attach">3</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="forecastNextRain5">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="label" translatable="yes">X.XX mm</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Bahnschrift 16"/>
-                      <attribute name="foreground" value="#ffffffffffff"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="left-attach">5</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="forecastNextSnow5">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="label" translatable="yes">x.xx cm</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Bahnschrift 16"/>
-                      <attribute name="foreground" value="#ffffffffffff"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="left-attach">5</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin-start">20</property>
-                    <property name="margin-end">10</property>
-                    <property name="pixbuf">rain.png</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin-start">20</property>
-                    <property name="margin-end">10</property>
-                    <property name="pixbuf">snow.png</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">4</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin-end">10</property>
-                    <property name="pixbuf">temp_cold.png</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">2</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="margin-end">10</property>
-                    <property name="pixbuf">temp_hot.png</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">2</property>
-                    <property name="top-attach">1</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">4</property>
-              </packing>
-            </child>
           </object>
         </child>
         <child>
           <object class="GtkButton" id="buttonForecastNextClose">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can-focus">False</property>
             <property name="focus-on-click">False</property>
-            <property name="receives-default">True</property>
+            <property name="receives-default">False</property>
             <property name="halign">end</property>
             <property name="valign">start</property>
             <property name="relief">none</property>
@@ -3414,9 +3258,9 @@ mmmm, yyyy</property>
             <property name="width-request">24</property>
             <property name="height-request">24</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can-focus">False</property>
             <property name="focus-on-click">False</property>
-            <property name="receives-default">True</property>
+            <property name="receives-default">False</property>
             <property name="halign">end</property>
             <property name="valign">end</property>
             <property name="relief">none</property>

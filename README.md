@@ -39,6 +39,9 @@ You can also copy the "wpa_supplicant.conf.dist" into "wpa_supplicant.conf" insi
 ## Install
 Please refer to this Wiki page; https://levelkro.xyz/wiki/RPi-piDeskboard (French) or run "install.sh" on your terminal over SSH.
 
+## LCD and other Raspberry Pi displays
+You can use any display (with touchscreen for better result) with piDeskboard. You can consult the section about this in the wiki. Support resolution of 480x320, 800x480 and 1024x600.
+
 ## Raspbian OS & Bluetooth
 If you have plan to use the Bluetooth with the Raspbian Lite, you must use this version; 2020-02-14 (2020-02-13). And do not make "sudo apt upgrade". One of the package disable and made unusable the Bluetooth module.
 
