@@ -26,7 +26,8 @@ class Deskboard():
         self.setUpdates()
         self.loadPlayer()
         self.startMarquee()
-        GLib.timeout_add_seconds(5, self.setUpdates)        
+        GLib.timeout_add_seconds(5, self.setUpdates)
+        print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Deskboard started")
         Gtk.main()        
         
     def getApi(self,action):
@@ -83,12 +84,9 @@ class Deskboard():
     def marquee(self, text):
         if text is None:
             text = "Error META"
-        if self.a < len(text):
+        if self.a < len(text) and self.z <= len(text):
             self.a = self.a + 1
             self.z = self.z + 1
-            if self.a >= len(text) or self.z > len(text):
-                self.a = 0
-                self.z = self.mwmarquee
         else:
             self.a = 0
             self.z = self.mwmarquee
@@ -151,7 +149,8 @@ class Deskboard():
                 self.forecastResize=64
             self.pathUI = self.defaultPath + self.config['system']['resolution'] + "/"
             self.a = 0
-            self.z = self.mwmarquee 
+            self.z = self.mwmarquee
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Configuration loaded")
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't load configurations datas")
             exit()
@@ -172,6 +171,7 @@ class Deskboard():
         self.windowCtrl = self.root.get_object("windowControl")
         self.windowForecast = self.root.get_object("windowForecast")
         self.windowForecastNext = self.root.get_object("windowForecastNext")
+        print(dt.now().strftime("%m-%d-%y %H:%M > ") + "UI loaded")
         
     def loadNames(self):
         self.dataDate =  self.root.get_object("dataDate")
@@ -311,13 +311,6 @@ class Deskboard():
         self.fcNext4rain = self.root.get_object("forecastNextRain4")
         self.fcNext4month = self.root.get_object("forecastNextMonth4")
         self.fcNext4week = self.root.get_object("forecastNextWeek4")
-        self.fcNext5day = self.root.get_object("forecastNextDay5")
-        self.fcNext5min = self.root.get_object("forecastNextMin5")
-        self.fcNext5max = self.root.get_object("forecastNextMax5")
-        self.fcNext5snow = self.root.get_object("forecastNextSnow5")
-        self.fcNext5rain = self.root.get_object("forecastNextRain5")
-        self.fcNext5month = self.root.get_object("forecastNextMonth5")
-        self.fcNext5week = self.root.get_object("forecastNextWeek5")
         
     def loadActions(self):
         self.buttonCtrlOpen.connect("clicked", self.triggerCtrl)
@@ -641,25 +634,6 @@ class Deskboard():
             if self.fcNext4week:
                 self.fcNext4week.set_text(forecast["next"][3]['text_day'])
                 self.fcNext4month.set_text(forecast["next"][3]['text_month']) 
-            chktmp = 4 in forecast["next"]
-            if chktmp:
-                self.fcNext5day.set_text(forecast["next"][4]['day'])
-                self.fcNext5min.set_text(forecast["next"][4]['min'])
-                self.fcNext5max.set_text(forecast["next"][4]['max'])
-                self.fcNext5snow.set_text(forecast["next"][4]['snow'])
-                self.fcNext5rain.set_text(forecast["next"][4]['rain'])
-                if self.fcNext5week:
-                    self.fcNext5week.set_text(forecast["next"][4]['text_day'])
-                    self.fcNext5month.set_text(forecast["next"][4]['text_month']) 
-            else:
-                self.fcNext5day.set_text("n/a")
-                self.fcNext5min.set_text("-")
-                self.fcNext5max.set_text("-")
-                self.fcNext5snow.set_text("-")
-                self.fcNext5rain.set_text("-")
-                if self.fcNext5week:
-                    self.fcNext5week.set_text("")
-                    self.fcNext5month.set_text("") 
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read forecast datas")
             
