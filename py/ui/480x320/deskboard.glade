@@ -244,7 +244,7 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
-                        <property name="top-attach">4</property>
+                        <property name="top-attach">6</property>
                       </packing>
                     </child>
                     <child>
@@ -262,7 +262,7 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
-                        <property name="top-attach">4</property>
+                        <property name="top-attach">6</property>
                       </packing>
                     </child>
                     <child>
@@ -280,7 +280,7 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
-                        <property name="top-attach">6</property>
+                        <property name="top-attach">7</property>
                       </packing>
                     </child>
                     <child>
@@ -300,7 +300,7 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
-                        <property name="top-attach">6</property>
+                        <property name="top-attach">7</property>
                       </packing>
                     </child>
                     <child>
@@ -319,7 +319,7 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">2</property>
-                        <property name="top-attach">7</property>
+                        <property name="top-attach">8</property>
                       </packing>
                     </child>
                     <child>
@@ -337,20 +337,45 @@ Author: Mathieu Légaré
                       </object>
                       <packing>
                         <property name="left-attach">3</property>
-                        <property name="top-attach">7</property>
+                        <property name="top-attach">8</property>
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkImage" id="iconWeatherTempMax1">
+                        <property name="height-request">35</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="margin-start">10</property>
+                        <property name="margin-end">10</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="pixbuf">temp_home.png</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">2</property>
+                        <property name="top-attach">4</property>
+                        <property name="height">2</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
-                    </child>
-                    <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="dataWeatherTempHome">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">XX C</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Bahnschrift Bold 16"/>
+                          <attribute name="foreground" value="#f6f6f5f5f4f4"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="left-attach">3</property>
+                        <property name="top-attach">4</property>
+                        <property name="height">2</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>

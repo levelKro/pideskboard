@@ -1,8 +1,8 @@
 #PiDeskboard by Mathieu Légaré <levelkro@yahoo.ca> https://levelkro.com
 #
 import json, requests, threading, configparser
-import gi, re, os, datetime, time, cairo
-import cv2
+import gi, re, os, subprocess, datetime, time
+import cairo, cv2
 import numpy as np
 import libvlc as vlc
 gi.require_version("Gtk", "3.0")
@@ -180,6 +180,7 @@ class Deskboard():
         self.dataWeatherFeel =  self.root.get_object("dataWeatherFeel")
         self.dataWeatherTempMin =  self.root.get_object("dataWeatherTempMin")
         self.dataWeatherTempMax =  self.root.get_object("dataWeatherTempMax")
+        self.dataWeatherTempHome =  self.root.get_object("dataWeatherTempHome")
         self.dataWeatherClouds =  self.root.get_object("dataWeatherClouds")
         self.dataWeatherRain =  self.root.get_object("dataWeatherRain")
         self.dataWeatherSnow =  self.root.get_object("dataWeatherSnow")
@@ -488,11 +489,14 @@ class Deskboard():
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read radio datas")
         try:
+            s = subprocess.check_output(["python","/home/pi/pideskboard/py/temp/celsius.py"])
+            home = s.decode('utf-8')
             weather=self.readJson(self.config['system']['cache'] + "weather.json")
             self.dataWeatherTemp.set_text(weather["temp"])
             self.dataWeatherFeel.set_text(weather["feel"])
             self.dataWeatherTempMin.set_text(weather["min"])
             self.dataWeatherTempMax.set_text(weather["max"])
+            self.dataWeatherTempHome.set_text(home)
             self.dataWeatherClouds.set_text(str(weather["clouds"]))
             self.dataWeatherDetails.set_text(weather["name"])        
             rain = "rain" in weather
