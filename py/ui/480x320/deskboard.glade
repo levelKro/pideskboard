@@ -341,7 +341,7 @@ Author: Mathieu Légaré
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkImage" id="iconWeatherTempMax1">
+                      <object class="GtkImage" id="iconWeatherTempHome">
                         <property name="height-request">35</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
