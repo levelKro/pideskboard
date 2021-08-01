@@ -110,6 +110,7 @@ class Deskboard():
             self.weatherUrlFC3 = ""
             self.weatherUrlFC4 = ""
             self.weatherUrlFC5 = ""
+            self.weatherHome = "none"
             self.count = 0        
             self.statePlayer = False
             self.stateCamera = False
@@ -489,14 +490,17 @@ class Deskboard():
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read radio datas")
         try:
-            s = subprocess.check_output(["python","/home/pi/pideskboard/py/temp/celsius.py"])
+            s = subprocess.check_output(["python","/home/pi/pideskboard/py/temp/" + self.config['system']['home_sensor'] + "/" + self.config['system']['units'] + ".py"])
             home = s.decode('utf-8')
+            self.dataWeatherTempHome.set_text(home)
+        except:
+            print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read local temprature")
+        try:
             weather=self.readJson(self.config['system']['cache'] + "weather.json")
             self.dataWeatherTemp.set_text(weather["temp"])
             self.dataWeatherFeel.set_text(weather["feel"])
             self.dataWeatherTempMin.set_text(weather["min"])
             self.dataWeatherTempMax.set_text(weather["max"])
-            self.dataWeatherTempHome.set_text(home)
             self.dataWeatherClouds.set_text(str(weather["clouds"]))
             self.dataWeatherDetails.set_text(weather["name"])        
             rain = "rain" in weather

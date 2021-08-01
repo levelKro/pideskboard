@@ -14,6 +14,7 @@ See the feature list for all possibilities;
 * Sub panel: IP Camera streams (up to 5 MJpeg cameras)
 * Sub panel: Weather forecast; next hours and next days (up to 5)
 * Multi-lang support, add yours! Now have ENglish and FRench
+* Support for local sensor (temperature), use the DS18B20 by default
 
 ## About this current version
 This version not have the WebUI (removed Apache and WebUI), for better performances. Writted completly in Python and work well on Raspberry Pi Zero.
