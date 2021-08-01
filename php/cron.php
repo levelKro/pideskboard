@@ -18,6 +18,30 @@
 	);
 start:
 	
+	switch($cfg['system']['units']){
+		case 'imperial':
+		case 'IMPERIAL':
+			$units=array(
+				"name"=>"imperial",
+				"winds"=>"mph",
+				"rain"=>"mm",
+				"snow"=>"mm"
+				"temp"=>"°F"
+			);
+		
+		break;
+		case 'metric':
+		case 'METRIC':
+		default:
+			$units=array(
+				"name"=>"metric",
+				"winds"=>"m/h",
+				"rain"=>"mm",
+				"snow"=>"mm"
+				"temp"=>"°C"
+			);
+	}
+	
 	// Reload config
 	if((time()-$sync['config']['now']) >= $sync['config']['limit']) {
 		$sync['config']['now']=time();
@@ -27,8 +51,8 @@ start:
 	}
 	
 	// Auto-reboot
-	if($cfg['system']['reboot']!==false){
-		if(date("G:i",time())==$cfg['system']['reboot']){
+	if($cfg['system']['reboot']=="true" || $cfg['system']['reboot']=="True"){
+		if(date("G:i",time())==$cfg['system']['reboot_time'] && (date("N",time())==$cfg['system']['reboot_day'] || $cfg['system']['reboot_day']=="0")){
 			if($cfg['system']['icon']) system($cfg['icon']['path'].' 15000 '.$cfg['icon']['reboot'].' 3');
 			if($cfg['system']['espeak']) speak(translateText("REBOOT"),$cfg['espeak']['module']);
 			sleep(15);			
@@ -109,22 +133,22 @@ start:
 	if((time()-$sync['weather']['now']) >= $sync['weather']['limit'] && $weather) {
 		$sync['weather']['now']=time();
 		if($cfg['system']['icon']) system($cfg['icon']['path'].' 3000 '.$cfg['icon']['remote']);
-		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['system']['language']."&units=metric";
+		$jsonurl = "http://api.openweathermap.org/data/2.5/weather?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['system']['language']."&units=".$units['name'];
 		$json = file_get_contents($jsonurl);
 		$weather['remote'] = json_decode($json);
-		$return['temp'] = round($weather['remote']->main->temp,0)."°C";
-		$return['feel'] = round($weather['remote']->main->feels_like,0)."°C";
-		$return['min'] = round($weather['remote']->main->temp_min,0)."°C";
-		$return['max'] = round($weather['remote']->main->temp_max,0)."°C";
+		$return['temp'] = round($weather['remote']->main->temp,0).$units['temp'];
+		$return['feel'] = round($weather['remote']->main->feels_like,0).$units['temp'];
+		$return['min'] = round($weather['remote']->main->temp_min,0).$units['temp'];
+		$return['max'] = round($weather['remote']->main->temp_max,0).$units['temp'];
 		$return['name'] = $weather['remote']->weather[0]->description;
 		$return['ico'] = "http://openweathermap.org/img/wn/".$weather['remote']->weather[0]->icon."@2x.png";
 		if(is_object($weather['remote']->snow)){
 			$snow=(array) $weather['remote']->snow;
-			if(is_numeric($snow["1h"])) $return['snow']=round($snow["1h"],1)."mm";
+			if(is_numeric($snow["1h"])) $return['snow']=round($snow["1h"],1).$units['snow'];
 		}
 		if(is_object($weather['remote']->rain)){
 			$rain=(array) $weather['remote']->rain;
-			if(is_numeric($rain["1h"])) $return['rain']=round($rain["1h"],1)."mm";			
+			if(is_numeric($rain["1h"])) $return['rain']=round($rain["1h"],1).$units['rain'];			
 		}
 		if(is_object($weather['remote']->clouds)){
 			$clouds=(array) $weather['remote']->clouds;
@@ -133,7 +157,7 @@ start:
 		jsonSave("weather",$return);
 		unset($output);	
 		// Extended informations
-		$jsonurl = "http://api.openweathermap.org/data/2.5/forecast?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=metric";
+		$jsonurl = "http://api.openweathermap.org/data/2.5/forecast?q=".$weather['city']."&appid=".$weather['api']."&lang=".$cfg['language']."&units=".$units['name'];
 		$json = file_get_contents($jsonurl);
 		$weather['remote'] = (array) json_decode($json);
 		$list=$weather['remote']['list'];
@@ -155,16 +179,16 @@ start:
 					"hour"=>date("H",$item['dt']),
 					"code"=>$item["weather"][0]->id,
 					"ico"=>"http://openweathermap.org/img/wn/".$item["weather"][0]->icon."@2x.png",
-					"temp"=>round($item["main"]->temp,1).'°C',
-					"feel"=>round($item["main"]->feels_like,1).'°C',
-					"min"=>round($item["main"]->temp_min,0).'°C',
-					"max"=>round($item["main"]->temp_max,0).'°C',
+					"temp"=>round($item["main"]->temp,1).$units['temp'],
+					"feel"=>round($item["main"]->feels_like,1).$units['temp'],
+					"min"=>round($item["main"]->temp_min,0).$units['temp'],
+					"max"=>round($item["main"]->temp_max,0).$units['temp'],
 					"humidity"=>$item["main"]->humidity.'%',
 					"clouds"=>$item["clouds"]->all.'%',
-					"winds"=>$item["wind"]->speed.'m/s',
+					"winds"=>$item["wind"]->speed.$units['winds'],
 					"details"=>$item["weather"][0]->description,
-					"snow"=>(($item["snow"])?$item["snow"]["3h"]."cm":''),
-					"rain"=>(($item["rain"])?$item["rain"]["3h"]."mm":'')
+					"snow"=>(($item["snow"])?$item["snow"]["3h"].$units['snow']:''),
+					"rain"=>(($item["rain"])?$item["rain"]["3h"].$units['rain']:'')
 				);
 				$i++;
 			}
@@ -173,8 +197,8 @@ start:
 				$output['next'][$day]['date']=$item["dt"];
 				$output['next'][$day]['text_day']=translateDate(date("l",$item['dt']));
 				$output['next'][$day]['text_month']=translateDate(date("F",$item['dt']));
-				if($item["main"]->temp_min<$output['next'][$day]['min'] || $output['next'][$day]['min']=="") $output['next'][$day]['min']=round($item["main"]->temp_min,1).'°C';
-				if($item["main"]->temp_max>$output['next'][$day]['max'] || $output['next'][$day]['max']=="") $output['next'][$day]['max']=round($item["main"]->temp_max,1).'°C';
+				if($item["main"]->temp_min<$output['next'][$day]['min'] || $output['next'][$day]['min']=="") $output['next'][$day]['min']=round($item["main"]->temp_min,1).$units['temp'];
+				if($item["main"]->temp_max>$output['next'][$day]['max'] || $output['next'][$day]['max']=="") $output['next'][$day]['max']=round($item["main"]->temp_max,1).$units['temp'];
 				if($item["snow"]["3h"]>0) $output['next'][$day]['snow']=($output['next'][$day]['snow']+($item["snow"]["3h"]));
 				if($item["rain"]["3h"]>0) $output['next'][$day]['rain']=($output['next'][$day]['rain']+($item["rain"]["3h"]));
 				
@@ -186,8 +210,8 @@ start:
 		}
 		$output['next']=$lines;
 		foreach($output['next'] as $x=>$values){
-			$output['next'][$x]['snow']=(($output['next'][$x]['snow'])?$output['next'][$x]['snow']."cm":"");
-			$output['next'][$x]['rain']=(($output['next'][$x]['rain'])?$output['next'][$x]['rain']."mm":"");
+			$output['next'][$x]['snow']=(($output['next'][$x]['snow'])?$output['next'][$x]['snow'].$units['snow']:"");
+			$output['next'][$x]['rain']=(($output['next'][$x]['rain'])?$output['next'][$x]['rain'].$units['rain']:"");
 		}
 		jsonSave("forecast",$output);
 	}
