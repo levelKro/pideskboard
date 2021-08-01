@@ -491,7 +491,7 @@ class Deskboard():
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read radio datas")
         try:
             s = subprocess.check_output(["python","/home/pi/pideskboard/py/temp/" + self.config['system']['home_sensor'] + "/" + self.config['system']['units'] + ".py"])
-            home = s.decode('utf-8')
+            home = s.decode('utf-8').replace("\n","")
             self.dataWeatherTempHome.set_text(home)
         except:
             print(dt.now().strftime("%m-%d-%y %H:%M > ") + "Cant't read local temprature")
