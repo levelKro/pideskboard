@@ -77,16 +77,15 @@ echo "Copying files into the system and change attributes when needed ..."
 sudo cp /home/pi/initramfs-splash/boot/initramfs.img /boot/initramfs.img
 sudo cp /home/pi/pideskboard/splash.png /boot/splash.png
 sudo cp /home/pi/pideskboard/__install/boot/splash.txt /boot/splash.txt
-sudo cp /home/pi/pideskboard/__install/init/webctrl.sh /etc/init.d/webctrl
+sudo cp /home/pi/pideskboard/__install/systemd/piwebctrl.service /etc/systemd/system/piwebctrl.service
 sudo cp -r /home/pi/pideskboard/__install/_fonts /home/pi/.fonts
 sudo chmod +x /home/pi/pideskboard/sh/*.sh
-sudo chmod +x /etc/init.d/webctrl
 echo "Add Git remote update infos ..."
 cd /home/pi/pideskboard
 git remote add upstream https://github.com/levelKro/pideskboard.git
 git pull upstream main
 echo "Enable autorun scripts"
-sudo systemctl enable webctrl
+sudo systemctl enable piwebctrl
 sudo -s cat >> /home/pi/.profile << EOF
 [[ -z \$DISPLAY && \$XDG_VTNR -eq 1 ]] && /home/pi/pideskboard/sh/dm_start.sh
 EOF
