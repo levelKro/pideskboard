@@ -25,7 +25,7 @@ start:
 				"name"=>"imperial",
 				"winds"=>"mph",
 				"rain"=>"mm",
-				"snow"=>"mm"
+				"snow"=>"mm",
 				"temp"=>"°F"
 			);
 		
@@ -37,7 +37,7 @@ start:
 				"name"=>"metric",
 				"winds"=>"m/h",
 				"rain"=>"mm",
-				"snow"=>"mm"
+				"snow"=>"mm",
 				"temp"=>"°C"
 			);
 	}

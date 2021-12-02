@@ -103,7 +103,7 @@ class Deskboard():
     def loadConfig(self):
         try:
             self.config = configparser.ConfigParser()
-            self.config.read('../../configs/config.ini')
+            self.config.read('/home/pi/pideskboard/configs/config.ini')
             self.weatherUrl = ""
             self.weatherUrlFC1 = ""
             self.weatherUrlFC2 = ""
