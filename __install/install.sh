@@ -54,10 +54,8 @@ sudo cp -r /home/pi/pideskboard/__install/_fonts /home/pi/.fonts
 sudo cp /home/pi/initramfs-splash/boot/initramfs.img /boot/initramfs.img
 sudo cp /home/pi/pideskboard/splash.png /boot/splash.png
 sudo cp /home/pi/pideskboard/__install/boot/splash.txt /boot/splash.txt
-sudo cp /home/pi/pideskboard/__install/systemd/piwebctrl.service /etc/systemd/system/piwebctrl.service
-echo "** .. Enabling scripts and service ..."
+echo "** .. Enabling scripts ..."
 sudo chmod +x /home/pi/pideskboard/sh/*.sh
-sudo systemctl enable piwebctrl
 echo "** .. Register piDeskboard for update with GIT"
 cd /home/pi/pideskboard
 git remote add upstream https://github.com/levelKro/pideskboard.git

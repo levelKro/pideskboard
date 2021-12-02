@@ -1,3 +1,2 @@
 #!/bin/bash
-cd /home/pi/pideskboard/py/ctrl
-sudo -E python3 ./webctrl.py >/home/pi/pideskboard/py/webctrl.log  2>&1 &
+sudo -E /usr/bin/python3 /home/pi/pideskboard/py/ctrl/webctrl.py >/home/pi/pideskboard/py/webctrl.log 2>&1 &
