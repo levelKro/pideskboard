@@ -7,12 +7,14 @@ import subprocess
 import configparser
 import json
 import psutil
+import datetime
 from urllib.parse import parse_qs
 from os import path
 from gpiozero import CPUTemperature
+from datetime import datetime as dt
 
 config = configparser.ConfigParser()
-config.read('../../configs/config.ini')
+config.read('/home/pi/pideskboard/configs/config.ini')
 WEBPATH=config['system']['path']+"ctrl/web"
 os.chdir(WEBPATH)
 
@@ -127,7 +129,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     
     def get_cpu_speed(self):
         try:
-            f = os.popen('/opt/vc/bin/vcgencmd get_config arm_freq')
+            f = os.popen('vcgencmd get_config arm_freq')
             cpu = f.read()
             if cpu != "":
                 return cpu.split("=")[1].replace("\n","")
@@ -136,7 +138,8 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         except:
             return "n/a"
         
-
+print(dt.now().strftime("%m-%d-%y %H:%M > ") + "piWebCtrl started")
 handler_object = MyHttpRequestHandler
 my_server = socketserver.TCPServer(("0.0.0.0", int(config['ctrl']['port'])), handler_object)
+print(dt.now().strftime("%m-%d-%y %H:%M > ") + "piWebCtrl started Web Server")
 my_server.serve_forever()
