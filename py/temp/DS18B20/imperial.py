@@ -26,6 +26,7 @@ def read_temp():
         temp_c = float(temp_string) / 1000.0
         temp_f = temp_c * 9.0 / 5.0 + 32.0
         output = str(round(temp_f,0)).replace(".0","") + degree_sign + "F"
-        return output.encode("utf-8")
+        #return output.encode("utf-8")
+        return output
 	
 print(read_temp())	
