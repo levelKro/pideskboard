@@ -36,7 +36,7 @@ echo "** .. Installing with apt-get (for system) ..."
 echo "** .. .. Installing X Server ..."
 sudo apt -qq install -y --no-install-recommends xserver-xorg x11-xserver-utils xinit openbox
 echo "** .. .. Installing Python 3, Samba, eSpeak and Yasm ..."
-sudo apt -qq install -y python3-dev python3-pip yasm samba espeak mbrola-fr*
+sudo apt -qq install -y python3-dev python3-pip yasm samba espeak espeak-ng mbrola-fr* mbrola-en* mbrola-ca*
 echo "** .. .. Installing PHP for cli ..."
 sudo apt -qq install -y php php-cli php-imap php-curl php-xml php-xmlrpc
 echo "** .. .. Installing Python 3 modules ..."
