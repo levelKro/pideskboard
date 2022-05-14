@@ -26,8 +26,8 @@ After installation, you must not use the device for other thing of project for b
 
 * Raspbian OS Lite (not the Desktop, only CLI)
 * Minimum 4Gb MicroSD card, 8Gb suggested
-* Raspberry Pi 0,1,2,3 (tested with Raspberry Pi Zero W)
-* Audio output for use with eSPeak (optionnal) (BT for RPi0, BT/HDMI or Analog for RPi1,2,3)
+* Raspberry Pi 0,0 v2,1,2,3
+* Audio output for use with eSpeak (optionnal) (BT for RPi0, BT/HDMI or Analog for RPi1,2,3)
 * Video output (HDMI or LCD by GPIO)
 * Touch input (for use the player and cameras)
 * Raspberry Pi 0,1,2,3 headless ready to use, with SSH enabled and available
@@ -42,13 +42,6 @@ Please refer to this Wiki page; https://levelkro.xyz/wiki/RPi-piDeskboard (Frenc
 
 ## LCD and other Raspberry Pi displays
 You can use any display (with touchscreen for better result) with piDeskboard. You can consult the section about this in the wiki. Support resolution of 480x320, 800x480 and 1024x600.
-
-## Raspbian OS & Bluetooth
-If you have plan to use the Bluetooth with the Raspbian Lite, you must use this version; 2020-02-14 (2020-02-13). And do not make "sudo apt upgrade". One of the package disable and made unusable the Bluetooth module.
-
-* Lite : http://downloads.raspberrypi.org/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip
-* Full : http://downloads.raspberrypi.org/raspbian_full/images/raspbian_full-2020-02-14/2020-02-13-raspbian-buster-full.zip
-* Desktop : http://downloads.raspberrypi.org/raspbian/images/raspbian-2020-02-14/2020-02-13-raspbian-buster.zip
 
 ## Credits
 Please note, this package includes ressources from;
